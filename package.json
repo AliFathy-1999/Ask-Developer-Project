@@ -1,0 +1,33 @@
+{
+  "name": "ask-developer-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "dev": "nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliFathy-1999/Ask-Developer-Project.git"
+  },
+  "author": "Ali Ahmed Fathi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AliFathy-1999/Ask-Developer-Project/issues"
+  },
+  "homepage": "https://github.com/AliFathy-1999/Ask-Developer-Project#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.0",
+    "express": "^4.18.1",
+    "ts-node": "^10.8.1",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.16"
+  }
+}
