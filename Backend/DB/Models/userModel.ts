@@ -1,7 +1,7 @@
-import { error } from 'console';
 import {Schema,model} from 'mongoose';
 import validator from 'validator';
 const bycryptjs = require('bcryptjs');
+let jwt = require('jsonwebtoken');
 import { IUserModel } from '../../Interfaces/ModelsInterface';
 const schema= new Schema<IUserModel>({
     fname:{
@@ -76,14 +76,14 @@ const schema= new Schema<IUserModel>({
         type:String,
         default:"user"
     },
-    /*tokens : [
+    tokens : [
         {
             token:{
                 type:String,
                 required:true
             }
         }
-    ]*/
+    ]
 },{
     timestamps:true  //createdAt, updatedAt
 });
@@ -92,7 +92,7 @@ schema.methods.toJSON = function () {
     const userObject = user.toObject();
     delete userObject.password;
     delete userObject.__v;
-    //delete userObject.tokens;
+    delete userObject.tokens;
     return userObject;
 }
 schema.pre('save',async function (){
@@ -112,5 +112,14 @@ schema.statics.login = async function(email,password){
     }
    return userData;
 }
+schema.methods.generateToken = async function(){
+    const user = this;
+    const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET)
+    user.tokens = user.tokens.concat({token})
+    await user.save();
+    return token;
+}
+
+
 const User = model("User",schema)
 module.exports =User;

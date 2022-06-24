@@ -20,10 +20,11 @@ class User{
     }
     static userLogin = async(req:Request,res:Response)=>{
         const userData = await userModel.login(req.body.email,req.body.password)
+        const token = await userData.generateToken();
         try{
             res.status(200).send({
                 apiStatus:true,
-                data:userData,
+                data:{user:userData,token},
                 message:"User Login Successfully"
             })
         }catch(e:any){
