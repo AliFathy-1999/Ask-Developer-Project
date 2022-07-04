@@ -7,34 +7,34 @@ const schema= new Schema<IUserModel>({
     fname:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
+        minlength:3,
+        maxlength:20
     },
     lname:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
+        minlength:3,
+        maxlength:20
     },
     age:{
         type:Number,
         required:true,
+        min:12,
+        max:80
     },
     email:{
         type:String,
         required:true,
         trim:true,
         unique:true,
-        validate(value:string)
-        {
-            if(!validator.isEmail(value))
-            { 
-                throw new Error("Email is invalid")
-            }
-        }
     },
     password:{
         type:String,
         required:true,
         trim:true,
+        minlength:6,
         validate(value:string){
             if(value.includes("password")){
                 throw new Error("Password cannot contain 'password'")
@@ -46,6 +46,8 @@ const schema= new Schema<IUserModel>({
         required:true,
         trim:true,
         unique:true,
+        minlength:3,
+        maxlength:20,
     },
     phoneno:{
         type:String,
@@ -64,6 +66,10 @@ const schema= new Schema<IUserModel>({
     pImage:{
         type:String,
         default:"https://secure.gravatar.com/avatar/${this._id}?s=90&d=identicon"
+    },
+    gender:{
+        type:String,
+        required:true,
     },
     jobtitle:{
         type:String,

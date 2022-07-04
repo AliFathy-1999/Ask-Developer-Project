@@ -6,6 +6,7 @@ interface IUserModel {
     username: string;
     phoneno: string;
     age: number;
+    gender:string;
     status: boolean;
     jobtitle: string;
     role: string;

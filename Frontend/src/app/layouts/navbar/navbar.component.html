@@ -1,15 +1,15 @@
-<nav class="p-3 navbar-light navbar-expand-lg" style="background-color:#DFEFF4">
+<nav class="p-3 navbar-light navbar-expand-lg" style="background-color:#DFEFF4" >
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <a routerLink="" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
         <img  src="../../../assets/asklogo.png" class="bi me-2" width="200" height="80" role="img">
-        <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg> -->
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li>
 
           <a routerLink="home" class="nav-link  link-primary fs-5"><mat-icon svgIcon="home"></mat-icon> Home</a></li>
+          <li><a routerLink="test" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Test</a></li>
         <li><a routerLink="tags" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Tags</a></li>
         <li><a routerLink="users" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="users"></mat-icon> Users</a></li>
         <!--<li><a routerLink="login" class="nav-link px-2 link-dark">login</a></li>-->
@@ -18,10 +18,10 @@
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <input type="search" class="form-control"  placeholder="Search..." aria-label="Search">
       </form>
-      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" >
-        <li class="text-primary fs-5"   >Hello! </li>
+      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" *ngIf="this._global.isLoggedIn">
+        <li class="text-primary fs-5"   >Hello! {{this._global.userInfo.data?.fname }}</li>
       </ul>
-      <div class="dropdown text-end">
+      <div class="dropdown text-end" *ngIf="this._global.isLoggedIn">
         <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://secure.gravatar.com/avatar/$%7Bthis._id%7D?s=90&d=identicon" alt="profile_picture" width="32" height="32" class="rounded-circle">
         </a>
@@ -29,15 +29,17 @@
           <li><a class="dropdown-item " routerLink="myquestion"><mat-icon svgIcon="myquestions"></mat-icon> My Questions</a></li>
           <li><a class="dropdown-item " routerLink="myprofile"><mat-icon svgIcon="profile"></mat-icon> Profile</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item"><mat-icon svgIcon="logout"></mat-icon> Log out</a></li>
+          <li class="dropdown-item"><mat-icon svgIcon="logout"></mat-icon> <button class="bg-transparent border-0" (click)="logout()"> Log out</button></li>
         </ul>
       </div>
-      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3" >
-        <li class="btn btn-primary" routerLink="/login"><mat-icon svgIcon="login"></mat-icon> login</li>
+
+      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3" *ngIf="!this._global.isLoggedIn">
+        <li class="btn " routerLink="/login"><mat-icon svgIcon="login"></mat-icon> Login</li>
       </ul>
-      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3" >
+      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3" *ngIf="!this._global.isLoggedIn">
         <li class="btn btn-warning " routerLink="/register"><mat-icon svgIcon="register" ></mat-icon> Register</li>
       </ul>
+
     </div>
   </div>
 </nav>

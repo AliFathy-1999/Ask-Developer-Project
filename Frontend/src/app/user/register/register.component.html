@@ -1,0 +1,148 @@
+
+<section class="h-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6 d-none d-xl-block">
+              <img src="../../../assets/Developers.jpg"
+                alt="Ask Deveolper Logo" class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height: 100%;" />
+            </div>
+
+            <form class="col-xl-6" #registerform="ngForm" (ngSubmit)="handleSubmit(registerform)">
+              <div class="card-body p-md-5 text-black">
+                <div class="d-flex justify-content-center">
+                <img src="../../../assets/asklogo.png" alt="logo" class="img-fluid" style="width: 60%;margin-bottom: 5%;">
+              </div>
+                <h1 class="text-center mb-5"><mat-icon svgIcon="register"></mat-icon> Users registration form</h1>
+                <div class="alert alert-danger" role="alert" *ngIf="userError">
+                 <mat-icon svgIcon="error2" class="text-danger"></mat-icon> {{ErrorMessage}}
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mb-4">
+                    <div class="form-outline">
+                      <input type="text" class="form-control form-control-lg" #fname="ngModel" name="fname"  placeholder="First name" [(ngModel)]="userData.fname"
+                      required minlength="3" maxlength="20"   />
+                      <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && fname.invalid">
+                        <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                        <span *ngIf="fname.errors?.['required']" class="text-light"> First name is required</span>
+                        <span *ngIf="fname.errors?.['minlength']" class="text-light"> Min Length of First name is 3</span>
+                        <span *ngIf="fname.errors?.['maxlength']" class="text-light"> Max Length of First name is 20</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4">
+                    <div class="form-outline">
+                      <input type="text"  class="form-control form-control-lg" #lname="ngModel" name="lname" placeholder="Last name" [(ngModel)]="userData.lname"
+                      required minlength="3" maxlength="20"/>
+                      <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && lname.invalid">
+                        <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                        <span *ngIf="lname.errors?.['required']" class="text-light"> Last name is required</span>
+                        <span *ngIf="lname.errors?.['minlength']" class="text-light"> Min Length of Last name is 3</span>
+                        <span *ngIf="lname.errors?.['maxlength']" class="text-light"> Max Length of Last name is 20</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-4">
+                    <div class="form-outline">
+                      <input type="number" name="age" class="form-control form-control-lg" #age="ngModel" placeholder="Age" [(ngModel)]="userData.age"
+                      required min="12" max="80" />
+                      <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && age.invalid">
+                        <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                        <span *ngIf="age.errors?.['required']" class="text-light"> Age is required</span>
+                        <span *ngIf="age.errors?.['min']" class="text-light"> Min age is 12</span>
+                        <span *ngIf="age.errors?.['max']" class="text-light"> Max age is 80</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
+                  <div class="bg-warning p-1 rounded-1 bg-opacity-25">Username is unique</div>
+                  <input type="text" name="username" class="form-control form-control-lg" #username="ngModel" placeholder="Username" [(ngModel)]="userData.username"
+                   required   minlength="3" maxlength="20"/>
+                    <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && username.invalid">
+                      <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                      <span *ngIf="username.errors?.['required']" class="text-light"> Username is required</span>
+                      <span *ngIf="username.errors?.['minlength']" class="text-light"> Min length of Username is 3</span>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <div class="bg-warning p-1 rounded-1 bg-opacity-25">Email is unique</div>
+                  <input type="email" name="email"  class="form-control form-control-lg" #email="ngModel" placeholder="Email" [(ngModel)]="userData.email"
+                  required  />
+                  <div class="bg-danger rounded-1 p-2" *ngIf=" registerform.submitted && email.invalid">
+                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                    <span *ngIf="email.errors?.['required']" class="text-light"> Email is required</span>
+                  </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <div class="bg-warning p-1 rounded-1 bg-opacity-25">Your Password doesn't the include "password" word</div>
+                  <input type="password" name="password" class="form-control form-control-lg" #password="ngModel" placeholder="Password" [(ngModel)]="userData.password"
+                  required  minlength="6" maxlength="20"/>
+                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && password.invalid">
+                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                    <span *ngIf="password.errors?.['required']" class="text-light"> password is required</span>
+                    <span *ngIf="password.errors?.['minlength']" class="text-light"> Min length of password is 6</span>
+                    <span *ngIf="password.errors?.['maxlength']" class="text-light"> Max length of password is 20</span>
+                  </div>
+                </div>
+
+                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+                  <h2 class="mb-0 me-4">Gender: </h2>
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="femaleGender" value="female" [(ngModel)]="userData.gender"  />
+                    <label class="form-check-label" for="femaleGender">Female</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="maleGender"value="male" [(ngModel)]="userData.gender" required  />
+                    <label class="form-check-label" for="maleGender">Male</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0">
+                    <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="otherGender" value="other" [(ngModel)]="userData.gender"  />
+                    <label class="form-check-label" for="otherGender">Other</label>
+                  </div>
+
+                    <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && gender.invalid">
+                      <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                      <span *ngIf="gender.errors?.['required']" class="text-light"> Gender is required</span>
+                    </div>
+
+                </div>
+                <div class="form-outline mb-4">
+                  <input type="text" name="phoneno" id="form3Example9" #phone="ngModel" class="form-control form-control-lg" placeholder="Phone number" [(ngModel)]="userData.phoneno" required />
+                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && phone.invalid">
+                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                    <span *ngIf="phone.errors?.['required']" class="text-light"> Phone number is required</span>
+
+                  </div>
+                </div>
+
+                <div class="form-outline mb-2">
+                  <input type="text" name="jobtitle" class="form-control form-control-lg" #jobtitle="ngModel"  placeholder="Job Title" [(ngModel)]="userData.jobtitle" required  minlength="3" maxlength="30"/>
+                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && jobtitle.invalid">
+                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                    <span *ngIf="jobtitle.errors?.['required']" class="text-light"> job title is required</span>
+                    <span *ngIf="jobtitle.errors?.['minlength']" class="text-light"> Min length of job title is 3</span>
+                    <span *ngIf="jobtitle.errors?.['maxlength']" class="text-light"> Max length of job title is 30</span>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-end pt-3">
+                  <button type="button" (click)="resetall(registerform)" class="btn btn-light btn-lg"><mat-icon svgIcon="reset"></mat-icon> Reset all</button>
+                  <button type="submit" class="btn btn-warning btn-lg ms-2"><mat-icon svgIcon="submit"></mat-icon> Submit form</button>
+                </div>
+                  <h3 class="text-center mt-4">Already have an account? <a routerLink="/login" class="btn btn-primary"><mat-icon svgIcon="login"></mat-icon> Login</a></h3>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

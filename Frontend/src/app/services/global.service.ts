@@ -5,10 +5,35 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalService {
+  public isLoggedIn = false;
+  public navbar:Boolean=true;
+  public userInfo:any={}
 
+  url:string="http://localhost:1999/api/user/"
   constructor(private http:HttpClient) {
+
   }
-  getData(){
-    return this.http.get('https://jsonplaceholder.typicode.com/photos?_limit=2500');
+  userRegister(obj:any){
+    return this.http.post(`${this.url}userRegister`,obj);
   }
+  userLogin(obj:any){
+    return this.http.post(`${this.url}userLogin`,obj);
+  }
+  getMe(){
+    return this.http.get(`${this.url}me`);
+  }
+  AuthLogin(){
+    this.http.get(`${this.url}me`).subscribe(data=>{
+      this.userInfo = data
+      localStorage.setItem('userInfo',JSON.stringify(data))
+    })
+    return this.userInfo;
+  }
+  userLogout(){
+    return this.http.get(`${this.url}logout`);
+  }
+  testAuth(){
+    return this.http.get(`${this.url}testauth`);
+  }
+
 }

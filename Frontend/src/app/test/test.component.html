@@ -1,7 +1,46 @@
+<p class="bg-danger">
+  ali
+</p>
 <!--<div>
   <div class="row" >
     <div class="col-3" *ngFor="let image of mydata">
       <img src="{{image.thumbnailUrl}}" loading="lazy" class="card-img-top" width="80" height="250" alt="...">
     </div>
+  </div>
+</div>-->
+<!--<form #test="ngForm" class="">
+  <div class="form-group card  p-2 w-50">
+    <div class="d-flex justify-content-center">
+    <input type="text" class="form-control w-25 " name="fname" [(ngModel)]="mydata.fname" placeholder="first name" minlength="3" maxlength="20" #fname="ngModel"  >
+    <p>{{mydata.fname}}</p>
+  </div>
+  <div class="bg-danger" *ngIf="fname.invalid">
+    <small *ngIf="fname.errors?.['minlength']" class="text-light">First name is min length is 3</small>
+  </div>
+    <div class="d-flex justify-content-center">
+    <input type="text" class="form-control w-25" name="lname" [(ngModel)]="mydata.lname" placeholder="last name">
+    <p>{{mydata.lname}}</p>
+  </div>
+  <div class="d-flex justify-content-center">
+    <input type="text" class="form-control w-25" name="username" [(ngModel)]="mydata.username" placeholder="username"  >
+    <p>{{mydata.username}}</p>
+  </div>
+  </div>
+
+  <button type="button" (click)="resetall(test)" class="btn btn-primary">Reset</button>
+
+</form>-->
+<button type="button" (click)="toast()" class="btn btn-primary">toast test</button>
+<div id="liveAlertPlaceholder"><div></div><div><div class="alert alert-success alert-dismissible" role="alert">   <div>Nice, you triggered this alert message!</div>   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div></div></div>
+<!--<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="me-auto">Bootstrap</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="toast-body">
+    Hello, world! This is a toast message.
   </div>
 </div>-->
