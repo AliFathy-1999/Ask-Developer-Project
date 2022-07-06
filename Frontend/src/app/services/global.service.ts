@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
   public isLoggedIn = false;
+  public isLoggedOut = false;
+  myfname:Boolean=false;
   public navbar:Boolean=true;
   public userInfo:any={}
 

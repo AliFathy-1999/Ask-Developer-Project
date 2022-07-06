@@ -17,6 +17,8 @@ import { LoginComponent } from './user/login/login.component';
 import { HomepageComponent } from './user/homepage/homepage.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UserInterceptor } from './interceptors/user.interceptor';
+import { UserprofileComponent } from './user/userprofile/userprofile.component';
+import { EditprofileComponent } from './user/editprofile/editprofile.component';
 
 
 
@@ -29,6 +31,8 @@ import { UserInterceptor } from './interceptors/user.interceptor';
     RegisterComponent,
     LoginComponent,
     HomepageComponent,
+    UserprofileComponent,
+    EditprofileComponent,
 
   ],
   imports: [

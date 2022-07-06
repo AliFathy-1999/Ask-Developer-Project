@@ -1,0 +1,62 @@
+<div class="container  bg-white mt-5 mb-5 card">
+  <div class="row">
+      <div class="col-md-3 border-right">
+          <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="{{this._global.userInfo.data?.pImage}}"><span class="font-weight-bold">{{this._global.userInfo.data?.fname}}</span><span class="text-black-50">{{this._global.userInfo.data?.email}}</span><span> </span></div>
+      </div>
+      <div class="col-md-9 border-right">
+          <div class="p-3 py-5">
+            <div class=" align-items-center mb-3">
+              <h1 class="text-center card-header">{{this._global.userInfo.data?.fname}}'s Profile</h1>
+          </div>
+            <table class="table text-center" >
+              <thead>
+              <tr class="fs-4">
+                <th scope="col" class="text-primary">User's data</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> First name</td>
+                <td scope="col">{{this._global.userInfo.data?.fname}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Last name</td>
+                <td scope="col">{{this._global.userInfo.data?.lname}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Username</td>
+                <td scope="col">{{this._global.userInfo.data?.username}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Email</td>
+                <td scope="col">{{this._global.userInfo.data?.email}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Age</td>
+                <td scope="col">{{this._global.userInfo.data?.age}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Gender</td>
+                <td scope="col">{{this._global.userInfo.data?.gender}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Phone number</td>
+                <td scope="col">{{this._global.userInfo.data?.phoneno}}</td>
+              </tr>
+              <tr class="fs-5">
+                <td scope="col" class="text-primary"> Job title</td>
+                <td scope="col">{{this._global.userInfo.data?.jobtitle}}</td>
+              </tr>
+            </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+              <a class="btn p-3 mb-5 w-25 fs-5" routerLink="/editprofile" style="background-color: #283149; color:#DFEFF4;"><mat-icon svgIcon="editprofile"></mat-icon> Edit profile</a>
+            </div>
+
+      </div>
+
+  </div>
+</div>
+
+

@@ -11,7 +11,8 @@ import { IconsService } from 'src/app/services/icons.service';
 })
 export class NavbarComponent implements OnInit {
   data:any
-  myfname:any
+  //myfname:any
+  myfname:Boolean=false;
   token:any = localStorage.getItem('token')
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService,private router:Router) {
     iconRegistry.addSvgIconLiteral('home', sanitizer.bypassSecurityTrustHtml(this._icons.HOME_ICON));
@@ -28,6 +29,8 @@ export class NavbarComponent implements OnInit {
 
     if(this.token){
       this._global.isLoggedIn=true;
+
+      //this.myfname=true;
     }
   }
   logout(){
@@ -36,6 +39,12 @@ export class NavbarComponent implements OnInit {
       localStorage.clear();
       this.router.navigate(['/home']);
       this._global.isLoggedIn=false;
+      this._global.isLoggedOut=true;
+      setTimeout(()=>{
+        this._global.isLoggedOut=false;
+      },5000)
+
+
 
     })
   }

@@ -12,18 +12,18 @@
           <li><a routerLink="test" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Test</a></li>
         <li><a routerLink="tags" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Tags</a></li>
         <li><a routerLink="users" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="users"></mat-icon> Users</a></li>
-        <!--<li><a routerLink="login" class="nav-link px-2 link-dark">login</a></li>-->
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <input type="search" class="form-control"  placeholder="Search..." aria-label="Search">
       </form>
-      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" *ngIf="this._global.isLoggedIn">
-        <li class="text-primary fs-5"   >Hello! {{this._global.userInfo.data?.fname }}</li>
+      <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" *ngIf="this._global.isLoggedIn && !myfname">
+        <li class="text-primary fs-5"   >Welcome {{this._global.userInfo.data?.fname || "username" }} </li>
+        <li *ngIf="myfname">ali</li>
       </ul>
       <div class="dropdown text-end" *ngIf="this._global.isLoggedIn">
         <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://secure.gravatar.com/avatar/$%7Bthis._id%7D?s=90&d=identicon" alt="profile_picture" width="32" height="32" class="rounded-circle">
+          <img src="{{this._global.userInfo.data?.pImage}}" alt="profile_picture" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item " routerLink="myquestion"><mat-icon svgIcon="myquestions"></mat-icon> My Questions</a></li>
