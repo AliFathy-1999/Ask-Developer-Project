@@ -1,6 +1,8 @@
 import {Request,Response } from "express";
 const multer = require('multer');
-const fs=require('fs');
+const sharp = require('sharp');
+//const fs=require('fs');
+import * as fs from 'fs';
 const path=require('path');
 const userModel= require("../DB/Models/userModel")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
@@ -71,7 +73,7 @@ class User{
                 await userData.save()
                 res.status(200).send({
                     apiStatus:true,
-                    data:userData,
+                    data:req.body,
                     message:"User data updated Successfully"
                 })
             }catch(e:any){
@@ -83,18 +85,21 @@ class User{
             }
     }
     static uploadProfilePic= async(req:any,res:Response)=>{
-              try{
-            const imagePath=path.join(__dirname,`${req.file.path}`);
+        try{
             let fileN = req.file.originalname;
+            const myimagePath=path.join(`${req.file.path}`);
             const ext = path.extname(req.file.originalname);
             if(ext == '.tiff' || ext == '.jpeg'){fileN = fileN.slice(0, -5);}else{fileN = fileN.slice(0, -4);}
             const myFileName = fileN
-            const profilepicpath = `../../../assets/uploads/${myFileName}${ext}`
-            req.user.pImage=profilepicpath;
+            const profilepicpath = `../../../assets/profilepicture/`
+            const imageP = "./Frontend/src/assets/profilepicture/";
+            const profilepicture = `${req.user.username}-${myFileName}-profilepicture-${Date.now()}${ext}`
+            await sharp(myimagePath).resize({width: 150,height:150}).toFile(`${imageP}${profilepicture}`);
+            req.user.pImage=`${profilepicpath}${profilepicture}`;
             await req.user.save();
             res.status(200).send({
                 apiStatus: true,
-                profilepicpath:profilepicpath,
+                profilepicture:profilepicture,
                 data:req.user,
                 message: "Image Uploaded Successfully"
             })
@@ -106,5 +111,6 @@ class User{
             })
         } 
     }
+
 }
 module.exports = User;

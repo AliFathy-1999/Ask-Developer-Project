@@ -5,7 +5,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatIconModule} from '@angular/material/icon';
+
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -18,7 +21,7 @@ import { HomepageComponent } from './user/homepage/homepage.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UserInterceptor } from './interceptors/user.interceptor';
 import { UserprofileComponent } from './user/userprofile/userprofile.component';
-import { EditprofileComponent } from './user/editprofile/editprofile.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -32,7 +35,6 @@ import { EditprofileComponent } from './user/editprofile/editprofile.component';
     LoginComponent,
     HomepageComponent,
     UserprofileComponent,
-    EditprofileComponent,
 
   ],
   imports: [
@@ -41,6 +43,8 @@ import { EditprofileComponent } from './user/editprofile/editprofile.component';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -51,6 +55,7 @@ import { EditprofileComponent } from './user/editprofile/editprofile.component';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    NgbModule,
 
   ],
   providers: [

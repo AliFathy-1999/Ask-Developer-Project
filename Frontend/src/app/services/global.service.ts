@@ -7,8 +7,10 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
   public isLoggedIn = false;
   public isLoggedOut = false;
+  public isRegistered = false;
   myfname:Boolean=false;
   public navbar:Boolean=true;
+  public footer:Boolean=true;
   public userInfo:any={}
 
   url:string="http://localhost:1999/api/user/"
@@ -34,8 +36,10 @@ export class GlobalService {
   userLogout(){
     return this.http.get(`${this.url}logout`);
   }
-  testAuth(){
-    return this.http.get(`${this.url}testauth`);
+  editprofile(obj:any){
+    return this.http.post(`${this.url}editprofile`,obj)
   }
-
+  uploadpImage(obj:any){
+    return this.http.post(`${this.url}uploadimage`,obj)
+  }
 }

@@ -7,6 +7,7 @@ interface IUserModel {
     phoneno: string;
     age: number;
     gender:string;
+    DOB:Date,
     status: boolean;
     jobtitle: string;
     role: string;

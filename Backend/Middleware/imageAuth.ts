@@ -1,13 +1,12 @@
 const multer = require("multer")
 const path = require("path")
-const fs = require("fs")
-
+import * as fs from 'fs';
 
 const storage = multer.diskStorage({
     destination: function(req:any, file:any, cb:any){
         cb(null, "Frontend/src/assets/uploads") 
     },
-    filename: function(req:any,file:any, cb:any){
+    filename: async function(req:any,file:any, cb:any){
         let fileN = file.originalname;
         const ext = path.extname(file.originalname);
         if(ext == '.tiff' || ext == '.jpeg')

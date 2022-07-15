@@ -10,4 +10,10 @@ form{
   .card-registration .select-arrow {
   top: 13px;
   }
-
+  .tooltip {
+    background-color: #283149;
+    font-size: large;
+  }
+#typeahead-focus{
+    overflow-y: auto;
+}

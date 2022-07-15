@@ -34,6 +34,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/multer": "^1.4.7",
     "@types/nodemon": "^1.19.1",
+    "@types/sharp": "^0.30.4",
     "@types/validator": "^13.7.3",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.0-beta1",
@@ -44,6 +45,7 @@
     "multer": "^1.4.5-lts.1",
     "ngx-toastr": "^14.3.0",
     "nodemon": "^2.0.16",
+    "sharp": "^0.30.7",
     "validator": "^13.7.0"
   }
 }

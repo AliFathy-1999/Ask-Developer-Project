@@ -25,6 +25,7 @@ export class AppComponent {
    }
     iconRegistry.addSvgIconLiteral('arrowup', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_UP_ICON));
     iconRegistry.addSvgIconLiteral('logout', sanitizer.bypassSecurityTrustHtml(this._icons.LOGOUT_ICON));
+    iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
     this.document.addEventListener('scroll', () => {
       if (window.pageYOffset > 300) {
         this.isScrolled = true;

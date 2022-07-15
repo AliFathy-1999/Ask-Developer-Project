@@ -1,6 +1,33 @@
-<p class="bg-danger">
-  ali
-</p>
+
+<mat-form-field appearance="fill">
+  <mat-label>Enter your password</mat-label>
+  <input matInput [type]="hide ? 'password' : 'text'">
+  <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </button>
+</mat-form-field>
+<!--<div class="form-control">
+  <div class="row ">
+    <div class="col-10">
+      <input type="{{passwordstatus}}" class="border-0 w-100 p-1 fs-4" placeholder="password" />
+    </div>
+    <div class="col-2 mt-1">
+      <button class="bg-transparent border-0" (click)="showpassword()"><mat-icon *ngIf="showpass" svgIcon="show"></mat-icon></button>
+      <button class="bg-transparent border-0" (click)="hidepassword()"><mat-icon *ngIf="hidepass" svgIcon="hide"></mat-icon></button>
+    </div>
+  </div>
+</div>-->
+
+<div class="form-control">
+  <div class="row ">
+    <div class="col-10">
+      <input type="{{passwordstatus}}" class="border-0 w-100 p-1 fs-4" placeholder="password" />
+    </div>
+    <div class="col-2 mt-1">
+      <button  class="bg-transparent border-0" (click)="showpassword()"><mat-icon  svgIcon="{{status}}"></mat-icon></button>
+    </div>
+  </div>
+</div>
 <!--<div>
   <div class="row" >
     <div class="col-3" *ngFor="let image of mydata">
@@ -8,29 +35,314 @@
     </div>
   </div>
 </div>-->
-<!--<form #test="ngForm" class="">
-  <div class="form-group card  p-2 w-50">
+<!--Modal: Login with Avatar Form-->
+<form #dateTest="ngForm" (ngSubmit)="handledateSubmit(dateTest)">
+  <input type="date" class="form-control-lg" id="datepicker" name="date" #date="ngModel" [(ngModel)]="mydata.DOB" required min="1960-01-01" max="2010-12-31">
+  <p>{{mydata.DOB}}</p>
+</form>
+<!--<select class="selectpicker">
+  <optgroup label="Picnic">
+    <option>Mustard</option>
+    <option>Ketchup</option>
+    <option>Relish</option>
+  </optgroup>
+  <optgroup label="Camping">
+    <option>Tent</option>
+    <option>Flashlight</option>
+    <option>Toilet Paper</option>
+  </optgroup>
+</select>
+
+<button (click)="handleJob()">Get Job</button>-->
+<p>
+  When using non-manual triggers, you can control the delay to open and close the tooltip through the <code>openDelay</code> and
+  <code>closeDelay</code> properties. Note that the <code>autoClose</code> feature does not use the close delay, it closes the tooltip immediately.
+</p>
+
+<p  class="btn btn-outline-secondary me-2"
+  ngbTooltip="You see, I show up after 300ms and disappear after 500ms!"
+  [openDelay]="300" [closeDelay]="500">
+  Hover 300ms here
+</p>
+<button type="button" class="btn btn-outline-secondary me-2"
+  ngbTooltip="You see, I show up after 1s and disappear after 2s!"
+  [openDelay]="1000" [closeDelay]="2000">
+  Hover 1s here
+</button>
+
+<hr>
+<form #DropTest="ngForm" (ngSubmit)="handledateSubmit(DropTest)">
+  <label for="typeahead-focus">Search for a state:</label>
+<input
+  id="typeahead-focus"
+  type="text"
+  class="form-control"
+  [(ngModel)]="mydata.jobtitle"
+  [ngbTypeahead]="search1"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)"
+  #instance="ngbTypeahead"
+  name="jobtitle"
+
+/>
+  <p>{{mydata.jobtitle}}</p>
+  <label for="cars"></label>
+  <div class="dropdown">
+
+  <select class="form-select" name="jobtitle" id="cars" name="jobtitle" #jobtitle="ngModel" [(ngModel)]="mydata.jobtitle"  (focus)="search()" >
+    <input type="text" class="form-control-lg" id="search" placeholder="Search" >
+    <option value="" disabled>Choose your job title from this list:</option>
+
+    <option *ngFor="let job of jobs"
+    [value]="job" >
+      {{job}}
+</option>
+
+
+  </select>
+</div>
+  <br><br>
+  <p>{{mydata.jobtitle}}</p>
+
+
+<hr>
+
+
+</form>
+
+
+
+<!--<mat-form-field appearance="fill">
+  <mat-label>Pokemon</mat-label>
+  <mat-select [formControl]="pokemonControl">
+    <mat-option>-- None --</mat-option>
+    <mat-optgroup *ngFor="let group of pokemonGroups" [label]="group.name"
+                  [disabled]="group.disabled">
+      <mat-option *ngFor="let pokemon of group.pokemon" [value]="pokemon.value">
+        {{pokemon.viewValue}}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label>Cars</mat-label>
+  <select matNativeControl>
+    <optgroup label="Swedish Cars">
+      <option value="volvo">volvo</option>
+      <option value="saab">Saab</option>
+    </optgroup>
+    <optgroup label="German Cars">
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </optgroup>
+  </select>
+</mat-form-field>-->
+<hr>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2  id="modal-basic-title"> <mat-icon svgIcon="edit"></mat-icon> Edit Profile Form</h2>
+    <button type="button" class="btn-close bg-danger" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #testModelForm="ngForm" (ngSubmit)="handleSubmit(testModelForm)">
+
+      <input type="text" class="form-control form-control-lg" #fname="ngModel" name="fname" placeholder="First Name" [(ngModel)]="mydata.fname"  minlength="3" maxlength="30" required>
+      <p>{{mydata.fname}}</p>
+      <input type="text" class="form-control form-control-lg" #lname="ngModel" name="lname" placeholder="Last Name" [(ngModel)]="mydata.lname" minlength="3" maxlength="30" required>
+      <p>{{mydata.lname}}</p>
+      <input type="date" class="form-control form-control-lg" #userdate="ngModel" name="userdate" placeholder="Date of Birth" [(ngModel)]="mydata.DOB" rmin="1960-01-01" max="2010-12-31" required>
+      <p>{{mydata.DOB}}</p>
+      <input type="email" class="form-control form-control-lg" #email="ngModel" name="email" placeholder="Email" [(ngModel)]="mydata.email"  required>
+      <p>{{mydata.email}}</p>
+      <input type="text" name="username" class="form-control form-control-lg" #username="ngModel" placeholder="Username" [(ngModel)]="mydata.username"
+      required   minlength="3" maxlength="20"/>
+      <p>{{mydata.username}}</p>
+      <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+        <h2 class="mb-0 me-4">Gender: </h2>
+        <div class="form-check form-check-inline mb-0 me-4">
+          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="femaleGender" value="female" [(ngModel)]="mydata.gender"  />
+          <label class="form-check-label" for="femaleGender">Female</label>
+        </div>
+
+        <div class="form-check form-check-inline mb-0 me-4">
+          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="maleGender"value="male" [(ngModel)]="mydata.gender" required  />
+          <label class="form-check-label" for="maleGender">Male</label>
+        </div>
+
+        <div class="form-check form-check-inline mb-0">
+          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="otherGender" value="other" [(ngModel)]="mydata.gender"  />
+          <label class="form-check-label" for="otherGender">Other</label>
+        </div>
+
+      </div>
+      <p>{{mydata.gender}}</p>
+      <div class="dropdown">
+        <select class="form-select form-control form-control-lg ms-1 fs-5"  id="jobtitle" name="jobtitle" #jobtitle="ngModel" [(ngModel)]="mydata.jobtitle"
+        required  minlength="2" maxlength="50" >
+          <option value="" disabled>Choose your job title from this list:</option>
+          <option *ngFor="let job of jobs" [value]="job" >{{job.charAt(0).toUpperCase() + job.slice(1)}}</option>
+        </select>
+      </div>
+      <p>{{mydata.jobtitle}}</p>
+      <input type="file" class="form-control form-control-lg" #file="ngModel" name="file" placeholder="Please upload image" [(ngModel)]="mydata.pImage"  required>
+      <p>{{mydata.pImage}}</p>
+      <div class="modal-footer">
+        <button type="button" class="btn light-blue-backdrop
+        " (click)="c('Save click')" [disabled]="!testModelForm.valid"> <mat-icon svgIcon="save"></mat-icon> Save Changes</button>
+      </div>
+    </form>
+  </div>
+
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+<hr>
+<div class="text-center">
+  <button href="" (click)="testmodel()"  class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
+    Modal Login Form</button>
+</div>
+
+<div class="text-center">
+  <a href="" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#modalLoginAvatar">Launch
+    Modal Login with Avatar</a>
+</div>
+
+<button mat-stroked-button (click)="openSnackBar()" aria-label="Show an example snack-bar">
+  Pool party!
+</button>
+
+<div class="d-flex justify-content-center">
+<form #test="ngForm" >
+  <div class="form-group card  p-5 w-100">
     <div class="d-flex justify-content-center">
-    <input type="text" class="form-control w-25 " name="fname" [(ngModel)]="mydata.fname" placeholder="first name" minlength="3" maxlength="20" #fname="ngModel"  >
+    <input class="in1" type="text" class="form-control m-3" name="fname" [(ngModel)]="mydata.fname" placeholder="first name" minlength="3" maxlength="20" #fname="ngModel"  >
     <p>{{mydata.fname}}</p>
   </div>
   <div class="bg-danger" *ngIf="fname.invalid">
     <small *ngIf="fname.errors?.['minlength']" class="text-light">First name is min length is 3</small>
   </div>
     <div class="d-flex justify-content-center">
-    <input type="text" class="form-control w-25" name="lname" [(ngModel)]="mydata.lname" placeholder="last name">
+    <input type="text" class="form-control m-3" name="lname" [(ngModel)]="mydata.lname" placeholder="last name">
     <p>{{mydata.lname}}</p>
   </div>
   <div class="d-flex justify-content-center">
-    <input type="text" class="form-control w-25" name="username" [(ngModel)]="mydata.username" placeholder="username"  >
+    <input type="text" class="form-control m-3" name="username" [(ngModel)]="mydata.username" placeholder="username"  >
     <p>{{mydata.username}}</p>
   </div>
   </div>
 
   <button type="button" (click)="resetall(test)" class="btn btn-primary">Reset</button>
 
-</form>-->
-<div id="skelaton-loading"> ali </div>
+</form>
+</div>
+
+
+  <!--<div class=" d-flex justify-content-center">
+    <img src="../../assets/uploads/developerAvatar.png" class="rounded-circle" width="150" height="150">
+    <section>
+      Upload image
+      <input type="file" name="avatar"  />
+    </section>
+    </div>
+    <h2>Slide in Overlay from the Bottom</h2>
+    <p>Hover over the image to see the effect.</p>
+
+    <div class="container">
+      <img src="../../assets/uploads/developerAvatar.png" alt="Avatar" class="image rounded-circle">
+      <div class="overlay rounded-circle">
+        <div class="text ">Upload Image</div>
+      </div>
+    </div>-->
+    <div class="profilepic">
+      <div class="d-flex justify-content-center">
+      <img class="profilepic__image" src="{{this._global.userInfo.data?.pImage}}" width="200" height="200" alt="Profibild" />
+    </div>
+      <div class="profilepic__content">
+        <span class="profilepic__text"><button class="bg-transparent border-0"><mat-icon svgIcon="uploadpic"></mat-icon> Upload Profile Picture </button></span>
+      </div>
+    </div>
+
+    <input type="text" readonly value="{{this._global.userInfo.data?.fname}}">
+
+    <div class="col-xl-6" >
+      <div class="card-body p-md-5 text-black">
+        <h1 class="text-center mb-5"><mat-icon svgIcon="register"></mat-icon> Users registration form</h1>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="form-outline">
+              <input type="text" class="form-control form-control-lg"   placeholder="First name" />
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="form-outline">
+              <input type="text"  class="form-control form-control-lg"  placeholder="Last name"/>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="form-outline">
+              <input type="number" name="age" class="form-control form-control-lg"  placeholder="Age"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" />
+        </div>
+        <div class="form-outline mb-4">
+          <input type="email" name="email"  class="form-control form-control-lg"  placeholder="Email" />
+        </div>
+        <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+          <h2 class="mb-0 me-4">Gender: </h2>
+          <div class="form-check form-check-inline mb-0 me-4">
+            <input class="form-check-input" type="radio" name="gender"  id="femaleGender" value="female"   />
+            <label class="form-check-label" for="femaleGender">Female</label>
+          </div>
+          <div class="form-check form-check-inline mb-0 me-4">
+            <input class="form-check-input" type="radio" name="gender" id="maleGender"/>
+            <label class="form-check-label" for="maleGender">Male</label>
+          </div>
+          <div class="form-check form-check-inline mb-0">
+            <input class="form-check-input" type="radio" name="gender"  id="otherGender"    />
+            <label class="form-check-label" for="otherGender">Other</label>
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <input type="text" name="phoneno" id="form3Example9" class="form-control form-control-lg" placeholder="Phone number" />
+        </div>
+        <div class="form-outline mb-2">
+          <input type="text" name="jobtitle" class="form-control form-control-lg"  placeholder="Job Title" />
+        </div>
+      </div>
+    </div>
+<!--<div class="example-container" cdkScrollable>
+  <button mat-raised-button #tooltip="matTooltip"
+          matTooltip="Info about the action"
+          [matTooltipPosition]="position.value!"
+          matTooltipHideDelay="500"
+          aria-label="Button that displays a tooltip that hides when scrolled out of the container"
+          class="example-button">
+    Action
+  </button>
+</div>
+<div mat-raised-button
+        matTooltip="Info about the action"
+        [matTooltipPosition]="position.value!"
+        matTooltipClass="tooltip"
+        aria-label="Button that shows a red tooltip"
+        class="example-button">
+  Red-tooltip Action
+</div>
+
+<h1 mat-raised-button
+        matTooltip="Info about the action"
+        [matTooltipPosition]="position.value!"
+        aria-label="Button that displays a tooltip when focused or hovered over">
+  Action
+</h1>
+
+<input type="text" >
+
+<section class="triangle">Username is unique</section>
 <!--<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="toast-header">
     <strong class="me-auto">Bootstrap</strong>
@@ -43,3 +355,4 @@
     Hello, world! This is a toast message.
   </div>
 </div>-->
+

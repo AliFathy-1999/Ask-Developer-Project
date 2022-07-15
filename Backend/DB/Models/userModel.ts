@@ -1,4 +1,5 @@
 import {Schema,model} from 'mongoose';
+import { isDate } from 'util/types';
 import validator from 'validator';
 const bycryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
@@ -18,12 +19,7 @@ const schema= new Schema<IUserModel>({
         minlength:3,
         maxlength:20
     },
-    age:{
-        type:Number,
-        required:true,
-        min:12,
-        max:80
-    },
+
     email:{
         type:String,
         required:true,
@@ -35,9 +31,13 @@ const schema= new Schema<IUserModel>({
         required:true,
         trim:true,
         minlength:6,
+        match:/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/,
+        //@Alifathy99
         validate(value:string){
             if(value.includes("password")){
                 throw new Error("Password cannot contain 'password'")
+            }else if(!value.match(/(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/)){
+                throw new Error("Password must contain at least one number , Capital letter and one special character")
             }
         }
     },
@@ -74,13 +74,23 @@ const schema= new Schema<IUserModel>({
     jobtitle:{
         type:String,
         required:true,
-        minlength:3,
-        maxlength:30,
+        minlength:2,
+        maxlength:50,
         default:"Developer"
     },
     role:{
         type:String,
         default:"user"
+    },
+    DOB:{
+        type:Date,
+        required:true,
+        validate(value:Date){
+            if(!isDate(value) || value > new Date() || value < new Date(1960,1,1) || value > new Date(2010,12,31)){
+                throw new Error("Date of birth is invalid")
+            }
+        },
+        
     },
     tokens : [
         {

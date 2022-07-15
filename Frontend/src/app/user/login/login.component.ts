@@ -18,22 +18,35 @@ export class LoginComponent implements OnInit {
   userToken:any;
   userError:Boolean=false;
   ErrorMessage:string="";
+  status:string="show";
+  passwordstatus:any="password"
   token = localStorage.getItem('token')
-  constructor(private _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     this._global.navbar = false;
-   /* if(this.token) {
-      this.router.navigateByUrl('/home')
-    }*/
+    this._global.footer=false;
+
     iconRegistry.addSvgIconLiteral('login', sanitizer.bypassSecurityTrustHtml(this._icons.LOGIN_ICON));
     iconRegistry.addSvgIconLiteral('submit', sanitizer.bypassSecurityTrustHtml(this._icons.SUBMIT_ICON));
     iconRegistry.addSvgIconLiteral('register', sanitizer.bypassSecurityTrustHtml(this._icons.REGISTRATION_ICON));
     iconRegistry.addSvgIconLiteral('error', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON));
     iconRegistry.addSvgIconLiteral('error2', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
     iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
+    iconRegistry.addSvgIconLiteral('show', sanitizer.bypassSecurityTrustHtml(this._icons.SHOW_ICON));
+    iconRegistry.addSvgIconLiteral('hide', sanitizer.bypassSecurityTrustHtml(this._icons.HIDE_ICON));
    }
 
   ngOnInit(): void {
 
+  }
+  showpassword(){
+    if(this.status=="show"){
+      this.status="hide";
+      this.passwordstatus="text";
+    }
+    else if( this.status=="hide"){
+      this.status="show";
+      this.passwordstatus="password";
+    }
   }
   handleSubmit(form:NgForm){
 
