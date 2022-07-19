@@ -8,6 +8,7 @@ export class GlobalService {
   public isLoggedIn = false;
   public isLoggedOut = false;
   public isRegistered = false;
+  isHomePage:Boolean=false;
   myfname:Boolean=false;
   public navbar:Boolean=true;
   public footer:Boolean=true;

@@ -23,7 +23,10 @@ import { UserInterceptor } from './interceptors/user.interceptor';
 import { UserprofileComponent } from './user/userprofile/userprofile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
+import { AddquestionComponent } from './question/addquestion/addquestion.component';
+//import { QuillModule } from 'ngx-quill'
+//import { QuillConfigModule } from 'ngx-quill/config';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     HomepageComponent,
     UserprofileComponent,
+    AllmyquestionsComponent,
+    AddquestionComponent,
 
   ],
   imports: [
@@ -56,7 +61,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       preventDuplicates: true,
     }),
     NgbModule,
-
+    //QuillModule.forRoot()
   ],
   providers: [
     {

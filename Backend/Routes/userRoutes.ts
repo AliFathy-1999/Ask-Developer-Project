@@ -1,6 +1,6 @@
 
 const userController= require("../Controllers/userController");
-const router = require('express').Router();
+var router = require('express').Router();
 const userAuth = require('../Middleware/userAuth');
 const imageAuth = require('../Middleware/imageAuth');
 
