@@ -10,6 +10,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(private _global:GlobalService) {
     this._global.navbar = true
+    this._global.isHomePage = true
 
    }
 

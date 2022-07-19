@@ -8,12 +8,13 @@ export class GlobalService {
   public isLoggedIn = false;
   public isLoggedOut = false;
   public isRegistered = false;
+  isHomePage:Boolean=false;
   myfname:Boolean=false;
   public navbar:Boolean=true;
   public footer:Boolean=true;
   public userInfo:any={}
 
-  url:string="http://localhost:1999/api/user/"
+  url:string="http://localhost:2000/api/user/"
   constructor(private http:HttpClient) {
 
   }

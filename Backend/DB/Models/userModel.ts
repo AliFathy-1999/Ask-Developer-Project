@@ -1,4 +1,4 @@
-import {Schema,model} from 'mongoose';
+import {Schema,model,VirtualType} from 'mongoose';
 import { isDate } from 'util/types';
 import validator from 'validator';
 const bycryptjs = require('bcryptjs');
@@ -103,6 +103,11 @@ const schema= new Schema<IUserModel>({
 },{
     timestamps:true  //createdAt, updatedAt
 });
+schema.virtual('MyQuestions',{
+    ref:"questions",
+    localField:"_id",
+    foreignField:"userId",
+ })
 schema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();

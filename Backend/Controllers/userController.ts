@@ -7,9 +7,6 @@ const path=require('path');
 const userModel= require("../DB/Models/userModel")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
 class User{
-    static func:ControllerInterface=async(req:Request,res:Response)=>{
-        res.json({message:"Hello World"});
-    }
     static userRegister:ControllerInterface= async(req:Request,res:Response) =>{
         try{
         const userData = new userModel(req.body)
