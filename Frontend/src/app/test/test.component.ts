@@ -1,6 +1,6 @@
 import { Component, OnInit ,ViewEncapsulation,ViewChild} from '@angular/core';
 import { GlobalService } from '../services/global.service';
-import {  NgForm,FormsModule, FormControl, Validators  } from '@angular/forms';
+import {  NgForm,FormsModule, UntypedFormControl, Validators  } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import {TooltipPosition} from '@angular/material/tooltip';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -1030,7 +1030,7 @@ export class TestComponent implements OnInit {
     );
   }
   closeResult = '';
-  pokemonControl = new FormControl('');
+  pokemonControl = new UntypedFormControl('');
 
 
   public jobs:any=[
@@ -2017,11 +2017,11 @@ export class TestComponent implements OnInit {
  public horizontalPosition: MatSnackBarHorizontalPosition = 'right';
  public verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = new UntypedFormControl('', [Validators.required, Validators.email]);
   feedback:string="";
   public postionToolTip:any="above";
   public positionOptions: TooltipPosition[] = ['above'];
-  public position = new FormControl(this.positionOptions[0]);
+  public position = new UntypedFormControl(this.positionOptions[0]);
   public testtoggle:boolean=false;
   public hide = true;
   public isModel=false
