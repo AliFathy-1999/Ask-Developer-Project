@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     this._global.navbar = false;
     this._global.footer=false;
-
+    this._global.isHomePage=false;
     iconRegistry.addSvgIconLiteral('login', sanitizer.bypassSecurityTrustHtml(this._icons.LOGIN_ICON));
     iconRegistry.addSvgIconLiteral('submit', sanitizer.bypassSecurityTrustHtml(this._icons.SUBMIT_ICON));
     iconRegistry.addSvgIconLiteral('register', sanitizer.bypassSecurityTrustHtml(this._icons.REGISTRATION_ICON));

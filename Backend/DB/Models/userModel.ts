@@ -1,6 +1,7 @@
 import {Schema,model,VirtualType} from 'mongoose';
 import { isDate } from 'util/types';
 import validator from 'validator';
+var mongoosePaginate = require('mongoose-paginate');
 const bycryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
 import { IUserModel } from '../../Interfaces/ModelsInterface';
@@ -108,6 +109,7 @@ schema.virtual('MyQuestions',{
     localField:"_id",
     foreignField:"userId",
  })
+ schema.plugin(mongoosePaginate);
 schema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject();

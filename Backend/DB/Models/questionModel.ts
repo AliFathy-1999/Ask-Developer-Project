@@ -1,6 +1,6 @@
 import {Schema,model} from 'mongoose';
 const mongoose = require('mongoose');
-
+var mongoosePaginate = require('mongoose-paginate');
 const schema = new Schema({
     userId:{
         type:Schema.Types.ObjectId,
@@ -15,26 +15,30 @@ const schema = new Schema({
         type:String,
         required:true,
     },
+    file:{
+        type:String,
+        default:"",
+    },
     title:{
         type:String,
         required:true,
         minlength:6,
-        maxlength:100,
+        maxlength:300,
     },
     body:{
         type:String,
         required:true,
         minlength:6,
-        maxlength:1000,
+        maxlength:3500,
     },
     votes:{
         type:Number,
         default:0,
     },
     tags: [
-        { 
-            type: String,
-            required: true
+        {
+                type:String,
+                required: true
         }
     ],
     answers:[
@@ -45,13 +49,11 @@ const schema = new Schema({
             }
         }
     ]
-
-    
-
-    
 },
 {
     timestamps:true
 });
+schema.plugin(mongoosePaginate);
+
 const questions = model("questions",schema)
 module.exports =questions;

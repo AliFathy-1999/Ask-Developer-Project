@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
   public isLoggedIn = false;
+  public addquestionBtn:Boolean=false;
   public isLoggedOut = false;
   public isRegistered = false;
   isHomePage:Boolean=false;
@@ -15,6 +16,7 @@ export class GlobalService {
   public userInfo:any={}
 
   url:string="http://localhost:2000/api/user/"
+  questionurl:string="http://localhost:2000/api/question/"
   constructor(private http:HttpClient) {
 
   }
@@ -42,5 +44,8 @@ export class GlobalService {
   }
   uploadpImage(obj:any){
     return this.http.post(`${this.url}uploadimage`,obj)
+  }
+  addQuestion(obj:any){
+    return this.http.post(`${this.questionurl}addquestion`,obj)
   }
 }

@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(public _global:GlobalService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private _icons: IconsService,@Inject(DOCUMENT) public document: Document) {
    let token = localStorage.getItem("token");
    if(token){
-
+    this._global.addquestionBtn = true;
     this._global.getMe().subscribe(data=>{
       this._global.isLoggedIn=true;
       this._global.userInfo=data

@@ -80,18 +80,6 @@
                     <span *ngIf="email.errors?.['required']" class="text-light"> Email is required</span>
                   </div>
                 </div>
-
-                <!--<div class="form-outline mb-4">
-                  <input type="password" name="password" class="form-control form-control-lg" #password="ngModel" placeholder="Password" [(ngModel)]="userData.password" pattern="/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/"
-                  required  minlength="6" maxlength="20" mat-raised-button matTooltip="Your Password doesn't the include 'password' word and Password must contain at least one number , Capital letter and one special character" [matTooltipPosition]="postionToolTip" matTooltipClass="tooltip"/>
-                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && password.invalid">
-                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
-                    <span *ngIf="password.errors?.['required']" class="text-light"> password is required</span>
-                    <span *ngIf="password.errors?.['pattern']" class="text-light"> Password must contain at least one number , Capital letter and one special character</span>
-                    <span *ngIf="password.errors?.['minlength']" class="text-light"> Min length of password is 6</span>
-                    <span *ngIf="password.errors?.['maxlength']" class="text-light"> Max length of password is 20</span>
-                  </div>
-                </div>-->
                 <div class="form-outline mb-4">
                   <div class="form-control">
                    <div class="row ">

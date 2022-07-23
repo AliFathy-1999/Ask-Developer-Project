@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit {
       let token2:any = localStorage.getItem('token');
       localStorage.clear();
       this.router.navigate(['/home']);
+      this._global.addquestionBtn = false;
       this._global.isLoggedIn=false;
       this._global.isLoggedOut=true;
       setTimeout(()=>{

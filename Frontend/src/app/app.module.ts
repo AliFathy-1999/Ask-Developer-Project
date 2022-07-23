@@ -25,7 +25,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
-
+import { QuillModule } from 'ngx-quill'
+import { QuillConfigModule } from 'ngx-quill/config';
+import { Test2Component } from './test2/test2.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { TagInputModule } from 'ngx-chips';
+import {MatChipsModule} from '@angular/material/chips';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +45,7 @@ import { AddquestionComponent } from './question/addquestion/addquestion.compone
     UserprofileComponent,
     AllmyquestionsComponent,
     AddquestionComponent,
+    Test2Component,
 
   ],
   imports: [
@@ -59,7 +67,73 @@ import { AddquestionComponent } from './question/addquestion/addquestion.compone
       preventDuplicates: true,
     }),
     NgbModule,
-    //QuillModule.forRoot()
+    QuillModule,
+    QuillConfigModule.forRoot({
+      modules: {
+        syntax: true,
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],
+
+          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+          [{ 'direction': 'rtl' }],                         // text direction
+
+          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+
+          ['clean'],                                         // remove formatting button
+
+          ['link', 'image', 'video']                         // link and image, video
+        ]
+      }
+    }),
+    NgxEditorModule,
+    NgxEditorModule.forRoot({
+      locals: {
+        // menu
+        bold: 'Bold',
+        italic: 'Italic',
+        code: 'Code',
+        blockquote: 'Blockquote',
+        underline: 'Underline',
+        strike: 'Strike',
+        bullet_list: 'Bullet List',
+        ordered_list: 'Ordered List',
+        heading: 'Heading',
+        h1: 'Header 1',
+        h2: 'Header 2',
+        h3: 'Header 3',
+        h4: 'Header 4',
+        h5: 'Header 5',
+        h6: 'Header 6',
+        align_left: 'Left Align',
+        align_center: 'Center Align',
+        align_right: 'Right Align',
+        align_justify: 'Justify',
+        text_color: 'Text Color',
+        background_color: 'Background Color',
+
+        // popups, forms, others...
+        url: 'URL',
+        text: 'Text',
+        openInNewTab: 'Open in new tab',
+        insert: 'Insert',
+        altText: 'Alt Text',
+        title: 'Title',
+        remove: 'Remove',
+      },
+    }),
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' }),
+    TagInputModule,
+    MatChipsModule,
+    NgSelectModule
   ],
   providers: [
     {
