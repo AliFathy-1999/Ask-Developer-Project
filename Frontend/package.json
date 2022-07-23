@@ -24,12 +24,18 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@ng-select/ng-select": "^9.0.2",
     "@popperjs/core": "^2.11.5",
+<<<<<<< HEAD
     "@types/quill": "^1.3.10",
     "bootstrap": "^5.2.0-beta1",
     "ngx-chips": "^3.0.0",
     "ngx-editor": "^14.0.0",
     "ngx-quill": "^18.0.0",
     "ngx-skeleton-loader": "^5.0.0",
+=======
+    "@types/quill": "^2.0.9",
+    "bootstrap": "^5.2.0-beta1",
+    "ngx-quill": "^17.0.0",
+>>>>>>> origin
     "ngx-toastr": "^14.3.0",
     "quill": "^1.3.7",
     "rxjs": "~7.5.0",

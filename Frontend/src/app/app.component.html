@@ -12,13 +12,19 @@
 <div class="container">
   <router-outlet></router-outlet>
 </div>
+<<<<<<< HEAD
 
 <div class="m-5 position-fixed bottom-0 end-0" *ngIf="isScrolled && _global.isHomePage && _global.addquestionBtn">
   <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:125px;" aria-label="add" routerLink='/addquestion' >
+=======
+<div class="m-5 position-fixed bottom-0 end-0" *ngIf="isScrolled && _global.isHomePage">
+  <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:125px;" aria-label="add">
+>>>>>>> origin
     <mat-icon svgIcon="add" style="color:#283149"></mat-icon>
   </button>
 </div>
 <div class="m-5 position-fixed bottom-0 end-0" *ngIf="isScrolled && _global.navbar">
+
   <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:50px;" id="btnbacktotop" #btnbacktotop (click)="getToTop()" >
     <mat-icon svgIcon="arrowup" style="color:#283149"></mat-icon>
   </button>

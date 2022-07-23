@@ -1,4 +1,5 @@
 import {Request,Response } from "express";
+<<<<<<< HEAD
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
@@ -6,21 +7,41 @@ import {ControllerInterface } from '../Interfaces/ControllerInterface';
 class Question{
     static test:ControllerInterface=async(req:any,res:Response)=>{
         res.json({'message':'test'})
+=======
+import { Schema } from "mongoose";
+import * as mongoose from "mongoose";
+const userModel= require("../DB/Models/userModel")
+const questionModel= require("../DB/Models/questionModel")
+import {ControllerInterface } from '../Interfaces/ControllerInterface';
+class Question{
+    static test:ControllerInterface=async(req:Request,res:Response)=>{
+        res.json({message:"Hello World"});
+>>>>>>> origin
     }
     static addQuestion = async(req:any,res:Response)=>{
         try{
             const userQuestion = new questionModel({
                 ...req.body,
+<<<<<<< HEAD
                 userId:req.user._id,    
+=======
+                userId:req.user._id,
+>>>>>>> origin
                 author:req.user.username,
                 authorpImage:req.user.pImage,
             });
             await userQuestion.save()
             res.status(200).send({
                 apiStatus:true,
+<<<<<<< HEAD
                 message:"Question Added Successfully"
             })
 
+=======
+                data:userQuestion,
+                message:"Question Added Successfully"
+            })
+>>>>>>> origin
         }catch(e:any){
             res.status(500).send({
                 apiStatus:false,
@@ -63,6 +84,7 @@ class Question{
             })
         }
     }
+<<<<<<< HEAD
 
     static myQuestions = async(req:any,res:Response)=>{
         var query   = {};
@@ -133,5 +155,10 @@ class Question{
 
         
     }
+=======
+   /* static myQuestions = async(req:any,res:Response)=>{
+
+    }*/
+>>>>>>> origin
 }
 module.exports =Question;
