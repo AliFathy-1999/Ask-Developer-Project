@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
@@ -8,16 +7,11 @@ import {  Validators  } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Editor, Toolbar} from 'ngx-editor';
 import { Router } from '@angular/router';
-=======
-import { Component, OnInit } from '@angular/core';
-
->>>>>>> origin
 @Component({
   selector: 'app-addquestion',
   templateUrl: './addquestion.component.html',
   styleUrls: ['./addquestion.component.css']
 })
-<<<<<<< HEAD
 export class AddquestionComponent implements OnInit, OnDestroy  {
   editor:Editor=new Editor();
   html= '';
@@ -110,13 +104,5 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
     })
   }
 }
-=======
-export class AddquestionComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
->>>>>>> origin
 
 }
