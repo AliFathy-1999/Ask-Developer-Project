@@ -16,10 +16,7 @@ const routes: Routes = [
   { path: 'login', component:LoginComponent },
   {path:'myprofile',component:UserprofileComponent},
   { path:"test", component: TestComponent },
-<<<<<<< HEAD
   { path:"test2", component: Test2Component },
-=======
->>>>>>> origin
   { path: 'addquestion', component: AddquestionComponent },
 ];
 
