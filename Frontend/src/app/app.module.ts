@@ -25,7 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
-<<<<<<< HEAD
+
 import { QuillModule } from 'ngx-quill'
 import { QuillConfigModule } from 'ngx-quill/config';
 import { Test2Component } from './test2/test2.component';
@@ -34,11 +34,10 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TagInputModule } from 'ngx-chips';
 import {MatChipsModule} from '@angular/material/chips';
 import { NgSelectModule } from '@ng-select/ng-select';
-=======
+
 //import { QuillModule } from 'ngx-quill'
 //import { QuillConfigModule } from 'ngx-quill/config';
 
->>>>>>> origin
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,10 +50,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     UserprofileComponent,
     AllmyquestionsComponent,
     AddquestionComponent,
-<<<<<<< HEAD
     Test2Component,
-=======
->>>>>>> origin
+
 
   ],
   imports: [
@@ -76,7 +73,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
       preventDuplicates: true,
     }),
     NgbModule,
-<<<<<<< HEAD
+
     QuillModule,
     QuillConfigModule.forRoot({
       modules: {
@@ -144,9 +141,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     TagInputModule,
     MatChipsModule,
     NgSelectModule
-=======
+
     //QuillModule.forRoot()
->>>>>>> origin
+
   ],
   providers: [
     {
