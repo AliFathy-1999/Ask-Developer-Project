@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import {  Validators  } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Editor, Toolbar} from 'ngx-editor';
+import { Editor, Toolbar, toHTML, toDoc} from 'ngx-editor';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-addquestion',
@@ -40,7 +40,7 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
 
   questionDataForm:any = new FormGroup({
     title: new FormControl('', [Validators.required,Validators.minLength(6),Validators.maxLength(300)]),
-    body: new FormControl('',[Validators.required,Validators.minLength(6),Validators.maxLength(1200)]),
+    body: new FormControl('',[Validators.required,Validators.minLength(6)]),
     tags: new FormControl('', [Validators.required]),
   });
   file:any
@@ -63,9 +63,6 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
     this.editor.destroy();
   }
 
-  handlefile(e:any){
-    this.file =e.target.files[0];
-  }
 
   get QuestionData(){
     return this.questionDataForm.controls;
@@ -74,6 +71,8 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
     this.isSubmitted =true
     if(this.questionDataForm.valid){
     this._global.addQuestion(this.questionDataForm.value).subscribe((data:any)=>{
+
+
       //this.router.navigate(['/question/'+data.id]);
       if(data.error){
         this.userError = true;
@@ -96,8 +95,6 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
       }else if(err.error.message.includes('body')){
         if(err.error.message.includes('validation failed') && err.error.message.includes('minlength')){
           this.ErrorMessage="Body should be atleast 6 characters long"
-        }else if(err.error.message.includes('validation failed') && err.error.message.includes('maxlength')){
-          this.ErrorMessage="Body should be atmost 1200 characters long"
         }
       }
 

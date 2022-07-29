@@ -5,14 +5,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
-import { FooterComponent } from './layouts/footer/footer.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestComponent } from './test/test.component';
 import { RegisterComponent } from './user/register/register.component';
@@ -22,21 +22,24 @@ import { ToastrModule } from 'ngx-toastr';
 import { UserInterceptor } from './interceptors/user.interceptor';
 import { UserprofileComponent } from './user/userprofile/userprofile.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
-
-import { QuillModule } from 'ngx-quill'
-import { QuillConfigModule } from 'ngx-quill/config';
+import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { Test2Component } from './test2/test2.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { TagInputModule } from 'ngx-chips';
 import {MatChipsModule} from '@angular/material/chips';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { FooterComponent } from './layouts/footer/footer.component';
+import { ProvidersComponent } from './providers/providers.component';
+import { SinglequestionComponent } from './question/singlequestion/singlequestion.component';
+import { EditquestionComponent } from './question/editquestion/editquestion.component';
 
-//import { QuillModule } from 'ngx-quill'
-//import { QuillConfigModule } from 'ngx-quill/config';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     AllmyquestionsComponent,
     AddquestionComponent,
     Test2Component,
+    ErrorpageComponent,
+    ProvidersComponent,
+    SinglequestionComponent,
+    EditquestionComponent,
 
 
   ],
@@ -73,34 +80,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
       preventDuplicates: true,
     }),
     NgbModule,
-
-    QuillModule,
-    QuillConfigModule.forRoot({
-      modules: {
-        syntax: true,
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-          ['blockquote', 'code-block'],
-
-          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-          [{ 'direction': 'rtl' }],                         // text direction
-
-          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-          [{ 'font': [] }],
-          [{ 'align': [] }],
-
-          ['clean'],                                         // remove formatting button
-
-          ['link', 'image', 'video']                         // link and image, video
-        ]
-      }
-    }),
     NgxEditorModule,
     NgxEditorModule.forRoot({
       locals: {
@@ -140,9 +119,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' }),
     TagInputModule,
     MatChipsModule,
-    NgSelectModule
-
-    //QuillModule.forRoot()
+    NgSelectModule,
+    MatCardModule,
+    MatMenuModule,
+    LazyLoadImageModule,
+    NgxPaginationModule,
+    MatDialogModule,
 
   ],
   providers: [

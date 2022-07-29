@@ -1,3 +1,20 @@
+<div class="modal fade" *ngIf="routerLinkStatus" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-dismiss="modal" aria-expanded="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login First</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3><strong>Login first</strong> to ask a question, have a nice time :)</h3>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+        <button type="button" class="btn btn-primary" routerLink="/login" routerLinkActive="router-link-active" >Go to Login page</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div *ngIf="_global.navbar">
 <app-navbar></app-navbar>
 
@@ -12,14 +29,12 @@
 <div class="container">
   <router-outlet></router-outlet>
 </div>
-
+<app-footer *ngIf="_global.footer"></app-footer>
 
 <div class="m-5 position-fixed bottom-0 end-0" *ngIf="isScrolled && _global.isHomePage && _global.addquestionBtn">
-  <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:125px;" aria-label="add" routerLink='/addquestion' >
-
 <div class="m-5 position-fixed bottom-0 end-0" *ngIf="isScrolled && _global.isHomePage">
-  <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:125px;" aria-label="add">
-
+  <button type="button" mat-fab  style="background-color: #DFEFF4; margin-bottom:125px;"
+  (click)="openModal()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" routerLink="{{routerlink}}">
     <mat-icon svgIcon="add" style="color:#283149"></mat-icon>
   </button>
 </div>
@@ -30,4 +45,5 @@
   </button>
 </div>
 
-<app-footer *ngIf="_global.footer"></app-footer>
+
+

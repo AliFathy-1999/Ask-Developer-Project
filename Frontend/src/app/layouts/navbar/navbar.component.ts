@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   data:any
   //myfname:any
   myfname:Boolean=false;
+  isLoaded:boolean = false
   token:any = localStorage.getItem('token')
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService,private router:Router) {
     iconRegistry.addSvgIconLiteral('home', sanitizer.bypassSecurityTrustHtml(this._icons.HOME_ICON));
@@ -26,12 +27,22 @@ export class NavbarComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
     if(this.token){
       this._global.isLoggedIn=true;
+       this._global.addquestionBtn = true;
+       this._global.getMe().subscribe(data=>{
+         this._global.isLoggedIn=true;
+         this._global.userInfo=data
+         localStorage.setItem("userInfo",JSON.stringify(data));
+       },(err)=>{
+        location.reload()
+       },()=>{
+        if(this.token){
+          this.isLoaded = true
+        }
+       })
+      }
 
-      //this.myfname=true;
-    }
   }
   logout(){
     this._global.userLogout().subscribe(data=>{

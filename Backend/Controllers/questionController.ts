@@ -1,4 +1,5 @@
 import {Request,Response } from "express";
+import mongoose from "mongoose";
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
@@ -11,7 +12,7 @@ class Question{
         try{
             const userQuestion = new questionModel({
                 ...req.body,
-                userId:req.user._id,    
+                userId:req.user._id,
                 author:req.user.username,
                 authorpImage:req.user.pImage,
             });
@@ -67,10 +68,10 @@ class Question{
     static myQuestions = async(req:any,res:Response)=>{
         var query   = {};
         var options = {
-            sort:     { title: -1 },
+            sort:      {createdAt:1} ,
             populate: 'MyQuestions',
             lean:     true,
-            page:   req.params.pageNum, 
+            page:   req.params.pageNum,
             limit:    +req.params.limit
         };
         questionModel.paginate(query,options,async function(err:any, result:any) {
@@ -106,23 +107,40 @@ class Question{
             Message:e.message
         })
     }
-
-
     }
     static showAllQuestions = async(req:any,res:Response)=>{
-        try{
-            const pageCount = +req.params.limit
-            const pageNum = +req.params.pageNum  // start 0
-            const questionData = 
-                await questionModel.find()
-                .sort({title:-1})
-                .limit(pageCount)
-                .skip(pageCount*pageNum)
+        var query   = {};
+        var options = {
+            page:+req.params.pageNum,
+            limit:+req.params.limit
+        };
+        questionModel.paginate(query,options,async function(err:any, result:any) {
+            try{
+              const questionData =  await questionModel.find()
+              .sort({createdAt:-1});
                 res.status(200).send({
                     apiStatus:true,
                     data:questionData,
                     message:"All Questions"
                 })
+            }catch(e:any){
+                res.status(500).send({
+                    apiStatus:false,
+                    data:e,
+                    message:e.message
+                })
+            }
+        });
+    }
+    static viewQuestion = async(req:any,res:Response)=>{
+        try{
+             const questionData =await questionModel.findByIdAndUpdate({_id:req.params.id},{$inc:{views:1}});
+             await questionData.save()
+            res.status(200).send({
+                apiStatus:true,
+                data:questionData,
+                message:"Question Viewed Successfully"
+            })
         }catch(e:any){
             res.status(500).send({
                 apiStatus:false,
@@ -130,8 +148,30 @@ class Question{
                 message:e.message
             })
         }
-
-        
+    }
+    static VotingQuestion = async(req:any,res:Response)=>{
+        try{
+            let voteNumber;
+            if(req.body.vote == 'up'){
+                voteNumber = 1
+            }else if(req.body.vote == 'down'){
+                voteNumber = -1
+            }
+            const questionData =await questionModel.findByIdAndUpdate({_id:req.params.id},{$inc:{votes:voteNumber}});
+            await questionData.save()
+            res.status(200).send({
+                apiStatus:true,
+                voteNumber:voteNumber,
+                data:questionData,
+                message:"Question Voted Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
     }
 }
 module.exports =Question;

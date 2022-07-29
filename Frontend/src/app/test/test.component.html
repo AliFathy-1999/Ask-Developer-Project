@@ -1,4 +1,91 @@
 
+<div class="d-flex">
+  <div class="container text-center">
+    <div class="row d-grid g-2 g-lg-3 ">
+      <div class="col">
+        <div class="p-3 col-2"><button class="border-0 bg-transparent"> <mat-icon svgIcon="arrowup"></mat-icon> </button></div>
+      </div>
+      <div class="col">
+        <div class="p-1 ms-4 col-2 border bg-light">
+          <p>0</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="p-3 col-2">
+          <button class="border-0 bg-transparent"><mat-icon svgIcon="arrowdown"></mat-icon></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<mat-card  class="example-card overflow-auto m-auto mb-5 mt-3">
+  <mat-card-header class="container">
+      <img mat-card-avatar src="../../assets/profilepicture/ali99-icons8-man-avatar-64-profilepicture-1657806690425.png" alt="">
+      <mat-card-title class="fw-bold">ali ahmed</mat-card-title>
+      <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> 0000000</mat-card-subtitle>
+      <mat-card-title>
+        <div class="">
+          <mat-icon svgIcon="answers" class="text-success"></mat-icon>   <span class="me-2 ms-1 text-success">0</span>
+          <mat-icon svgIcon="votes" class="text-primary"></mat-icon>   <span class="me-2 ms-1 text-primary">0</span>
+          <mat-icon svgIcon="views" class="text-info"></mat-icon>  <span class="me-2 ms-1 text-info">0</span>
+        </div>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h1 class="ms-5 qtitle" >
+      title
+  </h1>
+  </mat-card-content>
+  <mat-card-content style="background-color: #F6F6F6;padding: 2%;" >
+<p>Lorem ipsum dolor sit amet placerat habitasse vel. Enim posuere himenaeos vestibulum suspendisse lectus vivamus nam fames mauris class taciti. Eros vitae natoque accumsan pretium suscipit ultricies urna cursus quam.</p>
+  </mat-card-content>
+  <div class="d-flex">
+  <div class="badge" style="background-color:#283149;color: #C5E0EA; font-size: 100%;">  <mat-icon svgIcon="tags"></mat-icon> Tags :</div>
+  <ul class="list-unstyled list-group list-group-horizontal" >
+    <li  class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >ali</li>
+  </ul>
+</div>
+  <mat-card-actions>
+    <button mat-button>Show Question </button>
+  </mat-card-actions>
+</mat-card>
+</div>
+
+
+
+
+
+
+
+
+<!--<div class="item d-flex"  >
+  <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+  <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
+</div>-->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Login First</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <h3><strong>Login first</strong> to ask a question, have a nice time :)</h3>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" routerLink="/login"
+    routerLinkActive="router-link-active" (click)="modal.dismiss('Cross click')">Go to Login page</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+
+<hr>
+
+<pre>{{ closeResult }}</pre>
 <!--<div class="form-control">
   <div class="row ">
     <div class="col-10">

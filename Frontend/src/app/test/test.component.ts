@@ -11,6 +11,7 @@ import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-boo
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject, merge, OperatorFunction} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+
 const jobss = [      "accountant",
 "actor",
 "actuary",
@@ -1012,6 +1013,7 @@ const jobss = [      "accountant",
   `]
 })
 export class TestComponent implements OnInit {
+
   model: any;
   showpass:Boolean=true;
   hidepass:Boolean=false;
@@ -2052,9 +2054,15 @@ export class TestComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('save', sanitizer.bypassSecurityTrustHtml(this._icons.SAVE_ICON));
     iconRegistry.addSvgIconLiteral('show', sanitizer.bypassSecurityTrustHtml(this._icons.SHOW_ICON));
     iconRegistry.addSvgIconLiteral('hide', sanitizer.bypassSecurityTrustHtml(this._icons.HIDE_ICON));
-    config.backdrop = 'static';
-    config.keyboard = false;
-
+    iconRegistry.addSvgIconLiteral('arrowup', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_UP2_ICON));
+    iconRegistry.addSvgIconLiteral('arrowdown', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_DOWN_ICON));
+  }
+  open(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -2065,9 +2073,12 @@ export class TestComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-  open(content:any) {
-    this.modalService.open(content, { size: 'xl',backdropClass: 'light-blue-backdrop' , windowClass: 'modelColor'} );
+  refresh(){
+    location.reload()
   }
+  /*open(content:any) {
+    this.modalService.open(content, { size: 'xl',backdropClass: 'light-blue-backdrop' , windowClass: 'modelColor'} );
+  }*/
   handledateSubmit(form:NgForm){
     console.log(form.value)
   }

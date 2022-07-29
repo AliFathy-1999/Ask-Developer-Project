@@ -1,5 +1,77 @@
-<div class="d-flex justify-content-end mt-3" *ngIf="_global.addquestionBtn">
-  <button class="btn p-3 fs-5" style="background-color:#283149;color:#B9D7E5;" type="button" routerLink="/addquestion">
+
+<div class="modal fade" *ngIf="routerLinkStatus" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-dismiss="modal" aria-expanded="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login First</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3><strong>Login first</strong> to ask a question, have a nice time :)</h3>
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+        <button type="button" class="btn btn-primary" routerLink="/login" routerLinkActive="router-link-active" >Go to Login page</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+</div>
+<div class="d-flex justify-content-end mt-3 mb-5" *ngIf="_global.addquestionBtn">
+  <button class="btn p-3" style="background-color:#283149;color:#B9D7E5;" (click)="openModal()" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" routerLink="{{routerlink}}">
     <mat-icon style="color:#B9D7E5;" svgIcon="addquestion"></mat-icon> Add Question
    </button>
 </div>
+
+<div class="item" *ngIf="!isLoaded ; else questionData" >
+  <div *ngFor="let item of loadingAnimation">
+  <mat-card  class="m-auto mb-5">
+  <div class="d-flex ms-5" >
+  <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
+  <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+</div>
+<div class="d-flex justify-content-center">
+  <ngx-skeleton-loader count="4" appearance="line" class="d-grid  col-8"></ngx-skeleton-loader>
+</div>
+</mat-card>
+</div>
+</div>
+
+<ng-template #questionData>
+<mat-card  class="example-card overflow-auto m-auto mb-5 mt-3" *ngFor="let question of AllQuestions | paginate: { itemsPerPage: 10, currentPage: p, totalItems: AllQuestions.count}">
+  <mat-card-header class="container">
+      <img mat-card-avatar src="{{question.authorpImage}}" alt="">
+      <mat-card-title class="fw-bold">{{question.author}}</mat-card-title>
+      <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
+      <mat-card-title>
+        <div class="">
+          <mat-icon svgIcon="answers" class="text-success"></mat-icon>   <span class="me-2 ms-1 text-success">{{answersCount}}</span>
+          <mat-icon svgIcon="votes" class="text-primary"></mat-icon>   <span class="me-2 ms-1 text-primary">{{question.votes}}</span>
+          <mat-icon svgIcon="views" class="text-info"></mat-icon>  <span class="me-2 ms-1 text-info">{{question.views}}</span>
+        </div>
+      </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <h1 class="ms-5 qtitle" [routerLink]="['singlequestion', question._id]" routerLinkActive="router-link-active" (click)="incrementview(question._id)" >
+      {{question.title}}
+  </h1>
+  </mat-card-content>
+  <!--<mat-card-content style="background-color: #F6F6F6;padding: 2%;" innerHTML="{{question.body}}">
+
+  </mat-card-content>-->
+  <div class="d-flex">
+  <div class="badge" style="background-color:#283149;color: #C5E0EA; font-size: 100%;">  <mat-icon svgIcon="tags"></mat-icon> Tags :</div>
+  <ul class="list-unstyled list-group list-group-horizontal" >
+    <li *ngFor="let tag of question.tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
+  </ul>
+</div>
+  <mat-card-actions>
+    <button mat-button [routerLink]="['singlequestion', question._id]">Show Question </button>
+  </mat-card-actions>
+</mat-card>
+<div class="d-flex justify-content-center mb-5" >
+  <pagination-controls [autoHide]="true" [responsive]="true" [previousLabel]="previousLabel" class="rounded-1 p-1 active my-pagination" style="background-color: #2F3B56;color:#B9D7E5;" (pageChange)="paginate($event)"></pagination-controls>
+</div>
+</ng-template>
+

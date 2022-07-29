@@ -13,17 +13,11 @@ import { GlobalService } from './services/global.service';
 export class AppComponent {
   title = 'Ask Developer Website';
   isScrolled: boolean = false;
-
+  token = localStorage.getItem('token')
+  routerLinkStatus:Boolean=false;
+  routerlink:String="";
   constructor(public _global:GlobalService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private _icons: IconsService,@Inject(DOCUMENT) public document: Document) {
-   let token = localStorage.getItem("token");
-   if(token){
-    this._global.addquestionBtn = true;
-    this._global.getMe().subscribe(data=>{
-      this._global.isLoggedIn=true;
-      this._global.userInfo=data
-      localStorage.setItem("userInfo",JSON.stringify(data));
-    })
-   }
+
     iconRegistry.addSvgIconLiteral('arrowup', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_UP_ICON));
     iconRegistry.addSvgIconLiteral('logout', sanitizer.bypassSecurityTrustHtml(this._icons.LOGOUT_ICON));
     iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
@@ -36,6 +30,15 @@ export class AppComponent {
       }
     })
   }
+  openModal(){
+    if(this.token){
+      this.routerLinkStatus=false;
+      this.routerlink="/addquestion"
+    }else if(!this.token){
+      this.routerLinkStatus=true;
+      this.routerlink=""
+    }
+   }
   getToTop(){
     window.scrollTo(0,0);
   }

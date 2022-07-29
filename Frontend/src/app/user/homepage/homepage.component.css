@@ -1,0 +1,12 @@
+.example-card {
+  margin-top:2vw;
+  width: 80%;
+  height: 50%;
+}
+
+.qtitle{
+  cursor: pointer;
+}
+.qtitle:hover{
+  color:#0d6efd;
+}

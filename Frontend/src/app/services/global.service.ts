@@ -6,15 +6,13 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
   public isLoggedIn = false;
-  public addquestionBtn:Boolean=false;
+  public addquestionBtn:Boolean=true;
   public isLoggedOut = false;
   public isRegistered = false;
-  isHomePage:Boolean=false;
-  myfname:Boolean=false;
+  public isHomePage:Boolean=false;
   public navbar:Boolean=true;
   public footer:Boolean=true;
   public userInfo:any={}
-
   url:string="http://localhost:2000/api/user/"
   questionurl:string="http://localhost:2000/api/question/"
   constructor(private http:HttpClient) {
@@ -47,5 +45,23 @@ export class GlobalService {
   }
   addQuestion(obj:any){
     return this.http.post(`${this.questionurl}addquestion`,obj)
+  }
+  showAllQuestions(pageNum:number,limit:number){
+    return this.http.get(`${this.questionurl}allquestions/${pageNum}/${limit}`)
+  }
+  showmyquestions(pageNum:number,limit:number){
+    return this.http.get(`${this.questionurl}allmyquestions/${pageNum}/${limit}`)
+  }
+  EditQuestion(obj:any,id:any){
+    return this.http.put(`${this.questionurl}editquestion/${id}`,obj)
+  }
+  DeleteQuestion(id:any){
+    return this.http.delete(`${this.questionurl}/delquestion/${id}`)
+  }
+  SingleQuestion(id:any){
+    return this.http.get(`${this.questionurl}singlequestion/${id}`)
+  }
+  viewQuestion(id:any){
+    return this.http.put(`${this.questionurl}updateview/${id}`,null)
   }
 }

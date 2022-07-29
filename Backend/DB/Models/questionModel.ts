@@ -31,7 +31,6 @@ const schema = new Schema({
         type:String,
         required:true,
         minlength:6,
-        maxlength:3500,
     },
     votes:{
         type:Number,
@@ -43,6 +42,10 @@ const schema = new Schema({
                 required: true
         }
     ],
+    views:{
+        type:Number,
+        default:0,
+    },
     answers:[
         {
             answer:{

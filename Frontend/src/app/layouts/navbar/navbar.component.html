@@ -17,6 +17,12 @@
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <input type="search" class="form-control"  placeholder="Search..." aria-label="Search">
       </form>
+      <div class="item d-flex" *ngIf="!isLoaded ; else userData" >
+        <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+        <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
+      </div>
+
+      <ng-template #userData>
       <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" *ngIf="this._global.isLoggedIn && !myfname">
         <li class="text-primary fs-5"   >Welcome {{this._global.userInfo.data?.fname || "username" }} </li>
         <li *ngIf="myfname">ali</li>
@@ -26,13 +32,13 @@
           <img src="{{this._global.userInfo.data?.pImage}}" alt="profile_picture" width="32" height="32" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item " routerLink="myquestion"><mat-icon svgIcon="myquestions"></mat-icon> My Questions</a></li>
+          <li><a class="dropdown-item " routerLink="myquestions"><mat-icon svgIcon="myquestions"></mat-icon> My Questions</a></li>
           <li><a class="dropdown-item " routerLink="myprofile"><mat-icon svgIcon="profile"></mat-icon> Profile</a></li>
           <li><hr class="dropdown-divider"></li>
           <li class="dropdown-item"><mat-icon svgIcon="logout"></mat-icon> <button class="bg-transparent border-0" (click)="logout()"> Log out</button></li>
         </ul>
       </div>
-
+    </ng-template>
       <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3" *ngIf="!this._global.isLoggedIn">
         <li class="btn " routerLink="/login"><mat-icon svgIcon="login"></mat-icon> Login</li>
       </ul>

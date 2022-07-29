@@ -19,7 +19,7 @@
 
       <div *ngIf="QuestionData?.['title']?.errors?.['required']"> Title is required .</div>
       <div *ngIf="QuestionData?.['title']?.errors?.['minlength']">Min Length of Title is 6 .</div>
-      <div *ngIf="QuestionData?.['title']?.errors?.['maxlength']">Max Length of Title is 20 .</div>
+      <div *ngIf="QuestionData?.['title']?.errors?.['maxlength']">Max Length of Title is 300 .</div>
     </div>
     <h2 class="fw-bold mb-0">Body:</h2>
      <h3 class="blockquote-footer text-danger fw-bold">Include all the information someone would need to answer your question (Min Length of Body is 6 and Max Length of Body is  1200 Type here...)</h3>
@@ -30,15 +30,14 @@
         [editor]="editor"
         [placeholder]="'Min Length of Body is 6 and Max Length of Body is  3500 Type here...'"
         formControlName="body"
-         name="body"
+        [(ngModel)]="html"
+        name="body"
          minlength="6"
-          maxlength="1200"
       ></ngx-editor>
     </div>
     <div class="text-danger fw-bold  ms-2" *ngIf="isSubmitted && QuestionData?.['body']?.invalid || (QuestionData?.['body']?.touched || QuestionData?.['body']?.dirty)">
       <div *ngIf="QuestionData?.['body']?.errors?.['required']">Body is required .</div>
       <div *ngIf="QuestionData?.['body']?.errors?.['minlength']">Min Length of Body is 6 .</div>
-      <div *ngIf="QuestionData?.['body']?.errors?.['maxlength']">Max Length of Body is 3500 .</div>
     </div>
     <!--<input type="text" class="form-control form-control-lg" formControlName="body" name="body" >-->
     <h2 class="fw-bold mb-0  ms-2">Tags:</h2>
