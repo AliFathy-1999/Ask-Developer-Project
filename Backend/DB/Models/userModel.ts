@@ -1,8 +1,10 @@
+import { hash  } from 'bcryptjs';
 import {Schema,model,VirtualType} from 'mongoose';
+import { json } from 'stream/consumers';
 import { isDate } from 'util/types';
 import validator from 'validator';
 var mongoosePaginate = require('mongoose-paginate');
-const bycryptjs = require('bcryptjs');
+const bcryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
 import { IUserModel } from '../../Interfaces/ModelsInterface';
 const schema= new Schema<IUserModel>({
@@ -91,7 +93,7 @@ const schema= new Schema<IUserModel>({
                 throw new Error("Date of birth is invalid")
             }
         },
-        
+
     },
     tokens : [
         {
@@ -121,19 +123,20 @@ schema.methods.toJSON = function () {
 schema.pre('save',async function (){
     const user = this;
     if(user.isModified("password")){
-        user.password =await bycryptjs.hash(user.password,10)
+        user.password =await bcryptjs.hash(user.password,10)
     }
 })
 schema.statics.login = async function(email,password){
     const userData = await User.findOne({email});
-    if(!userData){
-        throw new Error("Invalid Email");
-    }
-    const isMatch= bycryptjs.compare(password,userData.password)
-    if(!isMatch){
-        throw new Error("Invalid Password");
-    }
+
+    if(!userData) throw new Error("Invalid Email");
+
+    const isMatched= await bcryptjs.compare(password,userData.password)
+    if(!isMatched) throw new Error("Invalid Password");
+
+
    return userData;
+
 }
 schema.methods.generateToken = async function(){
     const user = this;

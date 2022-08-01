@@ -13,10 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./singlequestion.component.css']
 })
 export class SinglequestionComponent implements OnInit {
+  Message:String="";
+  userSuccess:boolean=false;
   questionIdParams=this.activated.snapshot.paramMap.get("id");
   isAuthor:boolean=false;
   isLoaded:boolean = false;
+  oneClick:boolean=false;
   question:any = {};
+  toEditQuestionPage:string=`/editquestion/${this.questionIdParams}`;
   answersCount:number = 0;
   constructor(private activated : ActivatedRoute,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     iconRegistry.addSvgIconLiteral('addquestion', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
@@ -27,21 +31,59 @@ export class SinglequestionComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('clock', sanitizer.bypassSecurityTrustHtml(this._icons.CLOCK_ICON));
     iconRegistry.addSvgIconLiteral('answer', sanitizer.bypassSecurityTrustHtml(this._icons.ANSWER_ICON));
     iconRegistry.addSvgIconLiteral('delete', sanitizer.bypassSecurityTrustHtml(this._icons.DELETE_ICON));
-    iconRegistry.addSvgIconLiteral('arrowup', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_UP2_ICON));
+    iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
+    iconRegistry.addSvgIconLiteral('arrowup2', sanitizer.bypassSecurityTrustHtml(this._icons.UP_ICON));
     iconRegistry.addSvgIconLiteral('arrowdown', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_DOWN_ICON));
+    iconRegistry.addSvgIconLiteral('warning', sanitizer.bypassSecurityTrustHtml(this._icons.WARNING_ICON));
    }
-
+   toEditPage(id:any){
+    this.router.navigateByUrl(`editquestion/${id}`);
+   }
   ngOnInit(): void {
     this._global.SingleQuestion(this.questionIdParams).subscribe((data:any)=>{
       this.question= data.data;
       if(this.question.userId===this._global.userInfo.data._id){
         this.isAuthor=true;
       }
+      data.data.voters.forEach((element:any )=> {
+        if(element === this._global.userInfo.data._id){
+          this.oneClick=true;
+        }
+      })
     }, (err)=>{
       location.reload()
     } , ()=>{
         this.isLoaded = true
     })
   }
+  deletequestion(obj:any){
+    this._global.DeleteQuestion(obj).subscribe((data:any)=>{
+      this.router.navigateByUrl('/home');
+      this._global.QuestionStatusED=true;
+      this._global.QuestionStatusText="Question Deleted Successfully";
+      setTimeout(()=>{
+        this._global.QuestionStatusED=false;
+      },3000)
+    },(err)=>{
+      console.log(err.error.message)
+    })
+  }
+  votingonQuestion(id:any,obj:any){
+    this._global.VotingonQuestion(id,obj).subscribe((data:any)=>{
+      this.userSuccess=true;
+      this.Message="Voted Successfully";
+      setTimeout(()=>{
+        this.userSuccess=false;
+        location.reload()
+      },3000)
 
+
+    },(err)=>{
+      location.reload()
+    },()=>{
+      this.isLoaded = true;
+      this.isAuthor=true;
+      this.oneClick=true;
+    })
+  }
 }

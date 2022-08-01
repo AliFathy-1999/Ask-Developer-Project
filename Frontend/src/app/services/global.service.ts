@@ -13,6 +13,9 @@ export class GlobalService {
   public navbar:Boolean=true;
   public footer:Boolean=true;
   public userInfo:any={}
+  public QuestionStatusED:Boolean=false;
+  public QuestionStatusText="";
+  public token = localStorage.getItem('token');
   url:string="http://localhost:2000/api/user/"
   questionurl:string="http://localhost:2000/api/question/"
   constructor(private http:HttpClient) {
@@ -63,5 +66,8 @@ export class GlobalService {
   }
   viewQuestion(id:any){
     return this.http.put(`${this.questionurl}updateview/${id}`,null)
+  }
+  VotingonQuestion(id:any,vote:any){
+    return this.http.put(`${this.questionurl}voting/${id}/${vote}`,null)
   }
 }

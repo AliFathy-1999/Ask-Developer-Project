@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {  NgForm,FormsModule  } from '@angular/forms';
+import {  NgForm,FormsModule, FormControl, Validators, FormGroup  } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,6 +11,14 @@ import { IconsService } from 'src/app/services/icons.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  isSubmitted:boolean=false;
+  data = new FormGroup({
+    email:new FormControl('' , [Validators.required , Validators.email]),
+    password:new FormControl('' , [Validators.required])
+  })
+  get LoginData(){
+    return this.data.controls;
+  }
   userData={
     "email":'',
     "password":'',
@@ -48,24 +56,23 @@ export class LoginComponent implements OnInit {
       this.passwordstatus="password";
     }
   }
-  handleSubmit(form:NgForm){
-
-    this._global.userLogin(this.userData).subscribe((data:any)=>{
+  handleSubmit(){
+    this.isSubmitted =true
+    if(this.data.valid){
+    this._global.userLogin(this.data.value).subscribe((data:any)=>{
+      console.log(data);
       this.userToken=data['data']['token'];
         this.router.navigate(['/home']);
         localStorage.setItem("token",`bearer ${this.userToken}`) ;
-  },(err)=>{
-
+  },(err:any)=>{
       this.userError=true;
-      this.ErrorMessage=err.error.message;
-      if(this.userData.email=='' || this.userData.password==''){
-        this.ErrorMessage="Please fill all the fields. ";
-      }else{
-        this.ErrorMessage="Invalid email or password";
+      this.ErrorMessage=err;
+      if(err){
+        this.ErrorMessage="Invalid Email or Password"
       }
 
 
   });
-
+    }
 }
 }

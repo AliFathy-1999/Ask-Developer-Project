@@ -16,10 +16,8 @@
     <input type="text" class="form-control form-control-lg  example-chip-lists"
      formControlName="title" name="title" placeholder="e.g. What are the different data types present in javascript?" >
     <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && QuestionData?.['title']?.invalid || (QuestionData?.['title']?.touched || QuestionData?.['title']?.dirty)">
-
       <div *ngIf="QuestionData?.['title']?.errors?.['required']"> Title is required .</div>
       <div *ngIf="QuestionData?.['title']?.errors?.['minlength']">Min Length of Title is 6 .</div>
-      <div *ngIf="QuestionData?.['title']?.errors?.['maxlength']">Max Length of Title is 300 .</div>
     </div>
     <h2 class="fw-bold mb-0">Body:</h2>
      <h3 class="blockquote-footer text-danger fw-bold">Include all the information someone would need to answer your question (Min Length of Body is 6 and Max Length of Body is  1200 Type here...)</h3>
@@ -28,7 +26,7 @@
 
       <ngx-editor
         [editor]="editor"
-        [placeholder]="'Min Length of Body is 6 and Max Length of Body is  3500 Type here...'"
+        [placeholder]="'Min Length of Body is 6'"
         formControlName="body"
         [(ngModel)]="html"
         name="body"

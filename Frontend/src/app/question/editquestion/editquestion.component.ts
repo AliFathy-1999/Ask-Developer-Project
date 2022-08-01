@@ -14,7 +14,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditquestionComponent implements OnInit, OnDestroy {
   editor:Editor=new Editor();
-  html= '';
+  question:any = {};
+  isLoaded:boolean = false;
+  questiontitle:string = '';
+  questionTags:any = [];
+  questionData:any = {
+    title: '',
+    body: '',
+    tags: [],
+  };
+
+  html= "";
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -40,7 +50,7 @@ export class EditquestionComponent implements OnInit, OnDestroy {
   selectedCompanies: any  ;
 
   questionDataForm:any = new FormGroup({
-    title: new FormControl('', [Validators.required,Validators.minLength(6),Validators.maxLength(300)]),
+    title: new FormControl('', [Validators.required,Validators.minLength(6)]),
     body: new FormControl('',[Validators.required,Validators.minLength(6)]),
     tags: new FormControl('', [Validators.required]),
   });
@@ -55,6 +65,17 @@ export class EditquestionComponent implements OnInit, OnDestroy {
     this.upper.forEach((p, i) => {
       this.tags.push(p);
   });
+  this._global.SingleQuestion(this.questionIdParams).subscribe((data:any)=>{
+    this.question= data.data;
+    this.questionData.title= this.question.title;
+    this.questiontitle= this.question.title;
+    this.html= this.question.body;
+    this.questionTags.push(this.question.tags);
+  },(err:any)=>{
+    location.reload()
+  },()=>{
+    this.isLoaded = true
+  })
   }
   addTagFn(name:any) {
     return name;
@@ -68,42 +89,8 @@ export class EditquestionComponent implements OnInit, OnDestroy {
 
   Editquestion(){
     this._global.EditQuestion(this.questionDataForm.value,this.questionIdParams).subscribe((data:any)=>{
-      console.log(data)
       this.router.navigate(['/myquestions'])
     })
   }
-     /* addquestion(){
-    this.isSubmitted =true
-    if(this.questionDataForm.valid){
-this._global.EditQuestion(this.questionDataForm.value,id).subscribe((data:any)=>{
-
-
-      //this.router.navigate(['/question/'+data.id]);
-      if(data.error){
-        this.userError = true;
-        this.ErrorMessage = data.error;
-      }else{
-        this.router.navigate(['/home']);
-      }
-    },(err:any)=>{
-      console.log(err.error)
-      this.userError=true;
-      this.ErrorMessage=err.error.message;
-      /*if(err.error.message.includes('validation failed') && err.error.message.includes('required')){
-        this.ErrorMessage="Please fill all the fields"
-      }else if(err.error.message.includes('title')){
-        if(err.error.message.includes('validation failed') && err.error.message.includes('minlength')){
-          this.ErrorMessage="Title should be atleast 6 characters long"
-        }else if(err.error.message.includes('validation failed') && err.error.message.includes('maxlength')){
-          this.ErrorMessage="Title should be atmost 300 characters long"
-        }
-      }else if(err.error.message.includes('body')){
-        if(err.error.message.includes('validation failed') && err.error.message.includes('minlength')){
-          this.ErrorMessage="Body should be atleast 6 characters long"
-        }
-      }
-
-    })
-  }*/
 }
 

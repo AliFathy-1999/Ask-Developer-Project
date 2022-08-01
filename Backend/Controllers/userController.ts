@@ -106,7 +106,7 @@ class User{
                 data:e.message,
                 message: "Only images are allowed (.png, .jpg, .tiff, .jpeg)"
             })
-        } 
+        }
     }
 
 }

@@ -49,5 +49,8 @@ body{
 .cursor-pointer{
   cursor: pointer;
 }
-
+.qtitle{
+  width: 40%;
+  overflow-wrap: auto;
+}
 

@@ -11,6 +11,7 @@ import { IconsService } from 'src/app/services/icons.service';
 export class AllmyquestionsComponent {
   MyQestions:any = [{}]
   MyQestions2:any = ["","","","","","","","","",""]
+  public isCollapsed = false;
   isLoaded:boolean = false;
   NoQuestions:boolean = false
   QuestionStatus:boolean = false
@@ -52,6 +53,7 @@ export class AllmyquestionsComponent {
     this._global.DeleteQuestion(obj).subscribe((data:any)=>{
       location.reload()
       this.QuestionStatus=true
+
     },(err)=>{
       console.log(err.error.message)
     })

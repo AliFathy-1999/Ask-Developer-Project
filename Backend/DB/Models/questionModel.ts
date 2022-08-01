@@ -24,8 +24,6 @@ const schema = new Schema({
         type:String,
         required:true,
         minlength:6,
-        maxlength:300,
-
     },
     body:{
         type:String,
@@ -36,6 +34,10 @@ const schema = new Schema({
         type:Number,
         default:0,
     },
+    voters:[{
+      type:String,
+        Default:[]
+    }],
     tags: [
         {
                 type:String,
@@ -46,6 +48,10 @@ const schema = new Schema({
         type:Number,
         default:0,
     },
+    viwers:[{
+      type:String,
+      Default:[]
+    }],
     answers:[
         {
             answer:{

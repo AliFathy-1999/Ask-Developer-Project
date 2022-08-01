@@ -5,8 +5,6 @@ import { AddquestionComponent } from './question/addquestion/addquestion.compone
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
 import { SinglequestionComponent } from './question/singlequestion/singlequestion.component';
-import { TestComponent } from './test/test.component';
-import { Test2Component } from './test2/test2.component';
 
 import { HomepageComponent } from './user/homepage/homepage.component';
 import { LoginComponent } from './user/login/login.component';
@@ -22,15 +20,15 @@ const routes: Routes = [
   { path: 'register',component:RegisterComponent},
   { path: 'login', component:LoginComponent },
   {path:'myprofile',component:UserprofileComponent},
-  { path:"test", component: TestComponent },
-  { path:"test2", component: Test2Component },
   { path: 'addquestion', component: AddquestionComponent },
   { path: 'myquestions',children:[
     { path: '', component: AllmyquestionsComponent },
     { path: 'editquestion/:id', component: EditquestionComponent },
-    { path: 'singlequestion/:id', component: SinglequestionComponent }
+    { path: 'singlequestion/:id', component: SinglequestionComponent },
+    { path: 'singlequestion/:id/editquestion/:id', component: EditquestionComponent }
   ]
   },
+  { path: 'editquestion/:id', component: EditquestionComponent },
   { path: 'singlequestion/:id', component: SinglequestionComponent },
   { path: '**', component: ErrorpageComponent },
 

@@ -1,58 +1,101 @@
-<div class="item" *ngIf="!isLoaded ; else questionData" >
-  <div class="mt-5">
-  <mat-card  class="m-auto">
-  <div class="d-flex ms-5" >
-  <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
-  <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
-</div>
-<div class="d-flex justify-content-center">
-  <ngx-skeleton-loader count="4" appearance="line" class="d-grid  col-8"></ngx-skeleton-loader>
-</div>
-</mat-card>
-</div>
-</div>
-
+<div class="alert alert-success mt-5" role="alert" *ngIf="userSuccess">
+  <mat-icon svgIcon="success" class="text-success"></mat-icon> <strong> {{Message}}</strong>
+ </div>
+<div class="parent" *ngIf="!isLoaded ; else questionData">
+  <div class="div1">
+    <ngx-skeleton-loader class=" ms-2 mt-3 d-block" count="1"
+    [theme]="{width: '0',height:'0',  'border-style': 'solid','border-width': '0 27px 36px 27px',
+    'border-color': 'transparent transparent #98BFD6 transparent'}" appearance="line"></ngx-skeleton-loader>
+    <ngx-skeleton-loader  count="1" appearance="circle" class="ms-2"></ngx-skeleton-loader>
+    <ngx-skeleton-loader class="w-25 ms-2 mt-3 d-block" count="1"
+    [theme]="{width: '0',height:'0',  'border-style': 'solid','border-width': '36px 27px 0 27px',
+    'border-color': '#98BFD6 transparent transparent transparent'}" appearance="line"></ngx-skeleton-loader>
+  </div>
+  <div class="div2">
+    <div class="mt-5">
+      <mat-card  class="m-auto">
+      <div class="d-flex ms-5" >
+      <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
+      <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+    </div>
+    <div class="d-flex justify-content-center">
+      <ngx-skeleton-loader count="4" appearance="line" class="d-grid  col-8"></ngx-skeleton-loader>
+    </div>
+    <ngx-skeleton-loader count="1" appearance="line" class="d-grid  col-5 ms-5"></ngx-skeleton-loader>
+    </mat-card>
+    </div>
+  </div>
+  </div>
 <ng-template #questionData>
-
-<mat-card  class="example-card overflow-auto mb-5 mt-5">
-  <mat-card-header class="container">
-      <img mat-card-avatar src="{{question.authorpImage}}" alt="{{question.author}}_ProfilePicture">
-      <mat-card-title class="fw-bold">{{question.author}}</mat-card-title>
-      <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
-      <mat-card-title>
-        <div class="">
-          <mat-icon svgIcon="answers" class="text-success"></mat-icon>   <span class="me-2 ms-1 text-success">{{answersCount}}</span>
-          <mat-icon svgIcon="votes" class="text-primary"></mat-icon>   <span class="me-2 ms-1 text-primary">{{question.votes}}</span>
-          <mat-icon svgIcon="views" class="text-info"></mat-icon>  <span class="me-2 ms-1 text-info">{{question.views}}</span>
+  <div class="parent">
+    <div class="div1" >
+      <div class="container text-center">
+        <div class="row d-grid g-2 g-lg-3 ">
+          <div class="col">
+            <div class="p-3 col-2" ><button  class="border-0 bg-transparent voteButton" [disabled]="isAuthor || oneClick" (click)="votingonQuestion(question._id, 'up')"> <mat-icon placement="top" ngbTooltip="Upvote" svgIcon="arrowup2"></mat-icon> </button></div>
+          </div>
+          <div class="col">
+            <div class="p-1 ms-3 col-2 border bg-light">
+              <p>{{question.votes}}</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="p-3 col-2">
+              <button class="border-0 bg-transparent voteButton" [disabled]="isAuthor || oneClick"  (click)="votingonQuestion(question._id, 'down')"><mat-icon  placement="bottom" ngbTooltip="Downvote" svgIcon="arrowdown"></mat-icon></button>
+            </div>
+          </div>
         </div>
-      </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <h1 class="ms-5">
-      {{question.title}}
-  </h1>
-  </mat-card-content>
-  <mat-card-content style="background-color: #F6F6F6;padding: 2%;" innerHTML="{{question.body}}">
+      </div>
+    </div>
+    <div class="div2">
+      <div class="alert alert-warning mt-2 w-100 alertDiv">
+        <div class="btn btn-outline-warning text-dark"><mat-icon svgIcon="warning" class="text-warning"></mat-icon> <strong class="fs-5"> About Voting </strong></div>
+        <ul >
+          <li> <strong>Author:</strong> You can't vote on your own question</li>
+          <li> <strong>Voter:</strong> You can vote on any question you have not voted on</li>
+          <li> <strong>Voter:</strong> You can vote only once on any question</li>
+        </ul>
+      </div>
+      <mat-card  class="example-card overflow-auto mt-5">
+        <mat-card-header class="container">
+            <img mat-card-avatar src="{{question.authorpImage}}" alt="{{question.author}}_ProfilePicture">
+            <mat-card-title class="fw-bold">{{question.author}}</mat-card-title>
+            <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
+            <mat-card-title>
+              <div class="">
+                <mat-icon svgIcon="answers" class="text-success" placement="top" ngbTooltip="Answers"></mat-icon>   <span class="me-2 ms-1 text-success">{{answersCount}}</span>
+                <mat-icon svgIcon="votes" class="text-primary" placement="top" ngbTooltip="Votes"></mat-icon>   <span class="me-2 ms-1 text-primary">{{question.votes}}</span>
+                <mat-icon svgIcon="views" class="text-info" placement="top" ngbTooltip="Views"></mat-icon>  <span class="me-2 ms-1 text-info">{{question.views}}</span>
+              </div>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h1 class="ms-5">
+            {{question.title}}
+        </h1>
+        </mat-card-content>
+        <mat-card-content style="background-color: #F6F6F6;padding: 2%;" innerHTML="{{question.body}}">
 
-  </mat-card-content>
-  <div class="d-flex">
-  <div class="badge" style="background-color:#283149;color: #C5E0EA; font-size: 100%;">  <mat-icon svgIcon="tags"></mat-icon> Tags :</div>
-  <ul class="list-unstyled list-group list-group-horizontal" >
-    <li *ngFor="let tag of question.tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
-  </ul>
-</div>
-  <ul class="list-unstyled list-group list-group-horizontal p-2 mt-2" >
-    <li mat-button class="list-group-item" class="btn btn-warning ms-1 fw-bold" *ngIf="isAuthor">
-      <mat-icon svgIcon="addquestion"></mat-icon> Edit
-    </li>
-    <li mat-button class="list-group-item" class="btn btn-primary ms-1 fw-bold" >
-      <mat-icon svgIcon="answer"></mat-icon> Answer
-    </li>
-    <li mat-button class="list-group-item text-danger" class="btn text-danger ms-1 fw-bold" *ngIf="isAuthor">
-      <mat-icon svgIcon="delete"></mat-icon> Delete
-    </li>
-  </ul>
-</mat-card>
-
+        </mat-card-content>
+        <div class="d-flex">
+        <div class="badge" style="background-color:#283149;color: #C5E0EA; font-size: 100%;">  <mat-icon svgIcon="tags"></mat-icon> Tags :</div>
+        <ul class="list-unstyled list-group list-group-horizontal" >
+          <li *ngFor="let tag of question.tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
+        </ul>
+      </div>
+        <ul class="list-unstyled list-group list-group-horizontal p-2 mt-2" >
+          <li mat-button class="list-group-item border-0" *ngIf="isAuthor">
+            <button  class="btn btn-warning  fw-bold p-2" (click)="toEditPage(question._id)" routerLink="{{toEditQuestionPage}}"><mat-icon svgIcon="addquestion"></mat-icon> Edit </button>
+          </li>
+          <li mat-button class="list-group-item border-0"  >
+            <button class="btn btn-primary  fw-bold"> <mat-icon svgIcon="answer"></mat-icon> Answer </button>
+          </li>
+          <li mat-button class="list-group-item text-danger border-0" *ngIf="isAuthor">
+            <button  class="btn text-danger fw-bold border-0" (click)="deletequestion(question._id)"><mat-icon svgIcon="delete"></mat-icon> Delete</button>
+          </li>
+        </ul>
+      </mat-card>
+    </div>
+    </div>
 </ng-template>
 

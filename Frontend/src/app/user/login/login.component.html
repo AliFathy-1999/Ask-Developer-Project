@@ -9,7 +9,7 @@
                 alt="Ask Deveolper Logo" class="img-fluid" style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; height: 100%;" />
             </div>
 
-            <form class="col-xl-6"  #loginform="ngForm" id="logForm" (ngSubmit)="handleSubmit(loginform)">
+            <form class="col-xl-6"  [formGroup]="data"  (ngSubmit)="handleSubmit()" id="logForm" >
               <div class="card-body p-md-5 text-black">
                 <div class="d-flex justify-content-center">
                 <img src="../../../assets/asklogo.png" alt="logo" class="img-fluid" style="width: 60%;margin-bottom: 5%;">
@@ -27,10 +27,10 @@
                  </div>
 
                 <div class="form-outline mb-4">
-                  <input type="email" name="email" #email="ngModel"  class="form-control form-control-lg" placeholder="Email" [(ngModel)]="userData.email" required/>
-                  <div class="bg-danger rounded-1 p-2" *ngIf=" loginform.submitted && email.invalid">
+                  <input type="email" formControlName="email"  class="form-control form-control-lg" placeholder="Email" required/>
+                  <div class="bg-danger rounded-1 p-2" *ngIf="isSubmitted && LoginData?.['email']?.invalid">
                     <mat-icon class="text-light" svgIcon="error"></mat-icon>
-                    <span *ngIf="email.errors?.['required']" class="text-light"> Email is required</span>
+                    <span *ngIf="LoginData?.['email']?.errors?.['required']" class="text-light"> Email is required</span>
                   </div>
                 </div>
                 <div class="form-outline mb-4">
@@ -38,23 +38,23 @@
                    <div class="row ">
                       <div class="col-10">
                        <input type="{{passwordstatus}}" class="border-0 w-100 p-1 fs-4"
-                       name="password"  #password="ngModel" placeholder="Password" [(ngModel)]="userData.password" required />
+                      formControlName="password" placeholder="Password"  required />
                       </div>
                       <div class="col-2 mt-1">
                         <button type="button" class="bg-transparent border-0" (click)="showpassword()"><mat-icon  svgIcon="{{status}}"></mat-icon></button>
                       </div>
                   </div>
                 </div>
-                <div class="bg-danger rounded-1 p-2" *ngIf=" loginform.submitted && password.invalid">
+                <div class="bg-danger rounded-1 p-2" *ngIf="isSubmitted && LoginData?.['password']?.invalid">
                   <mat-icon class="text-light" svgIcon="error"></mat-icon>
-                  <span *ngIf="password.errors?.['required']" class="text-light"> Password is required</span>
+                  <span *ngIf="LoginData?.['password']?.errors?.['required']" class="text-light"> Password is required</span>
                 </div>
                 </div>
 
 
 
                 <div class="d-flex justify-content-center pt-3">
-                  <button type="submit" class="btn btn-warning btn-lg ms-2" [disabled]="loginform.invalid"><mat-icon svgIcon="submit"></mat-icon> Submit form</button>
+                  <button type="submit" class="btn btn-warning btn-lg ms-2" ><mat-icon svgIcon="submit"></mat-icon> Submit form</button>
                 </div>
                   <h3 class="text-center mt-4">Don't have an account? <a routerLink="/register" class="btn btn-primary"><mat-icon svgIcon="register"></mat-icon> Register</a></h3>
 

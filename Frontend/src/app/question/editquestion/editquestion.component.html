@@ -1,7 +1,22 @@
-
+<div class="item mt-5" *ngIf="!isLoaded ; else questionData">
+  <div>
+  <mat-card  class="m-auto mb-5">
+  <div class="d-flex ms-5" >
+  <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+</div>
+<div class="d-flex justify-content-center">
+  <ngx-skeleton-loader count="3" appearance="line" class="d-grid  col-8"></ngx-skeleton-loader>
+</div>
+<div class="d-flex ms-5" >
+  <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+</div>
+</mat-card>
+</div>
+</div>
+<ng-template #questionData>
 <div class="d-flex justify-content-center">
   <div class="m-3 w-25 text-center p-3 rounded-2" style="background-color:#283149;color:#B9D7E5;">
-    <div style="font-size: 1.5vw;padding: 0.6vw;"><mat-icon style="color:#B9D7E5;" svgIcon="addquestion"></mat-icon> Add Question Page</div>
+    <div style="font-size: 1.5vw;padding: 0.6vw;"><mat-icon style="color:#B9D7E5;" svgIcon="addquestion"></mat-icon> Edit Question Page</div>
   </div>
   </div>
   <div class="alert alert-danger" role="alert" *ngIf="userError">
@@ -14,15 +29,15 @@
       <h2 class="fw-bold mb-0">Title:</h2>
       <h3 class="blockquote-footer text-danger fw-bold">Be specific and imagine you’re asking a question to another person</h3>
       <input type="text" class="form-control form-control-lg  example-chip-lists"
-       formControlName="title" name="title" placeholder="e.g. What are the different data types present in javascript?" >
+       formControlName="title" name="title" placeholder="e.g. What are the different data types present in javascript?"
+       value="{{question.title}}" [(ngModel)]="questiontitle">
       <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && QuestionData?.['title']?.invalid || (QuestionData?.['title']?.touched || QuestionData?.['title']?.dirty)">
 
         <div *ngIf="QuestionData?.['title']?.errors?.['required']"> Title is required .</div>
         <div *ngIf="QuestionData?.['title']?.errors?.['minlength']">Min Length of Title is 6 .</div>
-        <div *ngIf="QuestionData?.['title']?.errors?.['maxlength']">Max Length of Title is 300 .</div>
       </div>
       <h2 class="fw-bold mb-0">Body:</h2>
-       <h3 class="blockquote-footer text-danger fw-bold">Include all the information someone would need to answer your question (Min Length of Body is 6 and Max Length of Body is  1200 Type here...)</h3>
+       <h3 class="blockquote-footer text-danger fw-bold">Include all the information someone would need to answer your question (Min Length of Body is 6 and Max Length of Body is  3500 Type here...)</h3>
       <div class="NgxEditor__Wrapper"style="height:100%;width: 95%;margin-bottom:1vw;">
         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
 
@@ -32,7 +47,8 @@
           formControlName="body"
           [(ngModel)]="html"
           name="body"
-           minlength="6"
+          minlength="6"
+          innerHtml="html"
         ></ngx-editor>
       </div>
       <div class="text-danger fw-bold  ms-2" *ngIf="isSubmitted && QuestionData?.['body']?.invalid || (QuestionData?.['body']?.touched || QuestionData?.['body']?.dirty)">
@@ -42,10 +58,9 @@
       <!--<input type="text" class="form-control form-control-lg" formControlName="body" name="body" >-->
       <h2 class="fw-bold mb-0  ms-2">Tags:</h2>
       <h3 class="blockquote-footer text-danger fw-bold mb-0">Add up to 5 tags to describe what your question is about</h3>
-
-  <ng-select [items]="tags" class="example-chip-lists"  [addTag]="addTagFn" [hideSelected]="false" [multiple]="true"
-             bindLabel="name"loadingText="Loading..." placeholder="Add tags e.g. javascript" notFoundText="No tags found"
-             dropdownPosition="auto"[maxSelectedItems]="5" formControlName="tags" name="tags">
+  <ng-select [items]="tags" value="questionData.tags" class="example-chip-lists"  [addTag]="addTagFn"  [multiple]="true"
+             bindLabel="name" [loading]="true" loadingText="Loading..." placeholder="Add tags e.g. javascript" notFoundText="No tags found"
+             dropdownPosition="auto"[maxSelectedItems]="5" formControlName="tags" name="tags"  [(ngModel)]="questionTags[0]" >
   </ng-select>
   <div class="text-danger fw-bold " *ngIf="isSubmitted && QuestionData?.['tags']?.invalid || (QuestionData?.['tags']?.touched || QuestionData?.['tags']?.dirty)">
     <div *ngIf="QuestionData?.['tags']?.errors?.['required']">Tags is required .</div>
@@ -56,5 +71,5 @@
       </div>
       </form>
   </div>
-
+</ng-template>
 

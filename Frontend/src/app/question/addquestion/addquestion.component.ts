@@ -39,7 +39,7 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
   selectedCompanies: any  ;
 
   questionDataForm:any = new FormGroup({
-    title: new FormControl('', [Validators.required,Validators.minLength(6),Validators.maxLength(300)]),
+    title: new FormControl('', [Validators.required,Validators.minLength(6)]),
     body: new FormControl('',[Validators.required,Validators.minLength(6)]),
     tags: new FormControl('', [Validators.required]),
   });
@@ -89,8 +89,6 @@ export class AddquestionComponent implements OnInit, OnDestroy  {
       }else if(err.error.message.includes('title')){
         if(err.error.message.includes('validation failed') && err.error.message.includes('minlength')){
           this.ErrorMessage="Title should be atleast 6 characters long"
-        }else if(err.error.message.includes('validation failed') && err.error.message.includes('maxlength')){
-          this.ErrorMessage="Title should be atmost 300 characters long"
         }
       }else if(err.error.message.includes('body')){
         if(err.error.message.includes('validation failed') && err.error.message.includes('minlength')){

@@ -134,7 +134,10 @@ class Question{
     }
     static viewQuestion = async(req:any,res:Response)=>{
         try{
-             const questionData =await questionModel.findByIdAndUpdate({_id:req.params.id},{$inc:{views:1}});
+             const questionData =await questionModel.findByIdAndUpdate(
+              {_id:req.params.id},
+              {$inc:{views:1}},
+              );
              await questionData.save()
             res.status(200).send({
                 apiStatus:true,
@@ -151,17 +154,21 @@ class Question{
     }
     static VotingQuestion = async(req:any,res:Response)=>{
         try{
+
             let voteNumber;
-            if(req.body.vote == 'up'){
+              if(req.params.vote === 'up'){
                 voteNumber = 1
-            }else if(req.body.vote == 'down'){
+            }else if(req.params.vote === 'down'){
                 voteNumber = -1
             }
-            const questionData =await questionModel.findByIdAndUpdate({_id:req.params.id},{$inc:{votes:voteNumber}});
+            const questionData =await questionModel.findByIdAndUpdate(
+              {_id:req.params.id},
+              {$inc:{votes:voteNumber},
+              $push:{voters:req.user._id}},
+              );
             await questionData.save()
             res.status(200).send({
                 apiStatus:true,
-                voteNumber:voteNumber,
                 data:questionData,
                 message:"Question Voted Successfully"
             })

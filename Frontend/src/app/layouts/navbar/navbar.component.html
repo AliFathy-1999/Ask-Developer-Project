@@ -6,10 +6,7 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li>
-
-          <a routerLink="home" class="nav-link  link-primary fs-5"><mat-icon svgIcon="home"></mat-icon> Home</a></li>
-          <li><a routerLink="test" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Test</a></li>
+        <li><a routerLink="home" class="nav-link  link-primary fs-5"><mat-icon svgIcon="home"></mat-icon> Home</a></li>
         <li><a routerLink="tags" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="tags"></mat-icon> Tags</a></li>
         <li><a routerLink="users" class="nav-link px-2 link-dark fs-5"><mat-icon svgIcon="users"></mat-icon> Users</a></li>
       </ul>
@@ -17,15 +14,16 @@
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         <input type="search" class="form-control"  placeholder="Search..." aria-label="Search">
       </form>
-      <div class="item d-flex" *ngIf="!isLoaded ; else userData" >
-        <ngx-skeleton-loader class="col-2 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+      <div class="item d-flex me-4" *ngIf="!isLoaded ; else userData" >
+        <div *ngIf="_global.token">
+        <ngx-skeleton-loader class="ms-2 mt-3 " count="1" appearance="line"></ngx-skeleton-loader>
         <ngx-skeleton-loader  count="1" appearance="circle"></ngx-skeleton-loader>
+      </div>
       </div>
 
       <ng-template #userData>
       <ul class="col-lg-auto mb-3 mb-lg-0 me-lg-3 list-unstyled" *ngIf="this._global.isLoggedIn && !myfname">
         <li class="text-primary fs-5"   >Welcome {{this._global.userInfo.data?.fname || "username" }} </li>
-        <li *ngIf="myfname">ali</li>
       </ul>
       <div class="dropdown text-end" *ngIf="this._global.isLoggedIn">
         <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">

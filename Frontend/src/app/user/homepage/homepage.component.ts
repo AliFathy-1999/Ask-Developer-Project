@@ -4,6 +4,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -23,7 +24,7 @@ export class HomepageComponent implements OnInit {
   QuestionSize:number = 0
   routerLinkStatus:Boolean=false;
   routerlink:String="";
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
+  constructor(private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     this._global.navbar = true
     this._global.isHomePage = true
     if(this.token){
@@ -49,14 +50,16 @@ export class HomepageComponent implements OnInit {
     this._global.showAllQuestions(this.page,this.pageSize).subscribe((data:any)=>{
           this.AllQuestions = data.data
           this.QuestionSize = this.AllQuestions.length;
-        } , (err)=>{
+        }, (err:any)=>{
           location.reload()
         } , ()=>{
             this.isLoaded = true
         })
-  }
+
+}
   incrementview(question_id:any){
     this._global.viewQuestion(question_id).subscribe((data:any)=>{
+    },(err)=>{
 
     })
   }

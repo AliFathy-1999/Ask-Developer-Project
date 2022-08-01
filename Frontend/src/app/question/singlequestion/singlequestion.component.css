@@ -1,0 +1,23 @@
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  clear:both;
+  height:1px;
+  margin-bottom:20px;
+  }
+
+  .div1 { grid-area: 1 / 1 / 2 / 2; margin-top: 100%;}
+  .div2 { grid-area: 1 / 2 / 2 / 6; }
+  .voteButton:disabled{
+    cursor: not-allowed;
+  }
+
+  .alertDiv{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+  }
