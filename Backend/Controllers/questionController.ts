@@ -2,12 +2,7 @@ import {Request,Response } from "express";
 import mongoose from "mongoose";
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
-import {ControllerInterface } from '../Interfaces/ControllerInterface';
-
 class Question{
-    static test:ControllerInterface=async(req:any,res:Response)=>{
-        res.json({'message':'test'})
-    }
     static addQuestion = async(req:any,res:Response)=>{
         try{
             const userQuestion = new questionModel({
@@ -179,6 +174,37 @@ class Question{
                 message:e.message
             })
         }
+    }
+    static search = async (req:any,res:Response) => {
+      var query   = {};
+      var options = {
+          page:+req.params.pageNum,
+          limit:+req.params.limit
+      };
+      questionModel.paginate(query,options,async function(err:any, result:any) {
+          try{
+            const searchData = req.params.tags
+                const questionData2 =  await questionModel.find({
+                        $or:[
+                        {'title': { $regex : searchData,$options: "$i"}},
+                        {'body': { $regex : searchData,$options: "$i"}},
+                        {'tags':{ $regex : searchData,$options: "$i"}},
+                        ]
+                    })
+            .sort({createdAt:-1});
+              res.status(200).send({
+                  apiStatus:true,
+                  data:questionData2,
+                  message:"Your search results were successfully retrieved."
+              })
+          }catch(e:any){
+              res.status(500).send({
+                  apiStatus:false,
+                  data:e,
+                  message:"No results found"
+              })
+          }
+      });
     }
 }
 module.exports =Question;

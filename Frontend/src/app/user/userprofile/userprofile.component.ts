@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import { NgForm } from '@angular/forms';
 import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-userprofile',
   templateUrl: './userprofile.component.html',
@@ -1033,7 +1034,7 @@ export class UserprofileComponent implements OnInit {
     "yardmaster",
     "zoologist"
   ]
-  constructor(config: NgbModalConfig, private modalService: NgbModal,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(private toastr: ToastrService,config: NgbModalConfig, private modalService: NgbModal,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     iconRegistry.addSvgIconLiteral('editprofile', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('error2', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
     iconRegistry.addSvgIconLiteral('edit', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
@@ -1060,6 +1061,7 @@ export class UserprofileComponent implements OnInit {
   handleEditSubmit(form:NgForm){
     this._global.editprofile(this.newUserData).subscribe((data:any)=>{
       this.userSucess=true;
+
       setTimeout(()=>{
         this.userSucess=false;
       },5000)
@@ -1079,6 +1081,7 @@ export class UserprofileComponent implements OnInit {
       }
       }
     )
+
   }
   handleUpload(form:NgForm){
     let formData = new FormData();
@@ -1086,6 +1089,7 @@ export class UserprofileComponent implements OnInit {
     this._global.uploadpImage(formData).subscribe((data:any)=>{
       this.profileAlt = data.profilepicture
       this.userSucess=true;
+      this.toastr.success("Your profile picture has been uploaded successfully");
       setTimeout(()=>{
         this.userSucess=false;
       },5000)
@@ -1093,6 +1097,7 @@ export class UserprofileComponent implements OnInit {
       location.reload();
     },(err:any)=>{
       this.userError=true;
+      this.toastr.success("Error in uploading profile picture: " + err.message);
       this.ErrorMessage="Only images are allowed (.png, .jpg, .tiff, .jpeg)";
       setTimeout(()=>{
         this.userError = false;

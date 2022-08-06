@@ -35,7 +35,7 @@ import { ErrorpageComponent } from './errorpage/errorpage.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SinglequestionComponent } from './question/singlequestion/singlequestion.component';
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
-
+import { UsersComponent } from './pages/users/users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +50,7 @@ import { EditquestionComponent } from './question/editquestion/editquestion.comp
     ErrorpageComponent,
     SinglequestionComponent,
     EditquestionComponent,
+    UsersComponent,
 
 
   ],

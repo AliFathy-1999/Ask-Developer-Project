@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { UsersComponent } from './pages/users/users.component';
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   },
   { path: 'editquestion/:id', component: EditquestionComponent },
   { path: 'singlequestion/:id', component: SinglequestionComponent },
+  { path: 'users', component: UsersComponent },
   { path: '**', component: ErrorpageComponent },
 
 ];

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomepageComponent implements OnInit {
   AllQuestions:any = [{}]
+  AllAnswers:any=[{}]
   loadingAnimation:any=["","","","",""]
   isLoaded:boolean = false
   answersCount:number = 0
@@ -49,7 +50,9 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this._global.showAllQuestions(this.page,this.pageSize).subscribe((data:any)=>{
           this.AllQuestions = data.data
-          this.QuestionSize = this.AllQuestions.length;
+          //this.QuestionSize = this.AllQuestions.length;
+          //this.answersCount = this.AllQuestions.answers.length;
+          console.log(this.QuestionSize)
         }, (err:any)=>{
           location.reload()
         } , ()=>{

@@ -9,4 +9,6 @@ const userRoutes=require("../Backend/Routes/userRoutes.ts")
 app.use('/api/user',userRoutes);
 const questionRoutes=require("../Backend/Routes/questionRoutes.ts")
 app.use('/api/question',questionRoutes);
+const answerRoutes=require("../Backend/Routes/AnswerRoutes")
+app.use('/api/answer',answerRoutes);
 module.exports = app;

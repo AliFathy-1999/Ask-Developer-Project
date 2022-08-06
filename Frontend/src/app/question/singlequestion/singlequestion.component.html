@@ -27,9 +27,9 @@
   </div>
   </div>
 <ng-template #questionData>
-  <div class="parent">
+  <div class="parent mb-5">
     <div class="div1" >
-      <div class="container text-center">
+      <div class="container text-center" >
         <div class="row d-grid g-2 g-lg-3 ">
           <div class="col">
             <div class="p-3 col-2" ><button  class="border-0 bg-transparent voteButton" [disabled]="isAuthor || oneClick" (click)="votingonQuestion(question._id, 'up')"> <mat-icon placement="top" ngbTooltip="Upvote" svgIcon="arrowup2"></mat-icon> </button></div>
@@ -95,7 +95,61 @@
           </li>
         </ul>
       </mat-card>
+
+      <hr class="mt-5">
+      <h1 class="badge fw-bold" style="background-color:#283149;color: #C5E0EA; font-size: vw;">
+        <mat-icon svgIcon="answers"></mat-icon> Answers : </h1>
+        <div *ngIf="!isAnswer" class="alert alert-info">
+          <h2> <strong><mat-icon svgIcon="info"></mat-icon> There is no answers yet.</strong> </h2>
+        </div>
+      <div class="parent mb-5" *ngIf="isAnswer" >
+        <div class="div1loading" >
+          <div class="container text-center" *ngFor="let answer of Answers">
+            <div class="row d-grid g-2 g-lg-3 votePosition"  >
+              <div class="col">
+                <div class="p-3 col-2" ><button  class="border-0 bg-transparent voteButton" [disabled]="isAuthor || oneClick" (click)="votingonQuestion(question._id, 'up')"> <mat-icon placement="top" ngbTooltip="Upvote" svgIcon="arrowup2"></mat-icon> </button></div>
+              </div>
+              <div class="col" >
+                <div class="p-1 ms-3 col-2 border bg-light">
+                  <p>0</p>
+                </div>
+              </div>
+              <div class="col">
+                <div class="p-3 col-2">
+                  <button class="border-0 bg-transparent voteButton" [disabled]="isAuthor || oneClick"  (click)="votingonQuestion(question._id, 'down')"><mat-icon  placement="bottom" ngbTooltip="Downvote" svgIcon="arrowdown"></mat-icon></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="div2">
+          <mat-card  class="example-card overflow-auto mt-5" *ngFor="let answer of Answers">
+            <mat-card-header class="container">
+                <img mat-card-avatar src="{{answer.authorpImage}}" alt="{{answer.author}}_ProfilePicture">
+                <mat-card-title class="fw-bold">{{answer.author}}</mat-card-title>
+                <mat-card-title>
+                  <div class="">
+                    <mat-icon svgIcon="reply" class="text-success" placement="top" ngbTooltip="Replies"></mat-icon>   <span class="me-2 ms-1 text-success">0</span>
+                    <mat-icon svgIcon="votes" class="text-primary" placement="top" ngbTooltip="Votes"></mat-icon>   <span class="me-2 ms-1 text-primary">0</span>
+                  </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h1 class="ms-5">
+                {{question.title}}
+            </h1>
+            </mat-card-content>
+            <mat-card-content style="background-color: #F6F6F6;padding: 2%;" innerHTML="{{answer.body.body}}">
+
+            </mat-card-content>
+            <button class="border-0 btn bg-transparent text-success"><mat-icon svgIcon="reply"></mat-icon> Reply </button>
+          </mat-card>
+    </div>
+
     </div>
     </div>
+  </div>
+
+
 </ng-template>
 

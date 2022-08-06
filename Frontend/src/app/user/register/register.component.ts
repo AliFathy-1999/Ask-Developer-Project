@@ -5,6 +5,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
+import { ToastrService } from 'ngx-toastr';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject, merge, OperatorFunction} from 'rxjs';
 import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
@@ -1008,7 +1009,7 @@ export class RegisterComponent implements OnInit {
   userError:Boolean=false;
   ErrorMessage:string="";
   public postionToolTip:any="above";
-  constructor(private _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(private _global: GlobalService,private toastr: ToastrService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     this._global.navbar = false;
     this._global.footer=false;
     this._global.isHomePage=false;
@@ -1037,12 +1038,14 @@ export class RegisterComponent implements OnInit {
   handleSubmit(form:NgForm){
     this._global.userRegister(this.userData).subscribe(data=>{
       this._global.isRegistered=true;
+      this.toastr.success("Register Successfully!");
       setTimeout(()=>{
         this._global.isRegistered=false;
       },5000)
       this.router.navigate(['/login']);
     },(err)=>{
       this.userError=true;
+
       if(err.error.message.includes('duplicate')){
         if(err.error.message.includes('username') ){
           this.ErrorMessage="Username is used, please choose another one";
@@ -1056,7 +1059,7 @@ export class RegisterComponent implements OnInit {
     }else{
       this.ErrorMessage="Something went wrong, please try again";
     }
-
+    this.toastr.error(this.ErrorMessage)
     });
 }
   resetall(form:NgForm){

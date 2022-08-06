@@ -667,4 +667,55 @@ public UP_ICON=`<?xml version="1.0" encoding="iso-8859-1"?>
 </svg>
 
 `
+public REPLIES_ICON = `
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="92px" height="92px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
+<path id="XMLID_986_" d="M71.7,43.7C64.4,36.4,54,32.4,42,31.7V21c0-1.6-1.2-3.1-2.7-3.7c-1.5-0.6-3.3-0.3-4.5,0.9l-24.6,25
+	c-1.5,1.6-1.6,4.1,0,5.6l24.6,25c1.1,1.2,3,1.5,4.5,0.9c1.5-0.6,2.7-2.1,2.7-3.7V60.2C50,60,68.8,60.8,75.7,73c0.7,1.3,2,2,3.4,2
+	c0.3,0,0.6,0,1-0.1c1.8-0.5,3.1-2,3.1-3.9C83.1,70.4,83.1,55.1,71.7,43.7z M37.4,52.4c-2,0.2-3.4,1.9-3.4,4v4.8L19,46l15-15.2v4.8
+	c0,2.2,1.6,4,3.8,4c21.5,0,30.6,10.3,34.5,19.1C58.2,50.3,38.4,52.3,37.4,52.4z"/>
+</svg>
+
+`
+public INFO_ICON=`<?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<circle style="fill:#48A0DC;" cx="25" cy="25" r="25"/>
+<line style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" x1="25" y1="37" x2="25" y2="39"/>
+<path style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" d="M18,16
+	c0-3.899,3.188-7.054,7.1-6.999c3.717,0.052,6.848,3.182,6.9,6.9c0.035,2.511-1.252,4.723-3.21,5.986
+	C26.355,23.457,25,26.261,25,29.158V32"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
+`
 }

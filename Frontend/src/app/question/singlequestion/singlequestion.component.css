@@ -4,17 +4,17 @@
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  clear:both;
-  height:1px;
-  margin-bottom:20px;
   }
 
   .div1 { grid-area: 1 / 1 / 2 / 2; margin-top: 100%;}
+  .div1loading { grid-area: 1 / 1 / 2 / 2; margin-top: 30%;}
   .div2 { grid-area: 1 / 2 / 2 / 6; }
   .voteButton:disabled{
     cursor: not-allowed;
   }
-
+.votePosition{
+  margin-bottom: 60%;
+}
   .alertDiv{
     display: inline-flex;
     align-items: center;

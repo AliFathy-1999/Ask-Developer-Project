@@ -5,6 +5,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   status:string="show";
   passwordstatus:any="password"
   token = localStorage.getItem('token')
-  constructor(public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(private toastr: ToastrService,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     this._global.navbar = false;
     this._global.footer=false;
     this._global.isHomePage=false;
@@ -64,11 +65,14 @@ export class LoginComponent implements OnInit {
       this.userToken=data['data']['token'];
         this.router.navigate(['/home']);
         localStorage.setItem("token",`bearer ${this.userToken}`) ;
+        this.toastr.success("Login Successfully")
   },(err:any)=>{
       this.userError=true;
       this.ErrorMessage=err;
+
       if(err){
         this.ErrorMessage="Invalid Email or Password"
+        this.toastr.error("Invalid Email or Password")
       }
 
 

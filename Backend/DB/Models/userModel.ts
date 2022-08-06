@@ -111,6 +111,7 @@ schema.virtual('MyQuestions',{
     localField:"_id",
     foreignField:"userId",
  })
+
  schema.plugin(mongoosePaginate);
 schema.methods.toJSON = function () {
     const user = this;

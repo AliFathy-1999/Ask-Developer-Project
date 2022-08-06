@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
 import { IconsService } from 'src/app/services/icons.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -15,7 +16,7 @@ export class NavbarComponent implements OnInit {
   myfname:Boolean=false;
   isLoaded:boolean = false
   token:any = localStorage.getItem('token')
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService,private router:Router) {
+  constructor(private toastr: ToastrService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService,private router:Router) {
     iconRegistry.addSvgIconLiteral('home', sanitizer.bypassSecurityTrustHtml(this._icons.HOME_ICON));
     iconRegistry.addSvgIconLiteral('tags', sanitizer.bypassSecurityTrustHtml(this._icons.TAGS_ICON));
     iconRegistry.addSvgIconLiteral('users', sanitizer.bypassSecurityTrustHtml(this._icons.USER_ICON));
@@ -46,6 +47,7 @@ export class NavbarComponent implements OnInit {
   }
   logout(){
     this._global.userLogout().subscribe(data=>{
+      this.toastr.success("Logged out Successfully")
       let token2:any = localStorage.getItem('token');
       localStorage.clear();
       this.router.navigate(['/home']);

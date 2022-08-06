@@ -1,3 +1,4 @@
+import { EmbeddedViewRef } from '@angular/core';
 import {Schema,model} from 'mongoose';
 const mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
@@ -48,23 +49,21 @@ const schema = new Schema({
         type:Number,
         default:0,
     },
-    viwers:[{
+    viwers:[
+      {
       type:String,
       Default:[]
-    }],
-    answers:[
-        {
-            answer:{
-                type:String,
-                default:"",
-            }
-        }
-    ]
-
+      }
+  ],
 },
 {
     timestamps:true
 });
+schema.virtual('MyAnswers',{
+  ref:"answers",
+  localField:"_id",
+  foreignField:"questionId",
+})
 schema.plugin(mongoosePaginate);
 const questions = model("questions",schema)
 module.exports =questions;
