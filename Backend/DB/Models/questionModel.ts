@@ -1,5 +1,5 @@
-import { EmbeddedViewRef } from '@angular/core';
-import {Schema,model} from 'mongoose';
+
+import {Schema,model, Mongoose} from 'mongoose';
 const mongoose = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 const schema = new Schema({
@@ -62,7 +62,7 @@ const schema = new Schema({
 schema.virtual('MyAnswers',{
   ref:"answers",
   localField:"_id",
-  foreignField:"questionId",
+  foreignField:"QuestionId",
 })
 schema.plugin(mongoosePaginate);
 const questions = model("questions",schema)

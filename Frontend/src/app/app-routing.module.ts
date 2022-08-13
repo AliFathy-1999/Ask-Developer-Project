@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
+import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 import { UsersComponent } from './pages/users/users.component';
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
@@ -16,6 +17,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home',children:[
     {path: '', component:HomepageComponent},
+    { path: 'singlequestion/:id', component: SinglequestionComponent },
+  ] },
+  {path:'search',component:SearchpageComponent},
+  { path: 'search',children:[
+    {path: '', component:SearchpageComponent},
     { path: 'singlequestion/:id', component: SinglequestionComponent },
   ] },
   { path: 'register',component:RegisterComponent},

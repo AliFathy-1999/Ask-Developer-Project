@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
     this.isSubmitted =true
     if(this.data.valid){
     this._global.userLogin(this.data.value).subscribe((data:any)=>{
-      console.log(data);
       this.userToken=data['data']['token'];
         this.router.navigate(['/home']);
         localStorage.setItem("token",`bearer ${this.userToken}`) ;

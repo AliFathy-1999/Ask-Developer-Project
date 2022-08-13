@@ -4,3 +4,7 @@ nav{
   background-attachment: fixed;
   background-size: contain;
 }
+.searchBtn{
+  background-color: #2F3A53;
+  color:#9DC2D8;
+}

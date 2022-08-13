@@ -1,5 +1,6 @@
 import {Schema,model} from 'mongoose';
 const mongoose = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 const schema = new Schema(
   {
     userId: {
@@ -39,16 +40,6 @@ const schema = new Schema(
         Default: [],
       },
     ],
-    views: {
-      type: Number,
-      default: 0,
-    },
-    viwers: [
-      {
-        type: String,
-        Default: [],
-      },
-    ],
     Replies: [{
       type:String,
       Default:[]
@@ -59,5 +50,6 @@ const schema = new Schema(
   }
 );
 
+schema.plugin(mongoosePaginate);
 const answers = model("answers",schema)
 module.exports=answers

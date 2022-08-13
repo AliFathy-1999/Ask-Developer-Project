@@ -3,8 +3,8 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
-import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -25,7 +25,7 @@ export class HomepageComponent implements OnInit {
   QuestionSize:number = 0
   routerLinkStatus:Boolean=false;
   routerlink:String="";
-  constructor(private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
+  constructor(private toastr: ToastrService,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     this._global.navbar = true
     this._global.isHomePage = true
     if(this.token){
@@ -50,9 +50,6 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this._global.showAllQuestions(this.page,this.pageSize).subscribe((data:any)=>{
           this.AllQuestions = data.data
-          //this.QuestionSize = this.AllQuestions.length;
-          //this.answersCount = this.AllQuestions.answers.length;
-          console.log(this.QuestionSize)
         }, (err:any)=>{
           location.reload()
         } , ()=>{

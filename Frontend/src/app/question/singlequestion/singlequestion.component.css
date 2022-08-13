@@ -4,6 +4,7 @@
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  height: 200vw;
   }
 
   .div1 { grid-area: 1 / 1 / 2 / 2; margin-top: 100%;}
@@ -13,7 +14,7 @@
     cursor: not-allowed;
   }
 .votePosition{
-  margin-bottom: 60%;
+  margin-bottom: 30%;
 }
   .alertDiv{
     display: inline-flex;

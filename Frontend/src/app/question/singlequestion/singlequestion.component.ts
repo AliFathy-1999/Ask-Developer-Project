@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import {  Validators  } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Editor, Toolbar, toHTML, toDoc} from 'ngx-editor';
+import { Editor, Toolbar} from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './singlequestion.component.html',
   styleUrls: ['./singlequestion.component.css']
 })
-export class SinglequestionComponent implements OnInit {
+export class SinglequestionComponent implements OnInit,OnDestroy {
   Message:String="";
   votingArr:any=["","","","",""]
   isAnswer:boolean = false;
@@ -24,9 +24,35 @@ export class SinglequestionComponent implements OnInit {
   isAuthor:boolean=false;
   isLoaded:boolean = false;
   oneClick:boolean=false;
+  isAuthorAnswer:boolean=false;
+  oneClickAnswer:boolean=false;
   question:any = {};
+  answers:any = {};
+  AllAnswers:any = [{}]
+  voters:any
   toEditQuestionPage:string=`/editquestion/${this.questionIdParams}`;
   answersCount:number = 0;
+  editor:Editor=new Editor();
+  html= '';
+  p:any
+  previousLabel:string = 'Prev';
+  page = 0;
+  pageSize = 10;
+  QuestionSize:number = 0
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
+  isSubmitted:Boolean = false;
+  answerDataForm:any = new FormGroup({
+    body: new FormControl('',[Validators.required,Validators.minLength(6)]),
+  });
   constructor(private toastr:ToastrService,private activated : ActivatedRoute,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     iconRegistry.addSvgIconLiteral('addquestion', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('tags', sanitizer.bypassSecurityTrustHtml(this._icons.TAGS_ICON));
@@ -43,35 +69,59 @@ export class SinglequestionComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('reply', sanitizer.bypassSecurityTrustHtml(this._icons.REPLIES_ICON));
     iconRegistry.addSvgIconLiteral('info', sanitizer.bypassSecurityTrustHtml(this._icons.INFO_ICON));
    }
+
    toEditPage(id:any){
     this.router.navigateByUrl(`editquestion/${id}`);
    }
   ngOnInit(): void {
+    this.editor = new Editor();
     this._global.SingleQuestion(this.questionIdParams).subscribe((data:any)=>{
       this.question= data.data;
       this.questionsAnswers=data.data.answers
-      //console.log(data.data.answers[0]);
-      //console.log(data.data.answers);
-      this.questionsAnswers.forEach((answer:any)=>{
-        this.Answers.push(answer);
-      })
-      this.answersCount=data.data.answers.length
-      if(this.questionsAnswers.length>0){
-        this.isAnswer = true;
-      }
-      if(this.question.userId===this._global.userInfo.data._id){
-        this.isAuthor=true;
-      }
-      data.data.voters.forEach((element:any )=> {
-        if(element === this._global.userInfo.data._id){
+      this.voters=data.data.voters
+      this.voters.forEach((voter:any)=>{
+        if(voter === this._global.userInfo.data._id){
           this.oneClick=true;
         }
       })
+
+
+      if(this.question.userId===this._global.userInfo.data._id){
+        this.isAuthor=true;
+      }
     }, (err)=>{
       location.reload()
     } , ()=>{
         this.isLoaded = true
     })
+    this._global.getAllAnswer(this.questionIdParams,this.page,this.pageSize).subscribe((data:any)=>{
+      this.AllAnswers= data.data;
+      this.voters=data.data.voters
+      this.voters.forEach((voter:any)=>{
+        if(voter === this._global.userInfo.data._id){
+          this.oneClickAnswer=true;
+        }
+      })
+      if(this.AllAnswers.length>0){
+        this.isAnswer = false;
+
+      }
+      if(this.AllAnswers.userId===this._global.userInfo.data._id){
+        this.isAuthorAnswer=true;
+      }
+    }, (err)=>{
+      location.reload()
+    } , ()=>{
+        this.isLoaded = true
+    })
+  }
+  ngOnDestroy(): void {
+    this.editor.destroy();
+  }
+
+
+  get AnswerData(){
+    return this.answerDataForm.controls;
   }
   deletequestion(obj:any){
     this._global.DeleteQuestion(obj).subscribe((data:any)=>{
@@ -95,10 +145,8 @@ export class SinglequestionComponent implements OnInit {
         this.userSuccess=false;
         location.reload()
       },3000)
-
-
     },(err)=>{
-      this.toastr.error('Error in voting on Question');
+      this.toastr.error(err.error.message);
       location.reload()
     },()=>{
       this.isLoaded = true;
@@ -106,4 +154,38 @@ export class SinglequestionComponent implements OnInit {
       this.oneClick=true;
     })
   }
+  addanswer(id:any){
+    this.isSubmitted =true
+    if(this.answerDataForm.valid){
+      this._global.AddAnswer(this.answerDataForm.value,id).subscribe((data:any)=>{
+        this.toastr.success("Your answer has been added Successfully!");
+        location.reload();
+        if(data.error){
+          this.toastr.error(data.error);
+        }else{
+          this.router.navigate([`/singlequestion/${id}`]);
+        }
+
+      },(err:any)=>{
+       this.toastr.error(err.error.message);
+      })
+  }
+}
+votingonAnswer(id:any,obj:any){
+  this._global.VotingonAnswer(id,obj).subscribe((data:any)=>{
+
+    this.toastr.success('Voted on answer Successfully');
+      location.reload()
+  },(err)=>{
+    this.toastr.error(err.error.message);
+    //location.reload()
+  },()=>{
+    this.isLoaded = true;
+    this.isAuthorAnswer=true;
+    this.oneClickAnswer=true;
+  })
+}
+paginate(e:any){
+  this.p = e;
+}
 }

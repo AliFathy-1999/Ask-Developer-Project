@@ -16,8 +16,10 @@ export class GlobalService {
   public QuestionStatusED:Boolean=false;
   public QuestionStatusText="";
   public token = localStorage.getItem('token');
+  public searchData:any = ""
   url:string="http://localhost:2000/api/user/"
   questionurl:string="http://localhost:2000/api/question/"
+  answerurl:string="http://localhost:2000/api/answer/"
   constructor(private http:HttpClient) {
 
   }
@@ -69,5 +71,17 @@ export class GlobalService {
   }
   VotingonQuestion(id:any,vote:any){
     return this.http.put(`${this.questionurl}voting/${id}/${vote}`,null)
+  }
+  Search(obj:any,pageNum:number,limit:number){
+    return this.http.post(`${this.questionurl}search/${pageNum}/${limit}/?searchText=${obj}`,obj)
+  }
+  AddAnswer(obj:any,questionId:any){
+    return this.http.post(`${this.answerurl}addanswer/${questionId}`,obj)
+  }
+  getAllAnswer(id:any,pageNum:number,limit:number){
+    return this.http.get(`${this.answerurl}getanswers/${id}/${pageNum}/${limit}`)
+  }
+  VotingonAnswer(id:any,vote:any){
+    return this.http.put(`${this.answerurl}votinganswer/${id}/${vote}`,null)
   }
 }

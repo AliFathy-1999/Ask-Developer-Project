@@ -46,3 +46,39 @@ body{
 .media-comment {
   margin-top:20px
 }
+.vl {
+  border-left: 6px solid green;
+  height: 500px;
+}
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 0px;
+
+}
+.wrapper {
+  width: auto;
+  height: auto;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  background: #283149;
+  border-radius: 100px;
+  position: relative;
+  margin: 100px auto 0 auto;
+}
+
+
+.vertical-line {
+  width: 5px;
+  height: 100px;
+  background: #283149;
+  margin: 0px auto 0 auto;
+}
+
+

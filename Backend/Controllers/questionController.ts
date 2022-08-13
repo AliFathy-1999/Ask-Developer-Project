@@ -1,5 +1,5 @@
+
 import {Request,Response } from "express";
-import mongoose from "mongoose";
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
 class Question{
@@ -149,28 +149,33 @@ class Question{
     }
     static VotingQuestion = async(req:any,res:Response)=>{
         try{
-
-            let voteNumber;
-              if(req.params.vote === 'up'){
-                voteNumber = 1
-            }else if(req.params.vote === 'down'){
-                voteNumber = -1
+          let voteNumber;
+          const authorData =await questionModel.findById({_id:req.params.id}).select('userId')
+          const isAuthor:any = Array.of(authorData.userId).filter((authorid:any) => authorid !== req.user._id)
+          const votingData =await questionModel.findById({_id:req.params.id}).select('voters')
+          const Uservote:any = (votingData.voters).filter((voterid:any) => voterid == req.user._id).length
+            if(Uservote<=0 || (isAuthor=== req.user._id) ){
+                if(req.params.vote === 'up'){voteNumber = 1}else if(req.params.vote === 'down'){voteNumber = -1}
+                const questionData =await questionModel.findByIdAndUpdate(
+                  {_id:req.params.id},
+                  {$inc:{votes:voteNumber},
+                  $push:{voters:req.user._id}},
+                  );
+                  await questionData.save()
+            }else if(Uservote>0){
+                throw new Error("Author: You can't vote on your own question,Voter: You can vote on any question you have not voted on and Voter: You can vote only once on any question");
             }
-            const questionData =await questionModel.findByIdAndUpdate(
-              {_id:req.params.id},
-              {$inc:{votes:voteNumber},
-              $push:{voters:req.user._id}},
-              );
-            await questionData.save()
+
             res.status(200).send({
                 apiStatus:true,
-                data:questionData,
+                isAuthor:isAuthor,
+                votingData:votingData.voters,
+                filtervote:Uservote,
                 message:"Question Voted Successfully"
             })
         }catch(e:any){
             res.status(500).send({
                 apiStatus:false,
-                data:e,
                 message:e.message
             })
         }
@@ -183,8 +188,8 @@ class Question{
       };
       questionModel.paginate(query,options,async function(err:any, result:any) {
           try{
-            const searchData = req.params.tags
-                const questionData2 =  await questionModel.find({
+            const searchData = req.query.searchText
+                const questionData =  await questionModel.find({
                         $or:[
                         {'title': { $regex : searchData,$options: "$i"}},
                         {'body': { $regex : searchData,$options: "$i"}},
@@ -194,9 +199,11 @@ class Question{
             .sort({createdAt:-1});
               res.status(200).send({
                   apiStatus:true,
-                  data:questionData2,
+                  searchData:searchData,
+                  data:questionData,
                   message:"Your search results were successfully retrieved."
               })
+
           }catch(e:any){
               res.status(500).send({
                   apiStatus:false,

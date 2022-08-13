@@ -28,7 +28,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { TagInputModule } from 'ngx-chips';
 import {MatChipsModule} from '@angular/material/chips';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ErrorpageComponent } from './errorpage/errorpage.component';
@@ -36,6 +35,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { SinglequestionComponent } from './question/singlequestion/singlequestion.component';
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
 import { UsersComponent } from './pages/users/users.component';
+import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +51,7 @@ import { UsersComponent } from './pages/users/users.component';
     SinglequestionComponent,
     EditquestionComponent,
     UsersComponent,
+    SearchpageComponent,
 
 
   ],
@@ -110,7 +111,6 @@ import { UsersComponent } from './pages/users/users.component';
       },
     }),
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' }),
-    TagInputModule,
     MatChipsModule,
     NgSelectModule,
     MatCardModule,
