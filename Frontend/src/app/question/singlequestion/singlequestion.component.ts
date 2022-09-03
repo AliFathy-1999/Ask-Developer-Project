@@ -30,6 +30,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   answers:any = {};
   AllAnswers:any = [{}]
   voters:any
+  Avoters:any
   toEditQuestionPage:string=`/editquestion/${this.questionIdParams}`;
   answersCount:number = 0;
   editor:Editor=new Editor();
@@ -39,6 +40,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   page = 0;
   pageSize = 10;
   QuestionSize:number = 0
+  answerCount:number = 0;
   toolbar: Toolbar = [
     ['bold', 'italic'],
     ['underline', 'strike'],
@@ -50,6 +52,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
   isSubmitted:Boolean = false;
+  userid:any;
   answerDataForm:any = new FormGroup({
     body: new FormControl('',[Validators.required,Validators.minLength(6)]),
   });
@@ -68,6 +71,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     iconRegistry.addSvgIconLiteral('warning', sanitizer.bypassSecurityTrustHtml(this._icons.WARNING_ICON));
     iconRegistry.addSvgIconLiteral('reply', sanitizer.bypassSecurityTrustHtml(this._icons.REPLIES_ICON));
     iconRegistry.addSvgIconLiteral('info', sanitizer.bypassSecurityTrustHtml(this._icons.INFO_ICON));
+    iconRegistry.addSvgIconLiteral('send', sanitizer.bypassSecurityTrustHtml(this._icons.SEND_ICON));
    }
 
    toEditPage(id:any){
@@ -85,6 +89,9 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
         }
       })
 
+      this._global.answerCount(this.question._id).subscribe((data:any)=>{
+        this.answerCount = data.data
+      })
 
       if(this.question.userId===this._global.userInfo.data._id){
         this.isAuthor=true;
@@ -96,10 +103,13 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     })
     this._global.getAllAnswer(this.questionIdParams,this.page,this.pageSize).subscribe((data:any)=>{
       this.AllAnswers= data.data;
-      this.voters=data.data.voters
-      this.voters.forEach((voter:any)=>{
+      this.Avoters=data.data.voters
+      console.log(this.Avoters)
+      this.Avoters.forEach((voter:any)=>{
         if(voter === this._global.userInfo.data._id){
           this.oneClickAnswer=true;
+          this.isAuthorAnswer=true;
+
         }
       })
       if(this.AllAnswers.length>0){
@@ -114,6 +124,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     } , ()=>{
         this.isLoaded = true
     })
+
   }
   ngOnDestroy(): void {
     this.editor.destroy();
@@ -171,9 +182,12 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
       })
   }
 }
-votingonAnswer(id:any,obj:any){
-  this._global.VotingonAnswer(id,obj).subscribe((data:any)=>{
-
+votingonAnswer(id:any,userid:any,obj:any){
+  this._global.VotingonAnswer(id,userid,obj).subscribe((data:any)=>{
+    if(userid===this._global.userInfo.data._id){
+      this.oneClickAnswer=true;
+      this.isAuthorAnswer=true;
+    }
     this.toastr.success('Voted on answer Successfully');
       location.reload()
   },(err)=>{

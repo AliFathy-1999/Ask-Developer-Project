@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@ng-select/ng-select": "^9.0.2",
     "@popperjs/core": "^2.11.5",
+    "animate.css": "^4.1.1",
     "bootstrap": "^5.2.0",
     "ng-lazyload-image": "^9.1.3",
     "ngx-editor": "^14.0.0",

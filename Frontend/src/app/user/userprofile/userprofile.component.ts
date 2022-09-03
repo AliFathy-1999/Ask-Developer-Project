@@ -4,7 +4,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -29,6 +29,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserprofileComponent implements OnInit {
   token = localStorage.getItem('token');
+  mydata:any;
+  isSubmitted:boolean = false;
   file="";
   profileAlt:any
   isUploaded:Boolean = false;
@@ -38,6 +40,21 @@ export class UserprofileComponent implements OnInit {
   userSucess:Boolean = false;
   ErrorMessage:string="";
   SuccessMessage:string="";
+  userEditData:any = {}
+  userFname:any;
+  userLname:any;
+  userDOB:any;
+  userDOB2:any;
+  userPhoneno:any;
+  userCountry:any;
+  userGender:any;
+  userJobtitle:any;
+  userSummary:any;
+  userVotes:any;
+  userQuestions:any;
+  userAnswers:any;
+  isLoaded:boolean = false;
+  count:number = 0;
   userData={
     "fname":``,
     "lname":'',
@@ -55,6 +72,7 @@ export class UserprofileComponent implements OnInit {
     "DOB":'',
     "phoneno":'',
     "gender":'',
+    "country":'',
     "jobtitle":''
   }
   public jobs:any=[
@@ -1034,6 +1052,19 @@ export class UserprofileComponent implements OnInit {
     "yardmaster",
     "zoologist"
   ]
+  Countries:any=[
+    "Afghanistan",    "Albania",    "Algeria",    "Andorra",    "Angola",    "Antigua & Barbuda",    "Argentina",    "Armenia",    "Australia",    "Austria",    "Azerbaijan",    "Bahamas",    "Bahrain",    "Bangladesh",    "Barbados",    "Belarus",    "Belgium",    "Belize",    "Benin",    "Bhutan",    "Bolivia",    "Bosnia & Herzegovina",    "Botswana",    "Brazil",    "Brunei",    "Bulgaria",    "Burkina Faso",    "Burundi",    "Cambodia",    "Cameroon",    "Canada",    "Cape Verde",    "Central African Republic",    "Chad",    "Chile",    "China",    "Colombia",    "Comoros",    "Congo",    "Costa Rica",    "Cote D'Ivoire",    "Croatia",    "Cuba",    "Cyprus",    "Czech Republic",    "Democratic Republic of the Congo",    "Denmark",    "Djibouti",    "Dominica",    "Dominican Republic",    "East Timor",    "Ecuador",    "Egypt",    "El Salvador",    "Equatorial Guinea",    "Eritrea",    "Estonia",    "Ethiopia",    "Fiji",    "Finland",    "France",    "Gabon",    "Gambia",    "Georgia",    "Germany",    "Ghana",    "Greece",    "Grenada",    "Guatemala",    "Guinea",    "Guinea-Bissau",    "Guyana",    "Haiti",    "Honduras",    "Hungary",    "Iceland",    "India",    "Indonesia",    "Iran",    "Iraq",    "Ireland",    "Israel",    "Italy",    "Jamaica",    "Japan",    "Jordan",    "Kazakhstan",    "Kenya",    "Kiribati",    "Kosovo",    "Kuwait",    "Kyrgyzstan",    "Laos",    "Latvia",    "Lebanon",    "Lesotho",    "Liberia",    "Libya",    "Liechtenstein",    "Lithuania",    "Luxembourg",    "Madagascar",    "Malawi",    "Malaysia",    "Maldives",    "Mali",    "Malta",    "Marshall Islands",    "Mauritania",    "Mauritius",    "Mexico",    "Micronesia",    "Moldova",    "Monaco",    "Mongolia",    "Montenegro",    "Morocco",    "Mozambique",    "Myanmar",    "Namibia",    "Nauru",    "Nepal",    "New Zealand",    "Nicaragua",    "Niger",    "Nigeria",    "North Korea",    "North Macedonia",    "Norway",    "Oman",    "Pakistan",    "Palau",    "Palestinian State",    "Panama",    "Papua New Guinea",    "Paraguay",    "Peru",    "Poland",    "Portugal",    "Qatar",    "Romania",    "Russia",    "Rwanda",    "Samoa",    "San Marino",    "Sao Tome & Principe",    "Saudi Arabia",    "Senegal",    "Serbia",    "Seychelles",    "Sierra Leone",    "Singapore",    "Slovakia",    "Slovenia",    "Solomon Islands",    "Somalia",    "South Africa",    "South Korea",    "South Sudan",    "Spain",    "Sri Lanka",    "St. Kitts & Nevis",    "St. Lucia",    "St. Vincent & The Grenadines",    "Sudan",    "Suriname",    "Swaziland",    "Sweden",    "Switzerland",    "Syria",    "Taiwan",    "Tajikistan",    "Tanzania",    "Thailand",    "The Netherlands",    "The Philippines",    "Togo",    "Tonga",    "Trinidad & Tobago",    "Tunisia",    "Turkey",    "Turkmenistan",    "Tuvalu",    "Uganda",    "Ukraine",    "United Arab Emirates",    "United Kingdom",    "United States Of America",    "Uruguay",    "Uzbekistan",    "Vanuatu","Vatican City","Venezuela",    "Vietnam",    "Western Sahara",    "Yemen",    "Zambia",    "Zimbabwe"
+]
+editFormData:any = new FormGroup({
+  fname: new FormControl('', [Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+  lname: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(20)]),
+  DOB: new FormControl('', [Validators.required]),
+  country: new FormControl('', [Validators.required]),
+  gender: new FormControl('', [Validators.required]),
+  phoneno: new FormControl('', [Validators.required]),
+  jobtitle: new FormControl('', [Validators.required,Validators.minLength(2),Validators.maxLength(50)]),
+  summary: new FormControl('', [Validators.minLength(10),Validators.maxLength(500)]),
+});
   constructor(private toastr: ToastrService,config: NgbModalConfig, private modalService: NgbModal,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     iconRegistry.addSvgIconLiteral('editprofile', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('error2', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
@@ -1043,6 +1074,16 @@ export class UserprofileComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('uploadpic', sanitizer.bypassSecurityTrustHtml(this._icons.UPLOAD_IMAGE_ICON));
     iconRegistry.addSvgIconLiteral('warn', sanitizer.bypassSecurityTrustHtml(this._icons.WARNING_ICON));
     iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
+    iconRegistry.addSvgIconLiteral('name', sanitizer.bypassSecurityTrustHtml(this._icons.FULLNAME_ICON));
+    iconRegistry.addSvgIconLiteral('dob', sanitizer.bypassSecurityTrustHtml(this._icons.DOB_ICON));
+    iconRegistry.addSvgIconLiteral('gender', sanitizer.bypassSecurityTrustHtml(this._icons.GENDER_ICON));
+    iconRegistry.addSvgIconLiteral('usern', sanitizer.bypassSecurityTrustHtml(this._icons.USERNAME_ICON));
+    iconRegistry.addSvgIconLiteral('email', sanitizer.bypassSecurityTrustHtml(this._icons.EMAIL_ICON));
+    iconRegistry.addSvgIconLiteral('country', sanitizer.bypassSecurityTrustHtml(this._icons.COUNTRY_ICON));
+    iconRegistry.addSvgIconLiteral('phone', sanitizer.bypassSecurityTrustHtml(this._icons.PHONE_ICON));
+    iconRegistry.addSvgIconLiteral('jobt', sanitizer.bypassSecurityTrustHtml(this._icons.JOB_ICON));
+    iconRegistry.addSvgIconLiteral('about', sanitizer.bypassSecurityTrustHtml(this._icons.ABOUTME_ICON));
+    iconRegistry.addSvgIconLiteral('statistics', sanitizer.bypassSecurityTrustHtml(this._icons.STATISTICS_ICON));
     config.backdrop = 'static';
     config.keyboard = false;
 
@@ -1050,7 +1091,33 @@ export class UserprofileComponent implements OnInit {
   open(content:any) {
     this.modalService.open(content, { size: 'xl',backdropClass: 'light-blue-backdrop' , windowClass: 'modelColor'} );
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this._global.getMe().subscribe((data:any)=>{
+      this.userEditData = data.data;
+      this.userFname = data.data.fname;this.userLname = data.data.lname;this.userDOB = data.data.DOB;this.userDOB2 = (data.data.DOB).slice(0,10);
+      this.userCountry = data.data.country;this.userGender = data.data.gender;this.userPhoneno = data.data.phoneno;
+      this.userJobtitle = data.data.jobtitle;this.userSummary=data.data.summary;this.userVotes = data.data.votes;
+      if(this.userVotes<=0){
+        this.userVotes = 0;
+      }else if(this.userVotes>0){
+        this.userVotes = this.userVotes;
+      }
+      this.userQuestions = data.questionsCount;
+      this.userAnswers = data.answersCount;
+      this.count = data.data.summary.length
+    }
+    ,(err:any)=>{
+      location.reload();
+    },()=>{
+      setTimeout(()=>{
+        this.isLoaded = true;
+      },3000)
+    })
+  }
+  get UserData(){
+    return this.editFormData.controls;
+  }
   uploadpimage(){
     this.uploadStatus = true;
   }
@@ -1058,27 +1125,21 @@ export class UserprofileComponent implements OnInit {
     this.file = e.target.files;
     this.isUploaded = true;
   }
-  handleEditSubmit(form:NgForm){
-    this._global.editprofile(this.newUserData).subscribe((data:any)=>{
-      this.userSucess=true;
+  handleEditSubmit(){
+    this.isSubmitted = true;
+    this._global.editprofile(this.editFormData.value).subscribe((data:any)=>{
 
-      setTimeout(()=>{
-        this.userSucess=false;
-      },5000)
-      this.SuccessMessage = data.message;
-        location.reload();
+      this.toastr.success("Your profile has been updated successfully");
+      location.reload();
       },(err:any)=>{
-        this.userError=true;
+        location.reload()
+        this.toastr.error("JPG or PNG or JPEG or TIFF and no larger than 25 MB !");
+
+      },()=>{
         setTimeout(()=>{
-          this.userError=false;
-        },5000)
-       if(err.error.message.includes('validation failed') && err.error.message.includes('required')){
-        this.ErrorMessage="Please fill all the fields";
-      }else if(err.error.message.includes('Phone number is invalid')){
-        this.ErrorMessage="Phone number is invalid, please enter a valid phone number";
-      }else{
-        this.ErrorMessage="Something went wrong, please try again";
-      }
+          this.isLoaded = false;
+        },3000)
+
       }
     )
 
@@ -1097,8 +1158,7 @@ export class UserprofileComponent implements OnInit {
       location.reload();
     },(err:any)=>{
       this.userError=true;
-      this.toastr.success("Error in uploading profile picture: " + err.message);
-      this.ErrorMessage="Only images are allowed (.png, .jpg, .tiff, .jpeg)";
+      this.toastr.error("Error in uploading profile picture: " + err.message);
       setTimeout(()=>{
         this.userError = false;
       },5000)

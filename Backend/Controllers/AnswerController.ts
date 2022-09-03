@@ -2,12 +2,14 @@ let mongoose = require('mongoose')
 import { Request,Response } from "express"
 const QuestionModel = require("../DB/Models/questionModel")
 const AnswerModel = require("../DB/Models/AnswerModel")
+const userModel = require("../DB/Models/userModel")
+const questionModel = require("../DB/Models/questionModel")
 const RepliesModel = require("../DB/Models/replyModel")
 class Answer{
   static addAnswer = async(req:any,res:Response)=>{
     try{
       const qId  = mongoose.Types.ObjectId(req.params.id);
-    const answerData = new AnswerModel({
+      const answerData = new AnswerModel({
       ...req.body,
       userId:req.user._id,
       author:req.user.username,
@@ -101,7 +103,13 @@ class Answer{
               {$inc:{votes:voteNumber},
               $push:{voters:req.user._id}},
               );
-              await answerData.save()
+              const userVotes =await userModel.findByIdAndUpdate(
+                {_id:req.params.userid},
+                {$inc:{votes:voteNumber},
+                $push:{voters:req.user._id}}
+                );
+              await answerData.save() && userVotes.save()
+
         }else if(Uservote>0){
             throw new Error("Author: You can't vote on your own answer,Voter: You can vote on any answer you have not voted on and Voter: You can vote only once on any answer");
         }
@@ -120,6 +128,47 @@ class Answer{
         })
     }
 }
+  static myAnswers = async (req: any, res: Response)=>{
+    var query   = {};
+    var options = {
+        lean:     true,
+        page:     +req.params.pageNum,
+        limit:    +req.params.limit
+    };
+    AnswerModel.paginate(query,options,async function(err:any, result:any) {
+        try{
+           const myanswers =  await AnswerModel.find({userId:req.user._id}).select("QuestionId and body and createdAt and updatedAt").sort({createdAt:-1})
+            res.status(200).send({
+                apiStatus:true,
+                data:myanswers,
+                message:"All my Answers fetched Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    });
+  }
+  static SingleQuestion = async (req: any, res: Response)=>{
+      try {
+        const answer = await AnswerModel.findById({_id:req.params.id})
+        res.status(200).send({
+            apiStatus:true,
+            data:answer,
+            message:"Answer fetched Successfully"
+        })
+      } catch (error:any) {
+          res.status(500).send({
+              apiStatus:false,
+              data:error,
+              message:error.message
+          })
+      }
+        
+  }
   static getReplyMessage = async(req:any,res:Response)=>{
     try{
     const reply = await RepliesModel.find();

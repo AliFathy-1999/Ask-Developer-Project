@@ -25,6 +25,7 @@ import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestion
 import { AddquestionComponent } from './question/addquestion/addquestion.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTabsModule} from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -36,6 +37,8 @@ import { SinglequestionComponent } from './question/singlequestion/singlequestio
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
 import { UsersComponent } from './pages/users/users.component';
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
+import { TestComponent } from './test/test.component';
+import { MyanswersComponent } from './user/myanswers/myanswers.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +55,8 @@ import { SearchpageComponent } from './pages/searchpage/searchpage.component';
     EditquestionComponent,
     UsersComponent,
     SearchpageComponent,
+    TestComponent,
+    MyanswersComponent,
 
 
   ],
@@ -118,7 +123,7 @@ import { SearchpageComponent } from './pages/searchpage/searchpage.component';
     LazyLoadImageModule,
     NgxPaginationModule,
     MatDialogModule,
-
+    MatTabsModule
   ],
   providers: [
     {

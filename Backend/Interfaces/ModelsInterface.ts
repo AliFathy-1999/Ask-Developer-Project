@@ -6,6 +6,7 @@ interface IUserModel {
     username: string;
     phoneno: string;
     age: number;
+    votes:number
     gender:string;
     DOB:Date,
     status: boolean;
@@ -13,5 +14,10 @@ interface IUserModel {
     role: string;
     pImage: string;
     tokens: Array<string>;
+    country:string;
+    summary:string;
+    answers:number;
+    questions:number;
+    //answersCount:number;
 }
 export { IUserModel };

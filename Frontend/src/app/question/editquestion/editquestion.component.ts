@@ -7,6 +7,7 @@ import {  Validators  } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Editor, Toolbar, toHTML, toDoc} from 'ngx-editor';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-editquestion',
   templateUrl: './editquestion.component.html',
@@ -54,7 +55,7 @@ export class EditquestionComponent implements OnInit, OnDestroy {
     body: new FormControl('',[Validators.required,Validators.minLength(6)]),
     tags: new FormControl('', [Validators.required]),
   });
-  constructor(private activated : ActivatedRoute,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,private _global:GlobalService) {
+  constructor(private toastr:ToastrService,private activated : ActivatedRoute,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,private _global:GlobalService) {
     iconRegistry.addSvgIconLiteral('addquestion', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('submitquestion', sanitizer.bypassSecurityTrustHtml(this._icons.SEND_ICON));
     iconRegistry.addSvgIconLiteral('error', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
@@ -90,6 +91,11 @@ export class EditquestionComponent implements OnInit, OnDestroy {
   Editquestion(){
     this._global.EditQuestion(this.questionDataForm.value,this.questionIdParams).subscribe((data:any)=>{
       this.router.navigate(['/myquestions'])
+      this.toastr.success('Question Edited Successfully', 'Success');
+    },(err:any)=>{
+      this.userError = true;
+      this.ErrorMessage = err.error.message;
+      this.toastr.error(this.ErrorMessage, 'Error');
     })
   }
 }

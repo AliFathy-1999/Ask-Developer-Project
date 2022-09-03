@@ -1,7 +1,7 @@
 <div class="alert alert-success mt-5" role="alert" *ngIf="userSuccess">
   <mat-icon svgIcon="success" class="text-success"></mat-icon> <strong> {{Message}}</strong>
  </div>
-<div class="parent " *ngIf="!isLoaded ; else questionData">
+<div class="parent mt-5" *ngIf="!isLoaded ; else questionData">
   <div class="div1 mt-5">
     <ngx-skeleton-loader class=" ms-2 mt-3 d-block" count="1"
     [theme]="{width: '0',height:'0',  'border-style': 'solid','border-width': '0 27px 36px 27px',
@@ -27,7 +27,7 @@
   </div>
   </div>
 <ng-template #questionData>
-  <div class="parent mb-5">
+  <div class="parent mb-5 mt-5">
     <div class="div1" >
       <div class="container text-center" >
         <div class="row d-grid g-2 g-lg-3 ">
@@ -63,7 +63,7 @@
             <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
             <mat-card-title>
               <div class="">
-                <mat-icon svgIcon="answers" class="text-success" placement="top" ngbTooltip="Answers"></mat-icon>   <span class="me-2 ms-1 text-success">{{answersCount}}</span>
+                <mat-icon svgIcon="answers" class="text-success" placement="top" ngbTooltip="Answers"></mat-icon>   <span class="me-2 ms-1 text-success">{{answerCount}}</span>
                 <mat-icon svgIcon="votes" class="text-primary" placement="top" ngbTooltip="Votes"></mat-icon>   <span class="me-2 ms-1 text-primary">{{question.votes}}</span>
                 <mat-icon svgIcon="views" class="text-info" placement="top" ngbTooltip="Views"></mat-icon>  <span class="me-2 ms-1 text-info">{{question.views}}</span>
               </div>
@@ -110,10 +110,13 @@
               [(ngModel)]="html"
               name="body"
                minlength="6"
+               required
             ></ngx-editor>
           </div>
           <div class="d-flex justify-content-end me-5 mb-4">
-            <button class="btn btn-primary" type="submit">Submit answer</button>
+            <button class="btn fw-bold submitanswer" style="background-color:#283149;color: #C5E0EA;" type="submit"
+            [disabled]="AnswerData?.['body']?.invalid">
+              <mat-icon svgIcon="send"></mat-icon> Submit answer</button>
           </div>
         </form>
         <div *ngIf="isAnswer" class="alert alert-info">
@@ -125,7 +128,7 @@
           <div class="container text-center " *ngFor="let answer of AllAnswers | paginate: { itemsPerPage: 5, currentPage: p, totalItems: AllAnswers.count}">
             <div class="row d-grid g-2 g-lg-3 votePosition"  >
               <div class="col">
-                <div class="p-3 col-2" ><button  class="border-0 bg-transparent voteButton" [disabled]="isAuthorAnswer || oneClickAnswer" (click)="votingonAnswer(answer._id, 'up')"> <mat-icon placement="top" ngbTooltip="Upvote" svgIcon="arrowup2"></mat-icon> </button></div>
+                <div class="p-3 col-2" ><button  class="border-0 bg-transparent voteButton" [disabled]="isAuthorAnswer || oneClickAnswer" (click)="votingonAnswer(answer._id,answer.userId, 'up')"> <mat-icon placement="top" ngbTooltip="Upvote" svgIcon="arrowup2"></mat-icon> </button></div>
               </div>
               <div class="col" >
                 <div class="p-1 ms-3 col-2 border bg-light">
@@ -134,7 +137,7 @@
               </div>
               <div class="col">
                 <div class="p-3 col-2">
-                  <button class="border-0 bg-transparent voteButton" [disabled]="isAuthorAnswer || oneClickAnswer"  (click)="votingonAnswer(answer._id, 'down')"><mat-icon  placement="bottom" ngbTooltip="Downvote" svgIcon="arrowdown"></mat-icon></button>
+                  <button class="border-0 bg-transparent voteButton" [disabled]="isAuthorAnswer || oneClickAnswer"  (click)="votingonAnswer(answer._id,answer.userId, 'down')"><mat-icon  placement="bottom" ngbTooltip="Downvote" svgIcon="arrowdown"></mat-icon></button>
                 </div>
               </div>
             </div>

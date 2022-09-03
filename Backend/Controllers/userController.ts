@@ -1,11 +1,13 @@
 import {Request,Response } from "express";
 const multer = require('multer');
 const sharp = require('sharp');
-//const fs=require('fs');
-import * as fs from 'fs';
+
 const path=require('path');
 const userModel= require("../DB/Models/userModel")
+const questionModel= require("../DB/Models/questionModel")
+const answerModel= require("../DB/Models/AnswerModel")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
+
 class User{
     static userRegister:ControllerInterface= async(req:Request,res:Response) =>{
         try{
@@ -42,9 +44,13 @@ class User{
         }
     }
     static getMe =async (req:any,res:Response) => {
+        const questionsCount = await questionModel.countDocuments({userId:req.user._id})
+        const answersCount = await answerModel.countDocuments({userId:req.user._id})
         res.status(200).send({
             apiStatus:true,
             data:req.user,
+            questionsCount:questionsCount,
+            answersCount:answersCount,
         })
     }
     static userLogout = async(req:any,res:Response)=>{
@@ -108,6 +114,30 @@ class User{
             })
         }
     }
-
+    static getAllUsers = async(req:any,res:Response)=>{
+        var query   = {};
+        var options = {
+            
+            lean:     true,
+            page:     req.params.pageNum,
+            limit:    req.params.limit
+        };
+        userModel.paginate(query,options,async function(err:any, result:any) {
+            try{
+               const users =  await  userModel.find().select("_id and username and pImage and jobtitle and country and votes").sort({createdAt:-1})
+                res.status(200).send({
+                    apiStatus:true,
+                    data:users,
+                    message:"All User information fetched Successfully"
+                })
+            }catch(e:any){
+                res.status(500).send({
+                    apiStatus:false,
+                    data:e,
+                    message:e.message
+                })
+            }
+        });
+    }
 }
 module.exports = User;

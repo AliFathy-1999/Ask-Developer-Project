@@ -81,7 +81,25 @@ export class GlobalService {
   getAllAnswer(id:any,pageNum:number,limit:number){
     return this.http.get(`${this.answerurl}getanswers/${id}/${pageNum}/${limit}`)
   }
-  VotingonAnswer(id:any,vote:any){
-    return this.http.put(`${this.answerurl}votinganswer/${id}/${vote}`,null)
+  VotingonAnswer(id:any,userid:any,vote:any){
+    return this.http.put(`${this.answerurl}votinganswer/${id}/${userid}/${vote}`,null)
+  }
+  AllUsers(pageNum:number,limit:number){
+    return this.http.get(`${this.url}allusers/${pageNum}/${limit}`)
+  }
+  answerCount(id:any){
+    return this.http.put(`${this.questionurl}countanswers/${id}`,null)
+  }
+  showmyanswers(pageNum:number,limit:number){
+    return this.http.get(`${this.answerurl}allmyanswers/${pageNum}/${limit}`)
+  }
+  DeleteAnswer(qid:any,id:any){
+    return this.http.delete(`${this.answerurl}delanswer/${qid}/${id}`)
+  }
+  EditAnswer(qid:any,id:any,obj:any){
+    return this.http.put(`${this.answerurl}editanswer/${qid}/${id}`,obj)
+  }
+  SingleAnswer(id:any){
+    return this.http.get(`${this.answerurl}answer/${id}`)
   }
 }

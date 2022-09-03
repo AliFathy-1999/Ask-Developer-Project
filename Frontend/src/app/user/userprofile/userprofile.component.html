@@ -1,176 +1,376 @@
-<div class="container  bg-white mt-5 mb-5 card">
-  <div class="row">
-      <div class="col-md-4 border-right mt-5">
-        <div class="d-flex flex-column align-items-center text-center p-3 py-5  mt-5">
-          <form class="form-horizontal" role="form" #upload="ngForm">
 
-        <div class="profilepic m-auto">
-          <div class="d-flex justify-content-center ">
-          <img class="profilepic__image" src="{{this._global.userInfo.data?.pImage}}" width="200" height="200" alt="{{this.profileAlt}}" />
-        </div>
+<mat-tab-group>
+  <mat-tab class="nav nav-borders card">
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon" svgIcon="profile"></mat-icon>
+      Profile
+    </ng-template>
+    <div class="container-xl px-4 mt-4" *ngIf="!isLoaded ; else userData1">
+      <div class="row">
+          <div class="col-xl-3">
+              <!-- Profile picture card-->
+              <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Profile Picture</div>
+                  <div class="card-body text-center">
+                      <!-- Profile picture image-->
+                      <ngx-skeleton-loader  count="1" [theme]="{width: '150px', height: '150px'}"
+                       appearance="circle"></ngx-skeleton-loader>
+                       <div class="d-flex justify-content-center">
+                        <ngx-skeleton-loader [theme]="{width: '100px',display: 'block'}" count="1"  appearance="line"></ngx-skeleton-loader>
 
-          <div class="profilepic__content">
-            <span class="profilepic__text" (click)="uploadpimage()">
-              <strong> <mat-icon svgIcon="uploadpic"></mat-icon>  Upload Profile Picture </strong></span>
-            </div>
-        </div>
-        <strong>Chanege Profile picture</strong>
-        <div class="d-flex justify-content-center">
-        <input *ngIf="uploadStatus" type="file"  class="form-control w-75" (change)="handlefile($event)">
-        <button *ngIf="isUploaded" class="btn border-primary border-3 text-primary w-75 mt-2 " type="submit" (click)="handleUpload(upload)" [disabled]="!upload.valid"><mat-icon svgIcon="save"></mat-icon> Save profile picture</button>
-        </div>
-        </form>
-        </div>
-
-        </div>
-
-      <div class="col-md-8 border-right">
-
-          <div class="py-5">
-            <div class="col-xl-10" >
-
-              <div class="card-body p-md-5 text-black">
-                <div class="alert alert-success" role="alert" *ngIf="userSucess">
-                  <mat-icon svgIcon="success" class="text-success"></mat-icon> {{SuccessMessage}}
-                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="userError">
-                  <mat-icon svgIcon="error2" class="text-danger"></mat-icon> {{ErrorMessage}}
-                 </div>
-                <h1 class="text-center mb-5 card-header"><mat-icon svgIcon="profile"></mat-icon> {{this._global.userInfo.data?.fname}}'s Profile</h1>
-                <div class="row">
-                  <div class="col-md-4 mb-4">
-                    <div class="form-outline">
-                      <input type="text" class="form-control form-control-lg text-primary" value="{{this._global.userInfo.data?.fname}}"  placeholder="First name" readonly />
-                    </div>
+                       </div>
+                       <ngx-skeleton-loader [theme]="{width: '200px'}" count="2"  appearance="line"></ngx-skeleton-loader>
                   </div>
-                  <div class="col-md-4 mb-4">
-                    <div class="form-outline">
-                      <input type="text"  class="form-control form-control-lg text-primary" value="{{this._global.userInfo.data?.lname}}"  placeholder="Last name" readonly/>
-                    </div>
-                  </div>
-                  <div class="col-md-4 mb-4">
-                    <div class="form-outline">
-                      <input type="text" name="DOB" class="form-control form-control-lg text-primary" value="{{this._global.userInfo.data?.DOB.slice(0, 10)}}" placeholder="DOB" readonly/>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" name="username" class="form-control form-control-lg text-primary" placeholder="Username" value="{{this._global.userInfo.data?.username}}" readonly />
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="email" name="email"  class="form-control form-control-lg text-primary"  placeholder="Email" value="{{this._global.userInfo.data?.email}}" readonly />
-                </div>
-                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
-                  <h2 class="mb-0 me-4">Gender: </h2>
-                  <div class="form-check form-check-inline mb-0 me-4">
-                    <input class="form-check-input" type="radio" name="gender" checked/>
-                    <label class="form-check-label text-primary" for="femaleGender">{{_global.userInfo.data?.gender}}</label>
-                  </div>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" name="phoneno" id="form3Example9" class="form-control form-control-lg text-primary" value="{{this._global.userInfo.data?.phoneno}}" placeholder="Phone number" readonly />
-                </div>
-                <div class="form-outline mb-2">
-                  <input type="text" name="jobtitle" class="form-control form-control-lg text-primary" value="{{this._global.userInfo.data?.jobtitle}}" placeholder="Job Title" readonly />
-                </div>
-
               </div>
-              <div class="d-flex justify-content-center">
-                <button class="btn p-3 mb-5 w-25 fs-5" (click)="open(content)" style="background-color: #283149; color:#DFEFF4;"><mat-icon svgIcon="editprofile"></mat-icon> Edit profile</button>
+              <div class="container-xl px-4 mt-4 " >
+                <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Statistics</div>
+                  <div class="card-body text-center">
+                      <div >
+                        <h3 class="text-center"><mat-icon svgIcon="statistics"></mat-icon> Statistics</h3>
+                        <div style="background-color: #F6F6F6;padding: 2%;">
+                          <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">
+                                  <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                                </div>
+                                <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                              </div>
+                              <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                            </li>
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">
+                                  <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                                </div>
+                                <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                              </div>
+                              <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                            </li>
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">
+                                  <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                                </div>
+                                <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                              </div>
+                              <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>
               </div>
-            </div>
+              </div>
+          </div>
+          <div class="col-xl-9">
+              <!-- Account details card-->
+              <div class="card mb-4">
+                  <div class="card-header fw-3">Account Details</div>
+                  <div class="card-body">
+                    <ul class="list-group">
+                      <li class="list-group-item fs-5">
+                        <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                      </li>
+                      <li class="list-group-item fs-5">
+                        <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                      </li>
+                      <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                      <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                      <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                      <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                      <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+
+                    </ul>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <ng-template #userData1>
+    <div class="container-xl px-4 mt-4" >
+      <div class="row">
+          <div class="col-xl-4">
+              <!-- Profile picture card-->
+              <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Profile Picture</div>
+                  <div class="card-body text-center">
+                      <!-- Profile picture image-->
+                      <img class="img-account-profile rounded-circle mb-2" src="{{this._global.userInfo.data?.pImage}}" alt="">
+                      <div class="text-center">
+                        <h3 ><mat-icon svgIcon="about"></mat-icon> About me</h3>
+                        <div style="background-color: #F6F6F6;padding: 2%;text-align: center;" class="blockquotetext">
+                          {{userSummary}}
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="container-xl px-4 mt-4" >
+                <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Statistics</div>
+                  <div class="card-body text-center">
+                      <div >
+                        <h3 class="text-center"><mat-icon svgIcon="statistics"></mat-icon> Statistics</h3>
+                        <div style="background-color: #F6F6F6;padding: 2%;">
+                          <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">Votes</div>
+                                The number of votes that have been voted for you
+                              </div>
+                              <span class="badge bg-primary rounded-pill">{{userVotes}}</span>
+                            </li>
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">Questions</div>
+                                Questions asked by you
+                              </div>
+                              <span class="badge bg-primary rounded-pill">{{userQuestions}}</span>
+                            </li>
+                            <li class="list-group-item d-flex  align-items-start">
+                              <div class=" me-auto">
+                                <div class="fw-bold">Answers</div>
+                                Answers answered by you
+                              </div>
+                              <span class="badge bg-primary rounded-pill">{{userAnswers}}</span>
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+          </div>
+
+          <div class="col-xl-8">
+              <!-- Account details card-->
+              <div class="card mb-4">
+                  <div class="card-header fw-3">Account Details</div>
+                  <div class="card-body">
+                    <ul class="list-group">
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="name" ></mat-icon>
+                        <strong class="text-primary" > Full name : </strong>{{userEditData.fname}} {{userEditData.lname}}
+                      </li>
+                      <li class="list-group-item fs-5">
+                        <mat-icon svgIcon="dob" class="text-primary"></mat-icon>  <strong class="text-primary">
+                           Date of Birth : </strong> {{this._global.userInfo.data?.DOB.slice(0, 10)}}
+                      </li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="gender" class="text-primary"></mat-icon>
+                        <strong class="text-primary" >  Gender : </strong>{{this._global.userInfo.data?.gender}}</li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="usern" class="text-primary"></mat-icon>
+                        <strong class="text-primary" > Username :  </strong> {{this._global.userInfo.data?.username}}</li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="email" class="text-primary"></mat-icon>
+                        <strong class="text-primary" > Email : </strong> {{this._global.userInfo.data?.email}}</li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="country" class="text-primary"></mat-icon>
+                        <strong class="text-primary" >Country : </strong> {{this._global.userInfo.data?.country}}</li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="phone" class="text-primary"></mat-icon>
+                        <strong class="text-primary" > Phone Number : </strong> {{this._global.userInfo.data?.phoneno}}</li>
+                      <li class="list-group-item fs-5"><mat-icon svgIcon="jobt" class="text-primary"></mat-icon>
+                        <strong class="text-primary" >  Job Title : </strong> {{this._global.userInfo.data?.jobtitle}}</li>
+                    </ul>
+
+                  </div>
+              </div>
+          </div>
+
+      </div>
+    </div>
+  </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon" svgIcon="edit"></mat-icon>
+      Edit Profile
+    </ng-template>
+    <div class="container-xl px-4 mt-4" *ngIf="!isLoaded ; else userdata">
+      <div class="row">
+          <div class="col-xl-3">
+              <!-- Profile picture card-->
+              <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Profile Picture</div>
+                  <div class="card-body text-center">
+                      <!-- Profile picture image-->
+                      <ngx-skeleton-loader  count="1" [theme]="{width: '150px', height: '150px'}"
+                       appearance="circle"></ngx-skeleton-loader>
+                       <div class="d-flex justify-content-center">
+                        <ngx-skeleton-loader [theme]="{width: '100px',display: 'block'}" count="1"  appearance="line"></ngx-skeleton-loader>
+
+                       </div>
+                       <ngx-skeleton-loader [theme]="{width: '200px'}" count="2"  appearance="line"></ngx-skeleton-loader>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-9">
+              <!-- Account details card-->
+              <div class="card mb-4">
+                  <div class="card-header fw-3">Account Details</div>
+                  <div class="card-body p-5">
+                    <ngx-skeleton-loader [theme]="{width: '40%'}" count="1" class=" m-5"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '40%'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{width: '40%'}" count="1" class="m-5 "  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '40%'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{width: '100%'}" count="1"   appearance="line"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{width: '40%'}" count="1" class="m-5"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '40%'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{width: '40%'}" count="1" class="m-5"  appearance="line"></ngx-skeleton-loader> <ngx-skeleton-loader [theme]="{width: '40%'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{width: '100%'}" count="1"   appearance="line"></ngx-skeleton-loader>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <ng-template #userdata>
+    <div class="container-xl px-4 mt-4">
+      <div class="row">
+          <div class="col-xl-4">
+              <!-- Profile picture card-->
+              <form class="form-horizontal" role="form" #upload="ngForm">
+
+              <div class="card mb-4 mb-xl-0">
+                  <div class="card-header"><mat-icon svgIcon="uploadpic"></mat-icon> Profile Picture</div>
+                  <div class="card-body text-center">
+                      <!-- Profile picture image-->
+                      <img class="img-account-profile rounded-circle mb-2" src="{{this._global.userInfo.data?.pImage}}" alt="">
+                      <!-- Profile picture help block-->
+                      <div class="small font-italic text-muted mb-4">JPG or PNG or JPEG or TIFF no larger than 25 MB</div>
+
+                      <button class="btn btn-primary" type="button" (click)="uploadpimage()"><mat-icon svgIcon="uploadpic"></mat-icon> Upload new image</button>
+                      <div class="d-flex justify-content-center">
+                        <input *ngIf="uploadStatus" type="file"  class="form-control w-75" (change)="handlefile($event)">
+                      </div>
+                        <button *ngIf="isUploaded" class="btn border-primary border-3 text-primary w-75 mt-2 " type="submit" (click)="handleUpload(upload)" [disabled]="!upload.valid"><mat-icon svgIcon="save"></mat-icon> Save profile picture</button>
+
+                  </div>
+              </div>
+            </form>
 
           </div>
-</div>
-<ng-template #content let-c="close"  let-d="dismiss">
-  <div style="background-color: #283149;color: white;">
-  <div class="modal-header" >
-    <h2 class="modal-title Modeltext" id="modal-basic-title"> <mat-icon svgIcon="edit"></mat-icon> Edit Profile Form</h2>
-    <button type="button" class="btn-close bg-danger" aria-label="Close" (click)="d('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <div class="alert alert-warning" role="alert">
-     <mat-icon svgIcon="warn"></mat-icon> If you want not to change the your specific field, write same value ex. If your first name is john write john in textfield.
+          <div class="col-xl-8">
+
+              <div class="card mb-4">
+                  <div class="card-header"><mat-icon svgIcon="profile"></mat-icon> Account Details</div>
+                  <div class="card-body">
+                    <form [formGroup]="editFormData" (ngSubmit)="handleEditSubmit()" >
+
+                          <div class="row gx-3 mb-3">
+
+                              <div class="col-md-6">
+                                  <label class="small mb-1" for="inputFirstName">First name</label>
+                                  <input class="form-control" id="inputFirstName" type="text" formControlName="fname" name="fname"
+                                   placeholder="Enter your first name" value="{{userEditData.fname}}"
+                                   [(ngModel)]="userFname" required  minlength="3" maxlength="20">
+                                   <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['fname']?.invalid || (UserData?.['fname']?.touched || UserData?.['fname']?.dirty)">
+                                    <div *ngIf="UserData?.['fname']?.errors?.['required']"> First name is required .</div>
+                                    <div *ngIf="UserData?.['fname']?.errors?.['minlength']">Min Length of First name is 3 .</div>
+                                    <div *ngIf="UserData?.['fname']?.errors?.['maxlength']">Max Length of First name is 20 .</div>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                  <label class="small mb-1" for="inputLastName">Last name</label>
+                                  <input class="form-control" id="inputLastName" type="text" formControlName="lname" name="lname"
+                                  placeholder="Enter your last name" value="{{userEditData.lname}}" [(ngModel)]="userLname" required  minlength="3" maxlength="20">
+                                  <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['lname']?.invalid || (UserData?.['lname']?.touched || UserData?.['lname']?.dirty)">
+                                    <div *ngIf="UserData?.['lname']?.errors?.['required']"> Last name is required .</div>
+                                    <div *ngIf="UserData?.['lname']?.errors?.['minlength']">Min Length of Last name is 3 .</div>
+                                    <div *ngIf="UserData?.['lname']?.errors?.['maxlength']">Max Length of Last name is 20 .</div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row gx-3 mb-3">
+                              <div class="col-md-6">
+                                  <label class="small mb-1" for="inputOrgName">Date of Birth</label>
+                                  <input class="form-control" id="inputOrgName" type="date"
+                                  formControlName="DOB" name="DOB" placeholder="Enter your Date of Birth"  value="{{userEditData.DOB}}"
+                                  [(ngModel)]="userDOB2" required   min="1960-01-01" max="2010-12-31">
+                                  <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['DOB']?.invalid || (UserData?.['DOB']?.touched || UserData?.['DOB']?.dirty)">
+                                    <div *ngIf="UserData?.['DOB']?.errors?.['required']"> Date of Birth is required .</div>
+                                    <div *ngIf="UserData?.['DOB']?.errors?.['minlength']"> User Date of Birth starts from 1960/01/01</div>
+                                    <div *ngIf="UserData?.['DOB']?.errors?.['maxlength']"> User Date of Birth ends from 2010/12/31</div>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Phone number</label>
+                                <input class="form-control" id="inputPhone" type="text" placeholder="Enter your phone number" value="{{userEditData.phoneno}}"
+                                formControlName="phoneno" name="phoneno" [(ngModel)]="userPhoneno" required >
+                                <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['phoneno']?.invalid || (UserData?.['phoneno']?.touched || UserData?.['phoneno']?.dirty)">
+                                  <div *ngIf="UserData?.['phoneno']?.errors?.['required']"> Phone number is required .</div>
+                                </div>
+                            </div>
+                          </div>
+                          <label class="small mb-1" for="country">Country</label>
+                          <div class="dropdown mb-4">
+                            <select class="form-select form-control form-control-lg fs-5"  id="country"  value="{{userEditData.country}}"
+                            formControlName="country" name="country" [(ngModel)]="userCountry" required  minlength="2" maxlength="50" >
+                              <option value="" disabled>Choose your Country from this list:</option>
+                              <option *ngFor="let country of Countries" [value]="country" >{{country}}</option>
+                            </select>
+                            <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['country']?.invalid || (UserData?.['country']?.touched || UserData?.['country']?.dirty)">
+                              <div *ngIf="UserData?.['country']?.errors?.['required']"> Country is required .</div>
+                              <div *ngIf="UserData?.['country']?.errors?.['minlength']"> Min length of country is 2</div>
+                              <div *ngIf="UserData?.['country']?.errors?.['maxlength']"> Max length of country is 50</div>
+                            </div>
+                          </div>
+                          <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+                            <h2 class="mb-0 me-4">Gender: </h2>
+                            <div class="form-check form-check-inline mb-0 me-4">
+                              <input class="form-check-input" type="radio" formControlName="gender" name="gender"  id="femaleGender" value="female" [(ngModel)]="userGender"  />
+                              <label class="form-check-label" for="femaleGender">Female</label>
+                            </div>
+
+                            <div class="form-check form-check-inline mb-0 me-4">
+                              <input class="form-check-input" type="radio" name="gender" formControlName="gender"  id="maleGender"value="male" [(ngModel)]="userGender" required  />
+                              <label class="form-check-label" for="maleGender">Male</label>
+                            </div>
+
+                            <div class="form-check form-check-inline mb-0">
+                              <input class="form-check-input" type="radio" name="gender" formControlName="gender"  id="otherGender" value="other" [(ngModel)]="userGender"  />
+                              <label class="form-check-label" for="otherGender">Other</label>
+                            </div>
+                            <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['gender']?.invalid || (UserData?.['gender']?.touched || UserData?.['gender']?.dirty)">
+                              <div *ngIf="UserData?.['gender']?.errors?.['required']"> Gender is required .</div>
+
+                            </div>
+                          </div>
+                          <div class="dropdown mb-4">
+                            <select class="form-select form-control form-control-lg fs-5"  id="jobtitle"  value="{{userEditData.jobtitle}}"
+                            formControlName="jobtitle" name="jobtitle" [(ngModel)]="userJobtitle" required  minlength="2" maxlength="50">
+                              <option value="" disabled>Choose your job title from this list:</option>
+                              <option *ngFor="let job of jobs" [value]="job" >{{job.charAt(0).toUpperCase() + job.slice(1)}}</option>
+                            </select>
+                            <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['jobtitle']?.invalid || (UserData?.['jobtitle']?.touched || UserData?.['jobtitle']?.dirty)">
+                              <div *ngIf="UserData?.['jobtitle']?.errors?.['required']"> Job title is required .</div>
+                              <div *ngIf="UserData?.['jobtitle']?.errors?.['minlength']"> Min length of Job title is 2</div>
+                              <div *ngIf="UserData?.['jobtitle']?.errors?.['maxlength']"> Max length of Job title is 50</div>
+                            </div>
+                          </div>
+                          <div class="col-md-12 mb-4">
+                            <label class="small mb-1" for="inputPhone">About me</label>
+                            <textarea class="form-control " id="inputSummary" type="text" placeholder="Write about yourself"  rows="5" value="{{userEditData.summary}}"
+                            formControlName="summary"  name="summary" [(ngModel)]="userSummary" minlength="10" maxlength="500" ></textarea>
+                            <p class="text-end">Number of Characters <strong> {{count}} </strong> of 500</p>
+                            <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['summary']?.invalid || (UserData?.['summary']?.touched || UserData?.['summary']?.dirty)">
+                              <div *ngIf="UserData?.['summary']?.errors?.['minlength']"> Your edit summary must be at least 10 characters</div>
+                              <div *ngIf="UserData?.['summary']?.errors?.['maxlength']"> Maxmium number of characters allowed in the summary is 500 characters </div>
+                            </div>
+                        </div>
+                          <!-- Save changes button-->
+                          <div class="d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit"><mat-icon svgIcon="save"></mat-icon> Save changes</button>
+                          </div>
+                        </form>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
-    <form #editModelForm="ngForm" (ngSubmit)="handleEditSubmit(editModelForm)" >
-      <p class="text-light mb-1"> First Name : <strong>{{this._global.userInfo.data?.fname}}</strong></p>
-      <input type="text" class="form-control form-control-lg mb-4"  #fname="ngModel" name="fname" placeholder="First Name" [(ngModel)]="newUserData.fname" required  minlength="3" maxlength="30">
-      <div class="bg-danger rounded-1 p-2 " *ngIf=" editModelForm.submitted && fname.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="fname.errors?.['required']" class="text-light"> First name is required</span>
-        <span *ngIf="fname.errors?.['minlength']" class="text-light"> Min Length of First name is 3</span>
-        <span *ngIf="fname.errors?.['maxlength']" class="text-light"> Max Length of First name is 20</span>
-      </div>
-      <p class="text-light mb-1"> Last Name : <strong>{{this._global.userInfo.data?.lname}}</strong></p>
-      <input type="text" class="form-control form-control-lg mb-4" #lname="ngModel" name="lname" placeholder="Last Name" [(ngModel)]="newUserData.lname" required minlength="3" maxlength="30" >
-      <div class="bg-danger rounded-1 p-2 " *ngIf=" editModelForm.submitted && fname.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="lname.errors?.['required']" class="text-light"> Last name is required</span>
-        <span *ngIf="lname.errors?.['minlength']" class="text-light"> Last Length of First name is 3</span>
-        <span *ngIf="lname.errors?.['maxlength']" class="text-light"> Last Length of First name is 20</span>
-      </div>
-      <p class="text-light mb-1"> Date of Birth : <strong>{{this._global.userInfo.data?.DOB.slice(0, 10)}}</strong></p>
-      <input type="date" class="form-control form-control-lg mb-4" #userdate="ngModel" name="userdate" placeholder="Date of Birth" [(ngModel)]="newUserData.DOB" required min="1960-01-01" max="2010-12-31" >
-      <div class="bg-danger rounded-1 p-2 " *ngIf="editModelForm.submitted && userdate.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="userdate.errors?.['required']" class="text-light"> Date of Birth is required</span>
-        <span *ngIf="userdate.errors?.['min']" class="text-light"> User Date of Birth starts from 1960/01/01 </span>
-        <span *ngIf="userdate.errors?.['max']" class="text-light"> User Date of Birth ends from 2010/12/31</span>
-      </div>
+  </ng-template>
+  </mat-tab>
+</mat-tab-group>
 
-      <p class="text-light mb-1"> Phone Number : <strong>{{this._global.userInfo.data?.phoneno}}</strong></p>
-      <input type="text" class="form-control form-control-lg mb-4" #phoneno="ngModel" name="phoneno" placeholder="Phone number" [(ngModel)]="newUserData.phoneno" required >
-      <div class="bg-danger rounded-1 p-2 " *ngIf="editModelForm.submitted && phoneno.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="phoneno.errors?.['required']" class="text-light"> Phone number is required</span>
-      </div>
 
-      <p class="text-light mb-1"> Gender : <strong>{{this._global.userInfo.data?.gender}}</strong></p>
-      <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
-        <h2 class="mb-0 me-4">Gender: </h2>
-        <div class="form-check form-check-inline mb-0 me-4">
-          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="femaleGender" value="female" [(ngModel)]="newUserData.gender"  />
-          <label class="form-check-label" for="femaleGender">Female</label>
-        </div>
-
-        <div class="form-check form-check-inline mb-0 me-4">
-          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="maleGender"value="male" [(ngModel)]="newUserData.gender" required  />
-          <label class="form-check-label" for="maleGender">Male</label>
-        </div>
-
-        <div class="form-check form-check-inline mb-0">
-          <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="otherGender" value="other" [(ngModel)]="newUserData.gender"  />
-          <label class="form-check-label" for="otherGender">Other</label>
-        </div>
-
-      </div>
-      <div class="bg-danger rounded-1 p-2 " *ngIf="editModelForm.submitted && gender.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="gender.errors?.['required']" class="text-light"> Gender is required</span>
-      </div>
-      <p class="text-light mb-1"> Job title : <strong>{{this._global.userInfo.data?.jobtitle}}</strong></p>
-      <div class="dropdown  mb-4">
-        <select class="form-select form-control form-control-lg ms-1 fs-5"  id="jobtitle" name="jobtitle" #jobtitle="ngModel" [(ngModel)]="newUserData.jobtitle"
-        required minlength="2" maxlength="50" >
-          <option value="" disabled>Choose your job title from this list:</option>
-          <option *ngFor="let job of jobs" [value]="job" >{{job.charAt(0).toUpperCase() + job.slice(1)}}</option>
-        </select>
-      </div>
-
-      <div class="bg-danger rounded-1 p-2 " *ngIf="editModelForm.submitted && jobtitle.invalid">
-        <mat-icon class="text-light" svgIcon="error"></mat-icon>
-        <span *ngIf="jobtitle.errors?.['required']" class="text-light"> job title is required</span>
-        <span *ngIf="jobtitle.errors?.['minlength']" class="text-light"> Min length of job title is 2</span>
-        <span *ngIf="jobtitle.errors?.['maxlength']" class="text-light"> Max length of job title is 50</span>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn light-blue-backdrop p-3 fs-5
-        " (click)="c('Save click')" [disabled]="!editModelForm.valid"> <mat-icon svgIcon="save"></mat-icon> Save Changes</button>
-      </div>
-    </form>
-  </div>
-</div>
-</ng-template>
 
 
 

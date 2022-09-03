@@ -14,5 +14,6 @@ router.put('/editquestion/:id', userAuthQ,questionController.editQuestion);
 router.delete('/delquestion/:id', userAuthQ,questionController.deleteQuestion);
 router.put('/updateview/:id',questionController.viewQuestion);
 router.put('/voting/:id/:vote',userAuthQ,questionController.VotingQuestion);
-router.post('/search/:pageNum/:limit',questionController.search)
+router.post('/search/:pageNum/:limit',questionController.search);
+router.put('/countanswers/:id',questionController.countanswers);
 module.exports = router;

@@ -7,9 +7,11 @@ import { AddquestionComponent } from './question/addquestion/addquestion.compone
 import { AllmyquestionsComponent } from './question/allmyquestions/allmyquestions.component';
 import { EditquestionComponent } from './question/editquestion/editquestion.component';
 import { SinglequestionComponent } from './question/singlequestion/singlequestion.component';
+import { TestComponent } from './test/test.component';
 
 import { HomepageComponent } from './user/homepage/homepage.component';
 import { LoginComponent } from './user/login/login.component';
+import { MyanswersComponent } from './user/myanswers/myanswers.component';
 import { RegisterComponent } from './user/register/register.component';
 import { UserprofileComponent } from './user/userprofile/userprofile.component';
 
@@ -35,9 +37,15 @@ const routes: Routes = [
     { path: 'singlequestion/:id/editquestion/:id', component: EditquestionComponent }
   ]
   },
+  { path: 'myanswers',children:[
+    { path: '', component: MyanswersComponent },
+    { path: 'singlequestion/:id', component: SinglequestionComponent },
+  ]
+  },
   { path: 'editquestion/:id', component: EditquestionComponent },
   { path: 'singlequestion/:id', component: SinglequestionComponent },
   { path: 'users', component: UsersComponent },
+  { path: 'test', component: TestComponent },
   { path: '**', component: ErrorpageComponent },
 
 ];

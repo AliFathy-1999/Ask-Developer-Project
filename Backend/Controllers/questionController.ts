@@ -2,6 +2,7 @@
 import {Request,Response } from "express";
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
+const answerModel= require("../DB/Models/AnswerModel")
 class Question{
     static addQuestion = async(req:any,res:Response)=>{
         try{
@@ -11,7 +12,8 @@ class Question{
                 author:req.user.username,
                 authorpImage:req.user.pImage,
             });
-            await userQuestion.save()
+
+            await userQuestion.save(); 
             res.status(200).send({
                 apiStatus:true,
                 message:"Question Added Successfully"
@@ -47,6 +49,7 @@ class Question{
     static deleteQuestion = async(req:any,res:Response)=>{
         try{
             const questionData = await questionModel.findOneAndDelete({_id:req.params.id})
+
             res.status(200).send({
                 apiStatus:true,
                 message:"Question Deleted Successfully"
@@ -71,7 +74,8 @@ class Question{
         };
         questionModel.paginate(query,options,async function(err:any, result:any) {
             try{
-                await req.user.populate('MyQuestions')
+               const questions= await req.user.populate('MyQuestions')
+                
                 res.status(200).send({
                     apiStatus:true,
                     data:req.user.MyQuestions,
@@ -111,11 +115,13 @@ class Question{
         };
         questionModel.paginate(query,options,async function(err:any, result:any) {
             try{
+              
               const questionData =  await questionModel.find()
               .sort({createdAt:-1});
                 res.status(200).send({
                     apiStatus:true,
                     data:questionData,
+                    //answerCount:answerCount,
                     message:"All Questions"
                 })
             }catch(e:any){
@@ -212,6 +218,23 @@ class Question{
               })
           }
       });
+    }
+    static countanswers = async (req:any,res:Response) => {
+        try{
+            const answerC = await questionModel.answersCount(req.params.id)
+            //const answerC = await answerModel.find({QuestionId:req.params.id}).length
+            res.status(200).send({
+                apiStatus:true,
+                data:answerC,
+                message:"Answer Count Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
     }
 }
 module.exports =Question;

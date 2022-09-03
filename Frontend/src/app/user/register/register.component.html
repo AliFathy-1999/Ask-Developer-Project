@@ -124,6 +124,21 @@
 
                 </div>
                 <div class="form-outline mb-4">
+                  <div class="dropdown">
+                    <select class="form-select form-control form-control-lg fs-5"  id="country" name="country" #country="ngModel" [(ngModel)]="userData.country"
+                    required  minlength="2" maxlength="50" >
+                      <option value="" disabled>Choose your Country from this list:</option>
+                      <option *ngFor="let country of Countries" [value]="country" >{{country}}</option>
+                    </select>
+                  </div>
+                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && country.invalid">
+                    <mat-icon class="text-light" svgIcon="error"></mat-icon>
+                    <span *ngIf="country.errors?.['required']" class="text-light"> country is required</span>
+                    <span *ngIf="country.errors?.['minlength']" class="text-light"> Min length of country is 2</span>
+                    <span *ngIf="country.errors?.['maxlength']" class="text-light"> Max length of country is 50</span>
+                  </div>
+                </div>
+                <div class="form-outline mb-4">
                   <input type="text" name="phoneno" id="form3Example9" #phone="ngModel" class="form-control form-control-lg" placeholder="Phone number" [(ngModel)]="userData.phoneno" required />
                   <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && phone.invalid">
                     <mat-icon class="text-light" svgIcon="error"></mat-icon>

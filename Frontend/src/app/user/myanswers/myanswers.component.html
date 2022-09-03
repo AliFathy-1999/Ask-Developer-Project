@@ -1,0 +1,121 @@
+
+<div class="card mt-5">
+  <table class="table table-stripe text-center" *ngIf="!isLoaded ; else MyanswersData">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Body</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of MyQestions2">
+      <th scope="row"> <ngx-skeleton-loader  count="1" appearance="line"></ngx-skeleton-loader></th>
+      <td><ngx-skeleton-loader  count="1" appearance="line"></ngx-skeleton-loader></td>
+      <td>
+        <ngx-skeleton-loader  count="1" appearance="line" class="col-4"></ngx-skeleton-loader>
+      </td>
+      <td>
+        <div class="d-flex justify-content-center">
+        <ngx-skeleton-loader  count="1" appearance="circle" [theme]="{'border-radius': '5px',height: '30px',width:'70px',border: '1px solid white'}"></ngx-skeleton-loader>
+        <ngx-skeleton-loader  count="1" appearance="circle" [theme]="{'border-radius': '5px',height: '30px',width:'70px',border: '1px solid white'}"></ngx-skeleton-loader>
+        <ngx-skeleton-loader  count="1" appearance="circle" [theme]="{'border-radius': '5px',height: '30px',width:'70px',border: '1px solid white'}"></ngx-skeleton-loader>
+      </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <ng-template #MyanswersData >
+    <div class="d-flex justify-content-center p-3 " style="background-color:#283149;color:#B9D7E5;">
+      <h1><mat-icon svgIcon="answers"></mat-icon> My answers page</h1>
+    </div>
+    <div style="overflow-x:auto;" >
+  <table class="table table-stripe">
+    <thead>
+    <tr class="text-center">
+      <th scope="col">#</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Body</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr  class="alert alert-danger" *ngIf="NoQuestions" role="alert">
+          <td colspan="6">
+            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="error"></mat-icon> No Questions Found, If you want to Ask a Question Click on <span [routerLink]="['/addquestion']" class="link-danger page-link cursor-pointer"> Ask a Question</span> </h2>
+          </td>
+        </tr>
+        <tr  class="alert alert-success" *ngIf="QuestionStatus" role="alert">
+          <td colspan="6">
+            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="success"></mat-icon>  Question Deleted Successfully</h2>
+          </td>
+        </tr>
+    <tr *ngFor="let answer of MyAnswers | paginate: { itemsPerPage: 10, currentPage: p, totalItems: MyAnswers.count }, let i = index " >
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div  style="background-color: #283149;color: white;">
+  <div class="modal-header">
+    <h2 class="modal-title" id="modal-basic-title"><mat-icon svgIcon="edit"></mat-icon> Edit answer modal</h2>
+    <button type="button" class="btn-close btn btn-danger" aria-label="Close" (click)="d('Cross click')"></button>
+  </div>
+ <form class="modal-body" [formGroup]="editanswerData"  (ngSubmit)="handleAnswerEditSubmit()" >
+   <!-- <div class="col-md-12">
+      <label class="small mb-1" for="inputanswer">Answer body</label>
+      <input class="form-control" id="inputanswer" type="text" formControlName="body" name="body" innerText="{{answer.body}}"
+       placeholder="Edit your answer here" value="{{answer.body}}" [(ngModel)]="answerbody" required  minlength="6"  >
+       <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && AnswerData?.['body']?.invalid || (AnswerData?.['body']?.touched || AnswerData?.['body']?.dirty)">
+        <div *ngIf="AnswerData?.['body']?.errors?.['required']"> Answer Body is required .</div>
+        <div *ngIf="AnswerData?.['body']?.errors?.['minlength']">Min Length of body is 6 .</div>
+      </div>
+  </div>-->
+  <div class="NgxEditor__Wrapper"style="height:100%;width: 95%;margin-bottom:1vw;">
+    <ngx-editor-menu [editor]="editor" [toolbar]="toolbar" class="text-dark"> </ngx-editor-menu>
+
+    <ngx-editor
+      [editor]="editor"
+      [placeholder]="'Min Length of Body is 6 and Max Length of Body is  3500 Type here...'"
+      formControlName="body"
+      [(ngModel)]="answerbody"
+      name="body"
+      minlength="6"
+      innerHtml="answerbody"
+      required
+    ></ngx-editor>
+  </div>
+  <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && AnswerData?.['body']?.invalid || (AnswerData?.['body']?.touched || AnswerData?.['body']?.dirty)">
+    <div *ngIf="AnswerData?.['body']?.errors?.['required']"> Answer Body is required .</div>
+    <div *ngIf="AnswerData?.['body']?.errors?.['minlength']">Min Length of body is 6 .</div>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary w-25 h-25" (click)="c('Save click')"  [disabled]="!editanswerData.valid"> save data</button>
+  </div>
+</form>
+</div>
+
+</ng-template>
+
+      <th scope="row">{{ i+1 }}</th>
+      <td>{{answer.createdAt | date:'h:mm a,MMM d, y' }}</td>
+        <td class="qtitle col-8 " innerHTML="{{ answer.body }}"></td>
+      <td>
+        <div class="d-flex accordion ">
+        <button class="btn btn-primary ms-1" [routerLink]="['singlequestion', answer.QuestionId]"><mat-icon svgIcon="show"></mat-icon> View</button>
+        <button class="btn btn-warning ms-1" (click)="open(content,answer.body,answer.QuestionId,answer._id)"  routerLinkActive="router-link-active" ><mat-icon svgIcon="edit"></mat-icon> Edit</button>
+        <button class="btn text-danger ms-1" (click)="deleteanswer(answer.QuestionId,answer._id)"><mat-icon svgIcon="delete"></mat-icon> Delete</button>
+      </div>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center mb-5" *ngIf="showPagination" >
+    <pagination-controls [previousLabel]="previousLabel" class="rounded-1 p-1 page-item active my-pagination" style="background-color: #2F3B56;color:#B9D7E5;" (pageChange)="paginate($event)"></pagination-controls>
+  </div>
+  </div>
+  </ng-template>
+

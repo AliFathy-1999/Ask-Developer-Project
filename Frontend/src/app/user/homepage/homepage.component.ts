@@ -25,6 +25,7 @@ export class HomepageComponent implements OnInit {
   QuestionSize:number = 0
   routerLinkStatus:Boolean=false;
   routerlink:String="";
+  answerCount:number = 0;
   constructor(private toastr: ToastrService,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     this._global.navbar = true
     this._global.isHomePage = true
@@ -50,8 +51,14 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this._global.showAllQuestions(this.page,this.pageSize).subscribe((data:any)=>{
           this.AllQuestions = data.data
+        this.AllQuestions.forEach((question:any)=>{
+          this._global.answerCount(question._id).subscribe((data:any)=>{
+            this.answerCount = data.data
+          })
+          })
         }, (err:any)=>{
-          location.reload()
+          // location.reload()
+          this.ngOnInit()
         } , ()=>{
             this.isLoaded = true
         })
@@ -67,5 +74,8 @@ export class HomepageComponent implements OnInit {
 
   paginate(e:any){
     this.p = e;
+  }
+  gotoTop(){
+    window.scrollTo(0,0)
   }
 }

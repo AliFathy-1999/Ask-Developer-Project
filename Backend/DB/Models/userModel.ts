@@ -7,6 +7,7 @@ var mongoosePaginate = require('mongoose-paginate');
 const bcryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
 import { IUserModel } from '../../Interfaces/ModelsInterface';
+
 const schema= new Schema<IUserModel>({
     fname:{
         type:String,
@@ -35,7 +36,7 @@ const schema= new Schema<IUserModel>({
         trim:true,
         minlength:6,
         match:/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/,
-        //@Alifathy99
+        
         validate(value:string){
             if(value.includes("password")){
                 throw new Error("Password cannot contain 'password'")
@@ -70,6 +71,23 @@ const schema= new Schema<IUserModel>({
         type:String,
         default:"https://secure.gravatar.com/avatar/${this._id}?s=90&d=identicon"
     },
+    votes:{
+        type:Number,
+        default:0
+    },
+    answers:{
+        type:Number,
+        default:0
+    },
+
+    questions:{
+        type:Number,
+        default:0
+    },
+    country:{
+        type:String,
+        default:"No Country"
+    },
     gender:{
         type:String,
         required:true,
@@ -80,6 +98,12 @@ const schema= new Schema<IUserModel>({
         minlength:2,
         maxlength:50,
         default:"Developer"
+    },
+    summary:{
+        type:String,
+        minlength:10,
+        maxlength:500,
+        default:"No Summary"
     },
     role:{
         type:String,
@@ -93,8 +117,8 @@ const schema= new Schema<IUserModel>({
                 throw new Error("Date of birth is invalid")
             }
         },
-
     },
+
     tokens : [
         {
             token:{
@@ -129,16 +153,12 @@ schema.pre('save',async function (){
 })
 schema.statics.login = async function(email,password){
     const userData = await User.findOne({email});
-
     if(!userData) throw new Error("Invalid Email");
-
     const isMatched= await bcryptjs.compare(password,userData.password)
     if(!isMatched) throw new Error("Invalid Password");
-
-
    return userData;
-
 }
+
 schema.methods.generateToken = async function(){
     const user = this;
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET)
@@ -147,6 +167,6 @@ schema.methods.generateToken = async function(){
     return token;
 }
 
-
+schema.plugin(mongoosePaginate);
 const User = model("User",schema)
 module.exports =User;

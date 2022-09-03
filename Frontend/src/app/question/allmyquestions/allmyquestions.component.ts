@@ -3,6 +3,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-allmyquestions',
   templateUrl: './allmyquestions.component.html',
@@ -24,12 +25,13 @@ export class AllmyquestionsComponent {
   collection = [{}];
   questionid:any;
   p:any
-  constructor(public _global: GlobalService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(private toastr:ToastrService,public _global: GlobalService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     iconRegistry.addSvgIconLiteral('show', sanitizer.bypassSecurityTrustHtml(this._icons.SHOW_ICON));
     iconRegistry.addSvgIconLiteral('success', sanitizer.bypassSecurityTrustHtml(this._icons.SUCCESS_ICON));
     iconRegistry.addSvgIconLiteral('edit', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('delete', sanitizer.bypassSecurityTrustHtml(this._icons.DELETE_ICON));
     iconRegistry.addSvgIconLiteral('error', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
+    iconRegistry.addSvgIconLiteral('questions', sanitizer.bypassSecurityTrustHtml(this._icons.QUESTIONS_ICON));
   }
   paginate(e:any){
     this.p = e;
@@ -53,7 +55,7 @@ export class AllmyquestionsComponent {
     this._global.DeleteQuestion(obj).subscribe((data:any)=>{
       location.reload()
       this.QuestionStatus=true
-
+      this.toastr.success('Question Deleted Successfully');
     },(err)=>{
       console.log(err.error.message)
     })
