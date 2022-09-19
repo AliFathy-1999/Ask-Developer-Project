@@ -61,6 +61,10 @@ const schema = new Schema({
       Default:[]
       }
   ],
+  bookmarker:[{
+    type:String,
+    Default:[]
+  }]
 },
 {
     timestamps:true

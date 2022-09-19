@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 interface IUserModel {
     fname: string;
     lname: string;
@@ -18,6 +20,12 @@ interface IUserModel {
     summary:string;
     answers:number;
     questions:number;
-    //answersCount:number;
+    bookmarks:Array<string>;
+    socialmedia: Array<string>;
+    facebookacc:Schema.Types.Mixed,
+    twitteracc:Schema.Types.Mixed,
+    githubacc:Schema.Types.Mixed,
+    linkedinacc:Schema.Types.Mixed,
+    website:Schema.Types.Mixed,
 }
 export { IUserModel };

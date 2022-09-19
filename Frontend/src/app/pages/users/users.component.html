@@ -16,17 +16,19 @@
 </div>
 
 <ng-template #usersData>
-  <div class="row m-2 d-flex ">
-<mat-card  class="example-card overflow-auto m-auto mb-5 mt-3 me-1 animate__animated animate__shakeX col-3 "  *ngFor="let user of AllUsers | paginate: { itemsPerPage: 12, currentPage: p, totalItems: AllUsers.count}">
+  <div class="row m-2  ">
+<mat-card  class="example-card overflow-auto m-auto mb-5 mt-3 me-1 animate__animated animate__shakeX col-sm-3 "  *ngFor="let user of AllUsers | paginate: { itemsPerPage: 12, currentPage: p, totalItems: AllUsers.count}">
   <mat-card-header class="container ">
-      <img mat-card-avatar src="{{user.pImage}}" alt="">
-      <mat-card-title class="fw-bold qtitle" [routerLink]="['singlequestion', user._id]">{{user.username}}</mat-card-title>
+      <img mat-card-avatar src="{{user.pImage}}" alt="" (click)="gotouserprofile(user._id)">
+      <mat-card-title class="fw-bold qtitle" (click)="gotouserprofile(user._id)">{{user.username}}</mat-card-title>
       <mat-card-subtitle><mat-icon svgIcon="job"></mat-icon> {{user.jobtitle}} </mat-card-subtitle>
-      <mat-card-subtitle><mat-icon svgIcon="location"></mat-icon> {{user.country}} </mat-card-subtitle>
   </mat-card-header>
-
+  <div class="text-primary d-flex ">
+  <span class="me-2"><mat-icon svgIcon="location"></mat-icon> {{user.country}} </span>
+  <span><mat-icon svgIcon="vote"></mat-icon> {{user.votes}} </span>
+  </div>
   <mat-card-actions>
-    <button mat-button [routerLink]="['singlequestion', user._id]">Show profile </button>
+    <button mat-button (click)="gotouserprofile(user._id)">Show profile </button>
   </mat-card-actions>
 </mat-card>
 </div>

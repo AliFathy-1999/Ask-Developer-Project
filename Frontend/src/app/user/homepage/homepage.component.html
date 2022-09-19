@@ -43,8 +43,8 @@
 <ng-template #questionData>
 <mat-card  class="example-card overflow-auto m-auto mb-5 mt-3 mb-5 animate__animated animate__shakeX"  *ngFor="let question of AllQuestions | paginate: { itemsPerPage: 10, currentPage: p, totalItems: AllQuestions.count}">
   <mat-card-header class="container ">
-      <img mat-card-avatar src="{{question.authorpImage}}" alt="">
-      <mat-card-title class="fw-bold">{{question.author}}</mat-card-title>
+      <img mat-card-avatar src="{{question.authorpImage}}" class="qtitle" alt="" (click)="gotouserprofile(question.userId)">
+      <mat-card-title class="fw-bold qtitle" (click)="gotouserprofile(question.userId)">{{question.author}}</mat-card-title>
       <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
       <mat-card-title>
         <div class="">

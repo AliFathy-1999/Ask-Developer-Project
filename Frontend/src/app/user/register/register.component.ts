@@ -8,8 +8,8 @@ import { IconsService } from 'src/app/services/icons.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
 import {Observable, Subject, merge, OperatorFunction} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
-
+import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,7 +18,8 @@ import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
 })
 
 export class RegisterComponent implements OnInit {
-  userData={
+
+  userData:any={
     "fname":'',
     "lname":'',
     "DOB":'',
@@ -28,8 +29,10 @@ export class RegisterComponent implements OnInit {
     "phoneno":'',
     "gender":'',
     "country":'',
-    "jobtitle":''
+    "jobtitle":'',
+
   }
+  isOther:Boolean= false;
   status:string="show";
   passwordstatus:any="password"
   Countries:any=[
@@ -1025,9 +1028,18 @@ export class RegisterComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('error2', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
     iconRegistry.addSvgIconLiteral('show', sanitizer.bypassSecurityTrustHtml(this._icons.SHOW_ICON));
     iconRegistry.addSvgIconLiteral('hide', sanitizer.bypassSecurityTrustHtml(this._icons.HIDE_ICON));
+
+    iconRegistry.addSvgIconLiteral('website', sanitizer.bypassSecurityTrustHtml(this._icons.WEBSITE_ICON));
+    iconRegistry.addSvgIconLiteral('facebook', sanitizer.bypassSecurityTrustHtml(this._icons.FACEBOOK_ICON));
+    iconRegistry.addSvgIconLiteral('linkedin', sanitizer.bypassSecurityTrustHtml(this._icons.LINKEDIN_ICON));
+    iconRegistry.addSvgIconLiteral('twitter', sanitizer.bypassSecurityTrustHtml(this._icons.TWITTER_ICON));
+    iconRegistry.addSvgIconLiteral('github', sanitizer.bypassSecurityTrustHtml(this._icons.GETHUB_ICON));
    }
 
   ngOnInit(): void {
+  }
+  changetoInput(){
+    this.isOther= true;
   }
   showpassword(){
     if(this.status=="show"){
@@ -1060,6 +1072,11 @@ export class RegisterComponent implements OnInit {
       this.ErrorMessage="Please fill all the fields";
     }else if(err.error.message.includes('Phone number is invalid')){
       this.ErrorMessage="Phone number is invalid, please enter a valid phone number";
+    }else if(err.error.message.includes('password')){
+      this.ErrorMessage=`- Password cannot contain 'password'
+      - Password must be at least 6 characters
+      - Password must contain at least one number , Capital letter and one special character`;
+      this.toastr.error(this.ErrorMessage);
     }else{
       this.ErrorMessage="Something went wrong, please try again";
     }

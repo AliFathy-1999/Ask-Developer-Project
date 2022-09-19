@@ -16,4 +16,6 @@ router.put('/updateview/:id',questionController.viewQuestion);
 router.put('/voting/:id/:vote',userAuthQ,questionController.VotingQuestion);
 router.post('/search/:pageNum/:limit',questionController.search);
 router.put('/countanswers/:id',questionController.countanswers);
+router.post('/bookmark/:id',userAuthQ,questionController.bookmarkQuestion);
+router.put('/unbookmark/:id',userAuthQ,questionController.unbookmarkQuestion);
 module.exports = router;

@@ -1,0 +1,199 @@
+<div class="container-xl px-4 mt-4" *ngIf="!isLoaded ; else userData1">
+  <div class="row">
+      <div class="col-xl-3">
+          <!-- Profile picture card-->
+          <div class="card mb-4 mb-xl-0">
+              <div class="card-header">Profile Picture</div>
+              <div class="card-body text-center">
+                  <!-- Profile picture image-->
+                  <ngx-skeleton-loader  count="1" [theme]="{width: '150px', height: '150px'}"
+                   appearance="circle"></ngx-skeleton-loader>
+                   <div class="d-flex justify-content-center">
+                    <ngx-skeleton-loader [theme]="{width: '100px',display: 'block'}" count="1"  appearance="line"></ngx-skeleton-loader>
+
+                   </div>
+                   <ngx-skeleton-loader [theme]="{width: '200px'}" count="2"  appearance="line"></ngx-skeleton-loader>
+              </div>
+          </div>
+          <div class="container-xl px-4 mt-4 " >
+            <div class="card mb-4 mb-xl-0">
+              <div class="card-header">Statistics</div>
+              <div class="card-body text-center">
+                  <div >
+                    <h3 class="text-center"><mat-icon svgIcon="statistics"></mat-icon> Statistics</h3>
+                    <div style="background-color: #F6F6F6;padding: 2%;">
+                      <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">
+                              <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                          </div>
+                          <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                        </li>
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">
+                              <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                          </div>
+                          <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                        </li>
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">
+                              <ngx-skeleton-loader [theme]="{width: '40px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{width: '80px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader>
+                          </div>
+                          <span class="badge rounded-pill"><ngx-skeleton-loader [theme]="{width: '30px',display: 'block',marginLeft:'20%'}" count="1" appearance="line"></ngx-skeleton-loader></span>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+      <div class="col-xl-9">
+          <!-- Account details card-->
+          <div class="card mb-4">
+              <div class="card-header fw-3">Account Details</div>
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item fs-5">
+                    <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                  </li>
+                  <li class="list-group-item fs-5">
+                    <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader>
+                  </li>
+                  <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                  <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                  <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                  <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+                  <li class="list-group-item fs-5"> <ngx-skeleton-loader [theme]="{width: '100px'}" count="1" class="me-4"  appearance="line"></ngx-skeleton-loader>   <ngx-skeleton-loader [theme]="{width: '300px'}" count="1"  appearance="line"></ngx-skeleton-loader></li>
+
+                </ul>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<ng-template #userData1>
+<div class="container-xl px-4 mt-4" >
+  <div class="row">
+      <div class="col-xl-4">
+          <!-- Profile picture card-->
+          <div class="card mb-4 mb-xl-0">
+              <div class="card-header">Profile Picture</div>
+              <div class="card-body text-center">
+                  <!-- Profile picture image-->
+                  <img class="img-account-profile rounded-circle mb-2" src="{{userdata.pImage}}" alt="">
+                  <div class="text-center">
+                    <h3 ><mat-icon svgIcon="about"></mat-icon> About me</h3>
+                    <div style="background-color: #F6F6F6;padding: 2%;text-align: center;" class="blockquotetext">
+                      {{userdata.summary}}
+                    </div>
+                  </div>
+                  <h3 class="mt-2"><mat-icon svgIcon="socialmedia"></mat-icon> Social media links</h3>
+                <div>
+                  <div class="alert alert-info text-center fw-bold fs-5 mb-0" role="alert" *ngIf="NoSocial">
+                    <mat-icon svgIcon="info"></mat-icon> No Social links added yet
+                  </div>
+                  <div *ngIf="!NoSocial">
+                 <div class="d-flex justify-content-center" >
+                    <mat-icon svgIcon="facebook" class="text-primary"></mat-icon>
+                    <a  class="ms-2 text-decoration-none d-block " href="{{userdata.facebookacc}}" target="_blank">{{userdata.facebookacc ||  "No facebook profile link is added"}}</a>
+                  </div>
+                  <div class="d-flex justify-content-center" >
+                    <mat-icon svgIcon="website" class="text-primary"></mat-icon>
+                    <a  class="ms-2 text-decoration-none d-block " href="{{userdata.website}}" target="_blank">{{userdata.website ||  "No website link is added"}}</a>
+                  </div>
+                  <div class="d-flex justify-content-center" >
+                    <mat-icon svgIcon="twitter" class="text-primary"></mat-icon>
+                    <a  class="ms-2 text-decoration-none d-block " href="{{userdata.twitteracc}}" target="_blank">{{userdata.twitteracc ||  "No twitter profile link is added"}}</a>
+                  </div>
+                  <div class="d-flex justify-content-center" >
+                    <mat-icon svgIcon="linkedin" class="text-primary"></mat-icon>
+                    <a  class="ms-2 text-decoration-none d-block " href="{{userdata.linkedinacc}}" target="_blank">{{userdata.linkedinacc ||  "No linkedin profile link is added"}}</a>
+                  </div>
+                  <div class="d-flex justify-content-center" >
+                    <mat-icon svgIcon="github" class="text-primary"></mat-icon>
+                    <a  class="ms-2 text-decoration-none d-block " href="{{userdata.githubacc}}" target="_blank">{{userdata.githubacc ||  "No linkedin profile link is added"}}</a>
+                  </div>
+                </div>
+                </div>
+                  </div>
+          </div>
+          <div class="container-xl px-4 mt-4" >
+            <div class="card mb-4 mb-xl-0">
+              <div class="card-header">Statistics</div>
+              <div class="card-body text-center">
+                  <div >
+                    <h3 class="text-center"><mat-icon svgIcon="statistics"></mat-icon> Statistics</h3>
+                    <div style="background-color: #F6F6F6;padding: 2%;">
+                      <ol class="list-group list-group-numbered">
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">Votes</div>
+                            The number of votes that have been voted for you
+                          </div>
+                          <span class="badge bg-primary rounded-pill">{{userdata.votes}}</span>
+                        </li>
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">Questions</div>
+                            Questions asked by you
+                          </div>
+                          <span class="badge bg-primary rounded-pill">{{userdata.questions}}</span>
+                        </li>
+                        <li class="list-group-item d-flex  align-items-start">
+                          <div class=" me-auto">
+                            <div class="fw-bold">Answers</div>
+                            Answers answered by you
+                          </div>
+                          <span class="badge bg-primary rounded-pill">{{userdata.answers}}</span>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="col-xl-8">
+          <!-- Account details card-->
+          <div class="card mb-4">
+              <div class="card-header fw-3">Account Details</div>
+              <div class="card-body">
+                <ul class="list-group">
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="name" ></mat-icon>
+                    <strong class="text-primary" > Full name : </strong>{{userdata.fname}} {{userdata.lname}}
+                  </li>
+                  <li class="list-group-item fs-5">
+                    <mat-icon svgIcon="dob" class="text-primary"></mat-icon>  <strong class="text-primary">
+                       Date of Birth : </strong> {{userdata.DOB.slice(0, 10)}}
+                  </li>
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="gender" class="text-primary"></mat-icon>
+                    <strong class="text-primary" >  Gender : </strong>{{userdata.gender}}</li>
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="usern" class="text-primary"></mat-icon>
+                    <strong class="text-primary" > Username :  </strong> {{userdata.username}}</li>
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="email" class="text-primary"></mat-icon>
+                    <strong class="text-primary" > Email : </strong> {{userdata.email}}</li>
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="country" class="text-primary"></mat-icon>
+                    <strong class="text-primary" >Country : </strong> {{userdata.country}}</li>
+                  <li class="list-group-item fs-5"><mat-icon svgIcon="jobt" class="text-primary"></mat-icon>
+                    <strong class="text-primary" >  Job Title : </strong> {{userdata.jobtitle}}</li>
+                </ul>
+
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>
+</ng-template>

@@ -70,7 +70,9 @@ export class HomepageComponent implements OnInit {
 
     })
   }
-
+  gotouserprofile(id:any){
+    this.router.navigate(['/user',id])
+  }
 
   paginate(e:any){
     this.p = e;

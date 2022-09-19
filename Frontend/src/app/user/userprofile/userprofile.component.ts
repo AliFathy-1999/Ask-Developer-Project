@@ -5,8 +5,9 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import {NgbModal, ModalDismissReasons,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal,NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-userprofile',
   templateUrl: './userprofile.component.html',
@@ -55,6 +56,8 @@ export class UserprofileComponent implements OnInit {
   userAnswers:any;
   isLoaded:boolean = false;
   count:number = 0;
+  NoSocial:boolean = false;
+  isSocial:boolean = false;
   userData={
     "fname":``,
     "lname":'',
@@ -1064,9 +1067,15 @@ editFormData:any = new FormGroup({
   phoneno: new FormControl('', [Validators.required]),
   jobtitle: new FormControl('', [Validators.required,Validators.minLength(2),Validators.maxLength(50)]),
   summary: new FormControl('', [Validators.minLength(10),Validators.maxLength(500)]),
+  facebookacc: new FormControl('', [Validators.minLength(7),Validators.maxLength(255)]),
+  website: new FormControl('', [Validators.minLength(7),Validators.maxLength(255)]),
+  twitteracc: new FormControl('', [Validators.minLength(7),Validators.maxLength(255)]),
+  linkedinacc: new FormControl('', [Validators.minLength(7),Validators.maxLength(255)]),
+  githubacc: new FormControl('', [Validators.minLength(7),Validators.maxLength(255)]),
 });
   constructor(private toastr: ToastrService,config: NgbModalConfig, private modalService: NgbModal,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     iconRegistry.addSvgIconLiteral('editprofile', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
+    iconRegistry.addSvgIconLiteral('info', sanitizer.bypassSecurityTrustHtml(this._icons.INFO_ICON));
     iconRegistry.addSvgIconLiteral('error2', sanitizer.bypassSecurityTrustHtml(this._icons.ERROR_ICON2));
     iconRegistry.addSvgIconLiteral('edit', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('save', sanitizer.bypassSecurityTrustHtml(this._icons.SAVE_ICON));
@@ -1084,6 +1093,13 @@ editFormData:any = new FormGroup({
     iconRegistry.addSvgIconLiteral('jobt', sanitizer.bypassSecurityTrustHtml(this._icons.JOB_ICON));
     iconRegistry.addSvgIconLiteral('about', sanitizer.bypassSecurityTrustHtml(this._icons.ABOUTME_ICON));
     iconRegistry.addSvgIconLiteral('statistics', sanitizer.bypassSecurityTrustHtml(this._icons.STATISTICS_ICON));
+    iconRegistry.addSvgIconLiteral('socialmedia', sanitizer.bypassSecurityTrustHtml(this._icons.SOCIAL_ICON));
+    iconRegistry.addSvgIconLiteral('facebook', sanitizer.bypassSecurityTrustHtml(this._icons.FACEBOOK_ICON));
+    iconRegistry.addSvgIconLiteral('twitter', sanitizer.bypassSecurityTrustHtml(this._icons.TWITTER_ICON));
+    iconRegistry.addSvgIconLiteral('github', sanitizer.bypassSecurityTrustHtml(this._icons.GETHUB_ICON));
+    iconRegistry.addSvgIconLiteral('website', sanitizer.bypassSecurityTrustHtml(this._icons.WEBSITE_ICON));
+    iconRegistry.addSvgIconLiteral('linkedin', sanitizer.bypassSecurityTrustHtml(this._icons.LINKEDIN_ICON));
+    iconRegistry.addSvgIconLiteral('unknown', sanitizer.bypassSecurityTrustHtml(this._icons.UNKNOWNLINK_ICON));
     config.backdrop = 'static';
     config.keyboard = false;
 
@@ -1098,6 +1114,12 @@ editFormData:any = new FormGroup({
       this.userFname = data.data.fname;this.userLname = data.data.lname;this.userDOB = data.data.DOB;this.userDOB2 = (data.data.DOB).slice(0,10);
       this.userCountry = data.data.country;this.userGender = data.data.gender;this.userPhoneno = data.data.phoneno;
       this.userJobtitle = data.data.jobtitle;this.userSummary=data.data.summary;this.userVotes = data.data.votes;
+      if((this.userEditData.facebookacc==="" && this.userEditData.twitteracc==="" && this.userEditData.githubacc==="" && this.userEditData.website==="" && this.userEditData.linkedinacc==="") || (this.userEditData.facebookacc===null && this.userEditData.twitteracc===null && this.userEditData.githubacc===null && this.userEditData.website===null && this.userEditData.linkedinacc===null)){
+        console.log("empty");
+        this.NoSocial = true;
+        this.isSocial = false;
+      }
+
       if(this.userVotes<=0){
         this.userVotes = 0;
       }else if(this.userVotes>0){
@@ -1115,6 +1137,7 @@ editFormData:any = new FormGroup({
       },3000)
     })
   }
+
   get UserData(){
     return this.editFormData.controls;
   }
@@ -1130,10 +1153,10 @@ editFormData:any = new FormGroup({
     this._global.editprofile(this.editFormData.value).subscribe((data:any)=>{
 
       this.toastr.success("Your profile has been updated successfully");
-      location.reload();
+      this.ngOnInit();
       },(err:any)=>{
         location.reload()
-        this.toastr.error("JPG or PNG or JPEG or TIFF and no larger than 25 MB !");
+        this.toastr.error(err.error.message);
 
       },()=>{
         setTimeout(()=>{

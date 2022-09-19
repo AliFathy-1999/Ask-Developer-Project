@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SinglequestionComponent implements OnInit,OnDestroy {
   Message:String="";
+  bookmarkStatus:boolean=false;
   votingArr:any=["","","","",""]
   isAnswer:boolean = false;
   userSuccess:boolean=false;
@@ -29,8 +30,9 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   question:any = {};
   answers:any = {};
   AllAnswers:any = [{}]
-  voters:any
-  Avoters:any
+  voters:any=[]
+  bookmarkers:any=[]
+  Avoters:any=[]
   toEditQuestionPage:string=`/editquestion/${this.questionIdParams}`;
   answersCount:number = 0;
   editor:Editor=new Editor();
@@ -72,6 +74,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     iconRegistry.addSvgIconLiteral('reply', sanitizer.bypassSecurityTrustHtml(this._icons.REPLIES_ICON));
     iconRegistry.addSvgIconLiteral('info', sanitizer.bypassSecurityTrustHtml(this._icons.INFO_ICON));
     iconRegistry.addSvgIconLiteral('send', sanitizer.bypassSecurityTrustHtml(this._icons.SEND_ICON));
+    iconRegistry.addSvgIconLiteral('bookmark', sanitizer.bypassSecurityTrustHtml(this._icons.BOOKMARK_ICON));
    }
 
    toEditPage(id:any){
@@ -80,15 +83,20 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.editor = new Editor();
     this._global.SingleQuestion(this.questionIdParams).subscribe((data:any)=>{
+      this.bookmarkers=data.data.bookmarker;
       this.question= data.data;
       this.questionsAnswers=data.data.answers
       this.voters=data.data.voters
       this.voters.forEach((voter:any)=>{
-        if(voter === this._global.userInfo.data._id){
+        if(voter === this._global.userInfo?.data._id){
           this.oneClick=true;
         }
       })
-
+      this.bookmarkers.forEach((bookmarker:any)=>{
+        if(bookmarker === this._global.userInfo?.data._id){
+          this.bookmarkStatus=true;
+        }
+      })
       this._global.answerCount(this.question._id).subscribe((data:any)=>{
         this.answerCount = data.data
       })
@@ -104,7 +112,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     this._global.getAllAnswer(this.questionIdParams,this.page,this.pageSize).subscribe((data:any)=>{
       this.AllAnswers= data.data;
       this.Avoters=data.data.voters
-      console.log(this.Avoters)
+
       this.Avoters.forEach((voter:any)=>{
         if(voter === this._global.userInfo.data._id){
           this.oneClickAnswer=true;
@@ -199,7 +207,20 @@ votingonAnswer(id:any,userid:any,obj:any){
     this.oneClickAnswer=true;
   })
 }
+BookmarkQuestion(id:any){
+  this._global.BookmarkQuestion(id).subscribe((data:any)=>{
+    this.toastr.success('Question Bookmarked Successfully');
+    this.bookmarkStatus=true;
+
+  },(err)=>{
+    this.toastr.error(err.error.message);
+  })
+
+}
 paginate(e:any){
   this.p = e;
+}
+gotouserprofile(id:any){
+  this.router.navigate(['/user',id])
 }
 }

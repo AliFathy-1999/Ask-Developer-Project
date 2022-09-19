@@ -68,10 +68,10 @@ export class SearchpageComponent implements OnInit{
       this.searchtText = res.params.searchText
 
 
-    if(this.data.valid){
+
     this.isSearch = true
     this.isNotSearch = false
-    this._global.Search(`[${res.params.searchText}]`,this.page,this.pageSize).subscribe((data:any)=>{
+    this._global.Search(this.searchtText,this.page,this.pageSize).subscribe((data:any)=>{
       this.AllQuestions = data.data
       localStorage.setItem('searchData',JSON.stringify(this.AllQuestions))
       if(this.AllQuestions.length >10){
@@ -86,7 +86,7 @@ export class SearchpageComponent implements OnInit{
         this.isLoaded = false
         this.isSearch = true
     })
-  }
+
 })
    }
   ngOnInit(): void {

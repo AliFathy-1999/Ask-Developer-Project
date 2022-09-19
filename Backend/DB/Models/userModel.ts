@@ -1,8 +1,8 @@
-import { hash  } from 'bcryptjs';
-import {Schema,model,VirtualType} from 'mongoose';
-import { json } from 'stream/consumers';
+import { link } from 'fs';
+import {Schema,model,VirtualType, SchemaType} from 'mongoose';
 import { isDate } from 'util/types';
 import validator from 'validator';
+
 var mongoosePaginate = require('mongoose-paginate');
 const bcryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
@@ -118,7 +118,22 @@ const schema= new Schema<IUserModel>({
             }
         },
     },
-
+    facebookacc:{type:Schema.Types.Mixed,default:""},
+    twitteracc:{type:Schema.Types.Mixed,default:""},
+    githubacc:{type:Schema.Types.Mixed,default:""},
+    linkedinacc:{type:Schema.Types.Mixed,default:""},
+    website:{type:Schema.Types.Mixed,default:""},
+    bookmarks:[
+        {
+            qId:String,
+            qtitle:String,
+            qtags:[String],
+            qvotes:Number,
+            qanswers:Number,
+            qviews:Number,
+        },
+        
+    ],
     tokens : [
         {
             token:{

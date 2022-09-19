@@ -45,12 +45,12 @@
     <tbody>
         <tr  class="alert alert-danger" *ngIf="NoQuestions" role="alert">
           <td colspan="6">
-            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="error"></mat-icon> No Questions Found, If you want to Ask a Question Click on <span [routerLink]="['/addquestion']" class="link-danger page-link cursor-pointer"> Ask a Question</span> </h2>
+            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="error"></mat-icon> No Answers Found</h2>
           </td>
         </tr>
         <tr  class="alert alert-success" *ngIf="QuestionStatus" role="alert">
           <td colspan="6">
-            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="success"></mat-icon>  Question Deleted Successfully</h2>
+            <h2 class="text-center fw-bold p-4"><mat-icon svgIcon="success"></mat-icon>  Answer Deleted Successfully</h2>
           </td>
         </tr>
     <tr *ngFor="let answer of MyAnswers | paginate: { itemsPerPage: 10, currentPage: p, totalItems: MyAnswers.count }, let i = index " >

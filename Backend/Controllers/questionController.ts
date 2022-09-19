@@ -236,5 +236,61 @@ class Question{
             })
         }
     }
+    static bookmarkQuestion = async(req:any,res:Response)=>{
+        try {
+            const authorData =await questionModel.findById({_id:req.params.id}).select('userId')
+            const userId = (req.user._id).toString()
+            const isAuthor:any = (authorData.userId).toString();
+            const bookmarkData =await questionModel.findById({_id:req.params.id}).select('bookmarker')
+            const questionThings =await questionModel.findById({_id:req.params.id}).select('title and tags and votes and views and answersCount')
+            const UserBookmark:any = (bookmarkData.bookmarker).filter((Bookmarkerid:any) => Bookmarkerid == req.user._id).length
+                if(UserBookmark<=0 && isAuthor!== userId ){
+                        const questionData =await questionModel.findByIdAndUpdate(
+                        {_id:req.params.id},
+                        {$push:{bookmarker:req.user._id}}
+                        );
+                    const userData = await userModel.findByIdAndUpdate({_id:req.user._id},{ $push: 
+                        { bookmarks: {qId:req.params.id,qtitle:questionThings.title,qtags:questionThings.tags,qvotes:questionThings.votes,qviews:questionThings.views,qanswers:questionThings.answersCount} }
+                     })
+                        await questionData.save() && await userData.save()
+                }else if(UserBookmark>0){
+                    throw new Error("User: You can bookmarks only once on any question");
+                }else if(isAuthor=== userId){
+                    throw new Error("Author: You can't bookmarks his/her question");
+                }
+            res.status(200).send({
+                apiStatus:true,
+                message:"Question Bookmarked Successfully and Added to User Bookmarks"
+            })
+        } catch (error:any) {
+            res.status(500).send({
+                apiStatus:false,
+                message:error.message
+            })
+        }
+       
+    }
+    static unbookmarkQuestion = async(req:any,res:Response)=>{
+        try {
+            const userData =await userModel.findByIdAndUpdate({_id:req.user._id},{ $pull: { bookmarks: {qId:req.params.id} } })
+                        const questionData =await questionModel.findByIdAndUpdate(
+                        {_id:req.params.id},
+                        { $pull: { bookmarker: { $in: req.user._id } },
+                         }
+                        );
+
+                         await questionData.save() && userData.save()
+            res.status(200).send({
+                apiStatus:true,
+                message:"Question UnBookmarked Successfully and Removed from User Bookmarks"
+            })
+        } catch (error:any) {
+            res.status(500).send({
+                apiStatus:false,
+                message:error.message
+            })
+        }
+       
+    }
 }
 module.exports =Question;

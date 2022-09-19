@@ -117,7 +117,6 @@ class User{
     static getAllUsers = async(req:any,res:Response)=>{
         var query   = {};
         var options = {
-            
             lean:     true,
             page:     req.params.pageNum,
             limit:    req.params.limit
@@ -138,6 +137,63 @@ class User{
                 })
             }
         });
+    }
+    static singleUser= async (req:any,res:Response)=>{
+        try{
+            const user = await userModel.findById({_id:req.params.id})
+            res.status(200).send({
+                apiStatus:true,
+                data:user,
+                message:"User information fetched Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    }
+    static addsocialmedialinks= async(req:any,res:Response)=>{
+        try{
+            const socialData = await userModel.findByIdAndUpdate({_id:req.user._id},{socialmedia:req.body},);
+                await socialData.save()
+            res.status(200).send({
+                apiStatus:true,
+                data:socialData,
+                message:"Social Media Links Added Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    }
+    static userBookmarks = async(req:any,res:Response)=>{
+        var query   = {};
+        var options = {
+            lean:     true,
+            page:     req.params.pageNum,
+            limit:    req.params.limit
+        };
+        userModel.paginate(query,options,async function(err:any, result:any) {
+        try {
+            const userBookmarks = await userModel.findById({_id:req.user._id}).select("bookmarks")
+            res.status(200).send({
+                apiStatus:true,
+                data:userBookmarks,
+                message:"User Bookmarks fetched Successfully"
+            })
+        } catch (error:any) {
+            res.status(500).send({
+                apiStatus:false,
+                data:error,
+                message:error.message
+            })
+        }
+    });
     }
 }
 module.exports = User;

@@ -46,6 +46,13 @@
           </div>
         </div>
       </div>
+      <div class="" >
+        <button class="border-0 bg-transparent ms-4" (click)="BookmarkQuestion(question._id)">
+          <mat-icon svgIcon="bookmark" class="bookmark bookmarked" [ngClass]="{'bookmarked' : bookmarkStatus}"  placement="end " ngbTooltip="Bookmark this Question ? , to remove bookmark go to Bookmark page"></mat-icon>
+          </button>
+
+        <!--class="bookmarked" *ngClass="{bookmarked: true}"-->
+      </div>
     </div>
     <div class="div2">
       <div class="alert alert-warning mt-2 w-100 alertDiv">
@@ -58,8 +65,8 @@
       </div>
       <mat-card  class="example-card overflow-auto mt-5">
         <mat-card-header class="container">
-            <img mat-card-avatar src="{{question.authorpImage}}" alt="{{question.author}}_ProfilePicture">
-            <mat-card-title class="fw-bold">{{question.author}}</mat-card-title>
+            <img mat-card-avatar class="qtitle" (click)="gotouserprofile(question.userId)" src="{{question.authorpImage}}" alt="{{question.author}}_ProfilePicture">
+            <mat-card-title class="fw-bold qtitle" (click)="gotouserprofile(question.userId)">{{question.author}}</mat-card-title>
             <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{question.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
             <mat-card-title>
               <div class="">
@@ -87,9 +94,6 @@
           <li mat-button class="list-group-item border-0" *ngIf="isAuthor">
             <button  class="btn btn-warning  fw-bold p-2" (click)="toEditPage(question._id)" routerLink="{{toEditQuestionPage}}"><mat-icon svgIcon="addquestion"></mat-icon> Edit </button>
           </li>
-          <li mat-button class="list-group-item border-0"  >
-            <button class="btn btn-primary  fw-bold"> <mat-icon svgIcon="answer"></mat-icon> Answer </button>
-          </li>
           <li mat-button class="list-group-item text-danger border-0" *ngIf="isAuthor">
             <button  class="btn text-danger fw-bold border-0" (click)="deletequestion(question._id)"><mat-icon svgIcon="delete"></mat-icon> Delete</button>
           </li>
@@ -101,7 +105,7 @@
         <mat-icon svgIcon="answers"></mat-icon> Answers : </h1>
         <form [formGroup]="answerDataForm" (ngSubmit)="addanswer(question._id)" class="ms-4">
           <h1 class="fw-bold"> Your Answer </h1>
-          <div class="NgxEditor__Wrapper"style="height:100%;width: 95%;margin-bottom:1vw;">
+          <div class="NgxEditor__Wrapper"style="height:100%;width: 95%;margin-bottom:1vw;" id="#answer">
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
             <ngx-editor
               [editor]="editor"
@@ -146,8 +150,8 @@
         <div class="div2">
           <mat-card  class="example-card overflow-auto m-auto  mt-3 mb-5"  *ngFor="let answer of AllAnswers | paginate: { itemsPerPage: 5, currentPage: p, totalItems: AllAnswers.count}">
             <mat-card-header class="container">
-                <img mat-card-avatar src="{{answer.authorpImage}}" alt="">
-                <mat-card-title class="fw-bold">{{answer.author}}</mat-card-title>
+                <img mat-card-avatar class="qtitle"src="{{answer.authorpImage}}" alt="" (click)="gotouserprofile(answer.userId)">
+                <mat-card-title class="fw-bold qtitle" (click)="gotouserprofile(answer.userId)">{{answer.author}}</mat-card-title>
                 <mat-card-subtitle><mat-icon svgIcon="clock"></mat-icon> {{answer.createdAt | date:'h:mm a,MMM d, y'}}</mat-card-subtitle>
 
             </mat-card-header>

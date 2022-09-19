@@ -1,11 +1,11 @@
-<div class="container-xl px-4 mt-4" > <!--*ngIf="!isLoaded ; else questionData"-->
+<!--<div class="container-xl px-4 mt-4" >
   <div class="row">
       <div class="col-xl-3">
-          <!-- Profile picture card-->
+
           <div class="card mb-4 mb-xl-0">
               <div class="card-header">Profile Picture</div>
               <div class="card-body text-center">
-                  <!-- Profile picture image-->
+
                   <ngx-skeleton-loader  count="1" [theme]="{width: '150px', height: '150px'}"
                    appearance="circle"></ngx-skeleton-loader>
                    <div class="d-flex justify-content-center">
@@ -17,7 +17,7 @@
           </div>
       </div>
       <div class="col-xl-9">
-          <!-- Account details card-->
+
           <div class="card mb-4">
               <div class="card-header fw-3">Account Details</div>
               <div class="card-body">
@@ -45,11 +45,11 @@
 <div class="container-xl px-4 mt-4">
   <div class="row">
       <div class="col-xl-3">
-          <!-- Profile picture card-->
+
           <div class="card mb-4 mb-xl-0">
               <div class="card-header">Profile Picture</div>
               <div class="card-body text-center">
-                  <!-- Profile picture image-->
+
                   <ngx-skeleton-loader  count="1" [theme]="{width: '150px', height: '150px'}"
                    appearance="circle"></ngx-skeleton-loader>
                    <div class="d-flex justify-content-center">
@@ -61,7 +61,7 @@
           </div>
       </div>
       <div class="col-xl-9">
-          <!-- Account details card-->
+
           <div class="card mb-4">
               <div class="card-header fw-3">Account Details</div>
               <div class="card-body p-5">
@@ -117,3 +117,111 @@
     </div>
 </div>
 </div>
+<p>
+  You can group by item key providing key name as a string to <b>groupBy</b> input
+</p>
+
+<ng-select [items]="ITjobs" *ngFor="let job of ITjobs"
+         placeholder="enter"
+         bindLabel="keywords"
+         bindValue="keywords"
+         groupBy="category"
+         [(ngModel)]="selectedAccount"
+         class="d-block">
+  <ng-template ng-optgroup-tmp let-item="item" class="d-block">
+      {{item.category || 'Unnamed group'}}
+  </ng-template>
+</ng-select>
+<br>
+<small>Selected: {{selectedAccount | json}}</small>
+
+<select  class="form-select " aria-label="Default select example" >
+
+  <optgroup *ngFor="let job of ITjobs" label="{{job.category}}">
+    <option *ngFor="let job of ITjobs" class="d-block" [value]="job.keywords" >{{job.keywords[0]}}</option>
+  </optgroup>
+
+</select>
+
+
+<div *ngFor="let job of ITjobs">
+  <p class="d-block">{{job.category}}</p>
+  <p class="d-block">{{job.keywords}}</p>
+</div>
+
+<strong class="text-danger">First name is required *</strong>
+
+
+
+
+<label for="exampleDataList" class="form-label">Datalist example</label>
+<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+<datalist id="datalistOptions" class="w-100" >
+  <option *ngFor="let job of jobs" value="{{job}}">
+</datalist>
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Number</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto"
+           class="form-control">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of jobs " [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+-->
+<!--<mat-card  class="example-card overflow-auto mt-5" >
+  <h1><mat-icon svgIcon="bks" class="text-warning"></mat-icon> Bookmark List :</h1>
+  <div class="d-flex justify-content-between">
+    <div class="mt-3">
+      <h2 class="overflow-auto ms-4 w-75">Lorem ipsum dolor sit amet potenti porttitor faucibus per tincidunt feugiat gravida cubilia magnis viverra lorem non eget felis lobortis turpis semper ultrices condimentum elit dictum nam fermentum convallis amet dis aliquam fusce in erat quam porta molestie dictumst urna finibus efficitur leo mus</h2>
+    <div class="ms-5">
+        <mat-icon svgIcon="answer" class="text-success" placement="top" ngbTooltip="Answers"></mat-icon>   <span class="me-2 ms-1 text-success">0</span>
+        <mat-icon svgIcon="vote" class="text-primary" placement="top" ngbTooltip="Votes"></mat-icon>   <span class="me-2 ms-1 text-primary">0</span>
+        <mat-icon svgIcon="view" class="text-info" placement="top" ngbTooltip="Views"></mat-icon>  <span class="me-2 ms-1 text-info">0</span>
+    </div>
+  </div>
+
+  </div>
+    <div class="m-3">
+      <div class="d-flex">
+        <div class="badge" style="background-color:#283149;color: #C5E0EA; font-size: 100%;">  <mat-icon svgIcon="tags"></mat-icon> Tags :</div>
+        <ul class="list-unstyled list-group list-group-horizontal" >
+          <li *ngFor="let tag of tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
+        </ul>
+      </div>
+  </div>
+  <mat-card-actions align="start">
+    <button mat-button>Show Question</button>
+    <button mat-button class="btn btn-danger"><mat-icon svgIcon="unbk"  class="mb-3"></mat-icon> UnBookmark this Question</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card  class="example-card overflow-auto mt-5" *ngFor="let load of loadingAnimation">
+  <div class="d-flex justify-content-between">
+    <div class="mt-3">
+    <ngx-skeleton-loader [theme]="{width: '30vw'}" count="1" class=" m-5"  appearance="line"></ngx-skeleton-loader>
+    <ngx-skeleton-loader [theme]="{width: '40vw'}" count="1" class="m-5 "  appearance="line"></ngx-skeleton-loader>
+    <div class="ms-5">
+      <ngx-skeleton-loader [theme]="{width: '5%',marginRight:'1vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{width: '5%',marginRight:'1vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{width: '5%',marginRight:'1vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+    </div>
+  </div>
+
+  </div>
+    <div class="ms-5">
+      <ngx-skeleton-loader [theme]="{width: '5%',margin:'1vw'}" count="3"   appearance="line"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{width: '5%',margin:'1vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+      <ngx-skeleton-loader [theme]="{width: '5%',margin:'1vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+  </div>
+  <ngx-skeleton-loader [theme]="{width: '10%','height':'2vw',marginLeft:'3vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+  <ngx-skeleton-loader [theme]="{width: '10%','height':'2vw',marginLeft:'3vw'}" count="1"   appearance="line"></ngx-skeleton-loader>
+</mat-card>-->
+

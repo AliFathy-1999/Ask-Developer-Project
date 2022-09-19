@@ -10,5 +10,8 @@ router.get('/logout',userAuth,userController.userLogout);
 router.post('/editprofile',userAuth,userController.editProfile);
 router.post('/uploadimage',userAuth,imageAuth.single('profilepicture'),userController.uploadProfilePic);
 router.get('/allusers/:pageNum/:limit',userController.getAllUsers);
+router.get('/user/:id',userController.singleUser);
+router.put('/addsocialmedialinks',userAuth,userController.addsocialmedialinks);
+router.get('/userbookmarks/:pageNum/:limit',userAuth,userController.userBookmarks);
 
 module.exports = router;

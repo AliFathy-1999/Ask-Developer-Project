@@ -1,5 +1,5 @@
 
-<section class="h-100">
+<section class="registerform">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
@@ -22,6 +22,7 @@
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
+                      <strong class="text-danger">First name is required *</strong>
                       <input type="text" class="form-control form-control-lg" #fname="ngModel" name="fname"  placeholder="First name" [(ngModel)]="userData.fname"
                       required minlength="3" maxlength="20"   />
                       <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && fname.invalid">
@@ -34,6 +35,7 @@
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
+                      <strong class="text-danger">Last name is required *</strong>
                       <input type="text"  class="form-control form-control-lg" #lname="ngModel" name="lname" placeholder="Last name" [(ngModel)]="userData.lname"
                       required minlength="3" maxlength="20"/>
                       <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && lname.invalid">
@@ -46,7 +48,7 @@
                   </div>
                   <div class="col-md-12 mb-4">
                     <div class="form-outline">
-                      <label for="DOB" class="text-black">Date of Birth : </label>
+                      <strong class="text-danger">Date of Birth is required *</strong>
                       <input type="date" class="form-control form-control-lg" id="datepicker" name="userdate" #userdate="ngModel"  placeholder="Date of Birth" [(ngModel)]="userData.DOB" required min="1960-01-01" max="2010-12-31">
                       <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && userdate.invalid">
                         <mat-icon class="text-light" svgIcon="error"></mat-icon>
@@ -58,6 +60,7 @@
                   </div>
                 </div>
                 <div class="form-outline mb-4">
+                  <strong class="text-danger">Username is required *</strong>
                   <input type="text" name="username" class="form-control form-control-lg" #username="ngModel" placeholder="Username" [(ngModel)]="userData.username"
                    required   minlength="3" maxlength="20" mat-raised-button
                    matTooltip="Username is unique"
@@ -72,7 +75,7 @@
                 </div>
 
                 <div class="form-outline mb-4">
-
+                  <strong class="text-danger">Email is required *</strong>
                   <input type="email" name="email"  class="form-control form-control-lg" #email="ngModel" placeholder="Email" [(ngModel)]="userData.email"
                   required  mat-raised-button matTooltip="Email is unique" [matTooltipPosition]="postionToolTip" matTooltipClass="tooltip"/>
                   <div class="bg-danger rounded-1 p-2" *ngIf=" registerform.submitted && email.invalid">
@@ -81,11 +84,12 @@
                   </div>
                 </div>
                 <div class="form-outline mb-4">
+                  <strong class="text-danger">Password is required *</strong>
                   <div class="form-control">
                    <div class="row ">
                       <div class="col-10">
                        <input type="{{passwordstatus}}" class="border-0 w-100 p-1 fs-4"
-                       name="password"  #password="ngModel" placeholder="Password" [(ngModel)]="userData.password" pattern="/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]/" required  minlength="6" maxlength="20" mat-raised-button matTooltip="Your Password doesn't the include 'password' word and Password must contain at least one number , Capital letter and one special character" [matTooltipPosition]="postionToolTip" matTooltipClass="tooltip"/>
+                       name="password"  #password="ngModel" placeholder="Password" [(ngModel)]="userData.password"  required  minlength="6" maxlength="20" matTooltip="Your Password doesn't the include 'password' word and Password must contain at least one number , Capital letter and one special character" [matTooltipPosition]="postionToolTip" matTooltipClass="tooltip"/>
                       </div>
                       <div class="col-2 mt-1">
                         <button type="button" class="bg-transparent border-0" (click)="showpassword()"><mat-icon  svgIcon="{{status}}"></mat-icon></button>
@@ -100,7 +104,9 @@
                   <span *ngIf="password.errors?.['maxlength']" class="text-light"> Max length of password is 20</span>
                 </div>
               </div>
+              <p> <strong class="text-danger">Gender is required *</strong></p>
                 <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
                   <h2 class="mb-0 me-4">Gender: </h2>
                   <div class="form-check form-check-inline mb-0 me-4">
                     <input class="form-check-input" type="radio" name="gender" #gender="ngModel" id="femaleGender" value="female" [(ngModel)]="userData.gender"  />
@@ -123,8 +129,10 @@
                     </div>
 
                 </div>
+
                 <div class="form-outline mb-4">
                   <div class="dropdown">
+                    <strong class="text-danger">Country is required *</strong>
                     <select class="form-select form-control form-control-lg fs-5"  id="country" name="country" #country="ngModel" [(ngModel)]="userData.country"
                     required  minlength="2" maxlength="50" >
                       <option value="" disabled>Choose your Country from this list:</option>
@@ -139,32 +147,37 @@
                   </div>
                 </div>
                 <div class="form-outline mb-4">
+                  <strong class="text-danger">Phone number is required *</strong>
                   <input type="text" name="phoneno" id="form3Example9" #phone="ngModel" class="form-control form-control-lg" placeholder="Phone number" [(ngModel)]="userData.phoneno" required />
                   <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && phone.invalid">
                     <mat-icon class="text-light" svgIcon="error"></mat-icon>
                     <span *ngIf="phone.errors?.['required']" class="text-light"> Phone number is required</span>
                   </div>
                 </div>
-
-                <div class="form-outline mb-2">
-                  <div class="dropdown">
-                    <select class="form-select form-control form-control-lg fs-5"  id="jobtitle" name="jobtitle" #jobtitle="ngModel" [(ngModel)]="userData.jobtitle"
+                <strong class="text-danger">Job title is required *</strong>
+                <div class=" d-flex" >
+                  <div class="dropdown" >
+                    <select  class="form-select form-control form-control-lg fs-5"  id="jobtitle" name="jobtitle" #jobtitle="ngModel" [(ngModel)]="userData.jobtitle"
                     required  minlength="2" maxlength="50" >
                       <option value="" disabled>Choose your job title from this list:</option>
                       <option *ngFor="let job of jobs" [value]="job" >{{job.charAt(0).toUpperCase() + job.slice(1)}}</option>
                     </select>
                   </div>
-                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && jobtitle.invalid">
+                  <button class="btn btn-warning" type="button" id="button-addon2" (click)="changetoInput()">Other</button>
+                  </div>
+                  <input type="text" name="jobtitle" *ngIf="isOther" class="form-control form-control-lg mt-4" #jobtitle="ngModel" placeholder="If you don't found your job title, please enter your job title here" [(ngModel)]="userData.jobtitle"
+                  minlength="2" maxlength="50">
+                  <div class="bg-danger rounded-1 p-2 " *ngIf=" registerform.submitted && jobtitle.invalid ">
                     <mat-icon class="text-light" svgIcon="error"></mat-icon>
                     <span *ngIf="jobtitle.errors?.['required']" class="text-light"> job title is required</span>
                     <span *ngIf="jobtitle.errors?.['minlength']" class="text-light"> Min length of job title is 2</span>
                     <span *ngIf="jobtitle.errors?.['maxlength']" class="text-light"> Max length of job title is 50</span>
-                  </div>
                 </div>
+
 
                 <div class="d-flex justify-content-end pt-3">
                   <button type="button" (click)="resetall(registerform)" class="btn btn-light btn-lg" ><mat-icon svgIcon="reset"></mat-icon> Reset all</button>
-                  <button type="submit" class="btn btn-warning btn-lg ms-2"><mat-icon svgIcon="submit"></mat-icon> Submit form</button>
+                  <button type="submit" class="btn btn-warning btn-lg ms-2" [disabled]="!registerform.valid"><mat-icon svgIcon="submit" ></mat-icon> Submit form</button>
                 </div>
                   <h3 class="text-center mt-4">Already have an account? <a routerLink="/login" class="btn btn-primary"><mat-icon svgIcon="login"></mat-icon> Login</a></h3>
 

@@ -39,6 +39,10 @@ import { UsersComponent } from './pages/users/users.component';
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 import { TestComponent } from './test/test.component';
 import { MyanswersComponent } from './user/myanswers/myanswers.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { CookieService } from 'ngx-cookie-service';
+import { BookmarkComponent } from './user/bookmark/bookmark.component';
+import { SingleuserComponent } from './pages/singleuser/singleuser.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,6 +61,8 @@ import { MyanswersComponent } from './user/myanswers/myanswers.component';
     SearchpageComponent,
     TestComponent,
     MyanswersComponent,
+    BookmarkComponent,
+    SingleuserComponent,
 
 
   ],
@@ -123,14 +129,15 @@ import { MyanswersComponent } from './user/myanswers/myanswers.component';
     LazyLoadImageModule,
     NgxPaginationModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,MatAutocompleteModule
   ],
   providers: [
     {
       provide:HTTP_INTERCEPTORS,
       useClass: UserInterceptor,
       multi:true
-    }
+    },
+    CookieService
   ],
   bootstrap: [AppComponent],
 

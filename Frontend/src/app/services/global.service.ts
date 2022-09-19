@@ -102,4 +102,16 @@ export class GlobalService {
   SingleAnswer(id:any){
     return this.http.get(`${this.answerurl}answer/${id}`)
   }
+  BookmarkQuestion(id:any){
+    return this.http.post(`${this.questionurl}bookmark/${id}`,null)
+  }
+  GetMyBookmarks(pageNum:number,limit:number){
+    return this.http.get(`${this.url}userbookmarks/${pageNum}/${limit}`)
+  }
+  UnBookmarkQuestion(id:any){
+    return this.http.put(`${this.questionurl}unbookmark/${id}`,null)
+  }
+  GetUser(id:any){
+    return this.http.get(`${this.url}user/${id}`)
+  }
 }

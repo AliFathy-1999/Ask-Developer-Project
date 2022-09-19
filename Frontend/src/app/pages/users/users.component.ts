@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   constructor(private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,private toastr: ToastrService,public _global:GlobalService) {
     iconRegistry.addSvgIconLiteral('job', sanitizer.bypassSecurityTrustHtml(this._icons.JOBTITLE_ICON));
     iconRegistry.addSvgIconLiteral('location', sanitizer.bypassSecurityTrustHtml(this._icons.COUNTRY_ICON));
+    iconRegistry.addSvgIconLiteral('vote', sanitizer.bypassSecurityTrustHtml(this._icons.VOTE_ICON));
   }
 
 
@@ -34,7 +35,9 @@ export class UsersComponent implements OnInit {
         this.isLoaded = true
     })
   }
-
+  gotouserprofile(id:any){
+    this.router.navigate(['/user',id])
+  }
 
   paginate(e:any){
     this.p = e;

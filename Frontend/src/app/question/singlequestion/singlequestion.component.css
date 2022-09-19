@@ -25,3 +25,15 @@
  .submitanswer:disabled{
     cursor: not-allowed;
   }
+.bookmarked{
+  color: #FFC107;
+}
+.bookmark:hover{
+  transform: scale(1.5);
+}
+.bookmark{
+  margin-left: 12%;
+}
+.qtitle{
+  cursor: pointer;
+}

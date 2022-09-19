@@ -105,7 +105,35 @@
                           {{userSummary}}
                         </div>
                       </div>
-                  </div>
+                      <h3 class="mt-2"><mat-icon svgIcon="socialmedia"></mat-icon> Social media links</h3>
+                    <div>
+                      <div class="alert alert-info text-center fw-bold fs-5 mb-0" role="alert" *ngIf="NoSocial">
+                        <mat-icon svgIcon="info"></mat-icon> No Social links added yet
+                      </div>
+                      <div *ngIf="!NoSocial">
+                     <div class="d-flex justify-content-center" >
+                        <mat-icon svgIcon="facebook" class="text-primary"></mat-icon>
+                        <a  class="ms-2 text-decoration-none d-block " href="{{userEditData.facebookacc}}" target="_blank">{{userEditData.facebookacc || "No facebook profile link is added"}}</a>
+                      </div>
+                      <div class="d-flex justify-content-center" >
+                        <mat-icon svgIcon="website" class="text-primary"></mat-icon>
+                        <a  class="ms-2 text-decoration-none d-block " href="{{userEditData.website}}" target="_blank">{{userEditData.website || "No Website profile link is added"}}</a>
+                      </div>
+                      <div class="d-flex justify-content-center" >
+                        <mat-icon svgIcon="twitter" class="text-primary"></mat-icon>
+                        <a  class="ms-2 text-decoration-none d-block " href="{{userEditData.twitteracc}}" target="_blank">{{userEditData.twitteracc || "No twitter profile link is added"}}</a>
+                      </div>
+                      <div class="d-flex justify-content-center" >
+                        <mat-icon svgIcon="linkedin" class="text-primary"></mat-icon>
+                        <a  class="ms-2 text-decoration-none d-block " href="{{userEditData.linkedinacc}}" target="_blank">{{userEditData.linkedinacc || "No linkedin profile link is added"}}</a>
+                      </div>
+                      <div class="d-flex justify-content-center" >
+                        <mat-icon svgIcon="github" class="text-primary"></mat-icon>
+                        <a  class="ms-2 text-decoration-none d-block " href="{{userEditData.githubacc}}" target="_blank">{{userEditData.githubacc || "No github profile link is added"}}</a>
+                      </div>
+                    </div>
+                    </div>
+                      </div>
               </div>
               <div class="container-xl px-4 mt-4" >
                 <div class="card mb-4 mb-xl-0">
@@ -241,8 +269,10 @@
                         <button *ngIf="isUploaded" class="btn border-primary border-3 text-primary w-75 mt-2 " type="submit" (click)="handleUpload(upload)" [disabled]="!upload.valid"><mat-icon svgIcon="save"></mat-icon> Save profile picture</button>
 
                   </div>
+
               </div>
             </form>
+
 
           </div>
           <div class="col-xl-8">
@@ -335,11 +365,11 @@
                             </div>
                           </div>
                           <div class="dropdown mb-4">
-                            <select class="form-select form-control form-control-lg fs-5"  id="jobtitle"  value="{{userEditData.jobtitle}}"
+                            <input type="text" name="jobtitle"  class="form-control form-control-lg mt-4" id="jobtitle"  value="{{userEditData.jobtitle}}"
                             formControlName="jobtitle" name="jobtitle" [(ngModel)]="userJobtitle" required  minlength="2" maxlength="50">
-                              <option value="" disabled>Choose your job title from this list:</option>
-                              <option *ngFor="let job of jobs" [value]="job" >{{job.charAt(0).toUpperCase() + job.slice(1)}}</option>
-                            </select>
+                            <datalist id="datalistOptions" class="w-100" >
+                              <option *ngFor="let job of jobs" value="{{job}}">
+                            </datalist>
                             <div class="text-danger fw-bold ms-2" *ngIf="isSubmitted && UserData?.['jobtitle']?.invalid || (UserData?.['jobtitle']?.touched || UserData?.['jobtitle']?.dirty)">
                               <div *ngIf="UserData?.['jobtitle']?.errors?.['required']"> Job title is required .</div>
                               <div *ngIf="UserData?.['jobtitle']?.errors?.['minlength']"> Min length of Job title is 2</div>
@@ -356,9 +386,67 @@
                               <div *ngIf="UserData?.['summary']?.errors?.['maxlength']"> Maxmium number of characters allowed in the summary is 500 characters </div>
                             </div>
                         </div>
+                        <label class="small mt-3" for="socialmedia">Social media links</label>
+
+                        <div class="row">
+                          <div class="col-md-6" >
+                            <label class="small mb-1" for="inputfacebook"></label>
+                            <div class="d-flex">
+                              <mat-icon class="text-primary mt-2 me-2" svgIcon="facebook"></mat-icon>
+                              <input class="form-control" id="inputfacebook" type="url" name="facebookacc" [(ngModel)]="userEditData.facebookacc"
+                               placeholder="Eg. https://web.facebook.com/name " formControlName="facebookacc"   minlength="7" maxlength="255" pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                            </div>
+                            <div class="text-danger fw-bold ms-2 w-100" *ngIf="isSubmitted && UserData?.['facebookacc']?.invalid || (UserData?.['facebookacc']?.touched || UserData?.['facebookacc']?.dirty)">
+                              <div *ngIf="UserData?.['facebookacc']?.errors?.['minlength']"> Your facebook profile link must be at least 7 characters</div>
+                              <div *ngIf="UserData?.['facebookacc']?.errors?.['pattern']"> Write link similar to this link https://web.facebook.com/name </div>
+                              <div *ngIf="UserData?.['facebookacc']?.errors?.['maxlength']"> Maxmium number of characters allowed in the facebook profile link is 255 characters </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6" >
+                            <label class="small mb-1" for="inputwebsite"></label>
+                            <div class="d-flex">
+                              <mat-icon class="text-primary mt-2 me-2" svgIcon="website"></mat-icon>
+                              <input class="form-control" id="inputwebsite" type="url" name="website"  [(ngModel)]="userEditData.website"
+                               placeholder="Eg. https://www.google.com/  " formControlName="website" minlength="7" maxlength="255" pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                            </div>
+                          </div>
+
+                          <div class="col-md-6" >
+                            <label class="small mb-1" for="inputtwitter"></label>
+                            <div class="d-flex">
+                              <mat-icon class="text-primary mt-2 me-2" svgIcon="twitter"></mat-icon>
+                              <input class="form-control" id="inputtwitter" type="url" name="twitteracc"  [(ngModel)]="userEditData.twitteracc"
+                               placeholder="Eg. https://twitter.com/username" formControlName="twitteracc" minlength="7" maxlength="255" pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                            </div>
+                          </div>
+
+                          <div class="col-md-6" >
+                            <label class="small mb-1" for="inputgithub"></label>
+                            <div class="d-flex">
+                              <mat-icon class="text-primary mt-2 me-2" svgIcon="github"></mat-icon>
+                              <input class="form-control" id="inputgithub" type="url" name="githubacc"  [(ngModel)]="userEditData.githubacc"
+                               placeholder="Eg. https://github.com/username " formControlName="githubacc" minlength="7" maxlength="255" pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                            </div>
+                          </div>
+
+                          <div class="col-md-6" >
+                            <label class="small mb-1" for="inputlinkedin"></label>
+                            <div class="d-flex">
+                              <mat-icon class="text-primary mt-2 me-2" svgIcon="linkedin"></mat-icon>
+                              <input class="form-control" id="inputlinkedin" type="url" name="linkedinacc"  [(ngModel)]="userEditData.linkedinacc"
+                               placeholder="Eg. https://www.linkedin.com/in/username/ " formControlName="linkedinacc" minlength="7" maxlength="255" pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)">
+                            </div>
+                          </div>
+                        </div>
+
+
+
                           <!-- Save changes button-->
                           <div class="d-flex justify-content-end">
-                            <button class="btn btn-primary" type="submit"><mat-icon svgIcon="save"></mat-icon> Save changes</button>
+                            <button class="btn btn-primary" type="submit"
+                             [disabled]="UserData?.['fname']?.invalid || UserData?.['lname']?.invalid || UserData?.['DOB']?.invalid || UserData?.['phoneno']?.invalid || UserData?.['gender']?.invalid || UserData?.['jotitle']?.invalid || UserData?.['country']?.invalid || UserData?.['summary']?.invalid || UserData?.['facebookacc']?.invalid || UserData?.['website']?.invalid || UserData?.['twitteracc']?.invalid || UserData?.['githubacc']?.invalid || UserData?.['linkedinacc']?.invalid">
+                              <mat-icon svgIcon="save"></mat-icon>
+                               Save changes</button>
                           </div>
                         </form>
                   </div>

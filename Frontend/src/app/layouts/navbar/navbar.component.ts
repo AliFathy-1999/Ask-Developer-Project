@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit, OnChanges {
     iconRegistry.addSvgIconLiteral('register', sanitizer.bypassSecurityTrustHtml(this._icons.REGISTRATION_ICON));
     iconRegistry.addSvgIconLiteral('search', sanitizer.bypassSecurityTrustHtml(this._icons.SEARCH_ICON));
     iconRegistry.addSvgIconLiteral('answers', sanitizer.bypassSecurityTrustHtml(this._icons.ANSWERS_ICON));
+    iconRegistry.addSvgIconLiteral('bookmark', sanitizer.bypassSecurityTrustHtml(this._icons.BOOKMARK_ICON));
    }
   ngOnChanges(changes: SimpleChanges): void {
     this._global.searchData =  this.inputSearch;
