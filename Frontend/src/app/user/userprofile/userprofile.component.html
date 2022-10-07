@@ -101,9 +101,14 @@
                       <img class="img-account-profile rounded-circle mb-2" src="{{this._global.userInfo.data?.pImage}}" alt="">
                       <div class="text-center">
                         <h3 ><mat-icon svgIcon="about"></mat-icon> About me</h3>
-                        <div style="background-color: #F6F6F6;padding: 2%;text-align: center;" class="blockquotetext">
-                          {{userSummary}}
-                        </div>
+                        <details >
+                          <summary class="fw-bold text-primary fs-5">
+                            Show my Summary, Click here
+                          </summary>
+                          <p style="background-color: #F6F6F6;padding: 2%;text-align: center;" class="blockquotetext">
+                            {{userSummary}}
+                          </p>
+                        </details>
                       </div>
                       <h3 class="mt-2"><mat-icon svgIcon="socialmedia"></mat-icon> Social media links</h3>
                     <div>

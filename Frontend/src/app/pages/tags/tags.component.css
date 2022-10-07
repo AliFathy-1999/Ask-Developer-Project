@@ -1,0 +1,6 @@
+.qtitle{
+  cursor: pointer;
+}
+.qtitle:hover{
+  color:#0d6efd;
+}

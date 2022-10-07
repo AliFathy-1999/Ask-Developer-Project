@@ -27,5 +27,12 @@ interface IUserModel {
     githubacc:Schema.Types.Mixed,
     linkedinacc:Schema.Types.Mixed,
     website:Schema.Types.Mixed,
+    verify:[{
+        code:Schema.Types.Mixed,
+        expire:string,
+        status:boolean,
+        token:string
+    }],
+    verified:Boolean,
 }
 export { IUserModel };

@@ -6,10 +6,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IconsService } from 'src/app/services/icons.service';
 import { ToastrService } from 'ngx-toastr';
-import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Subject, merge, OperatorFunction} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter} from 'rxjs/operators';
-import {map, startWith} from 'rxjs/operators';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

@@ -50,12 +50,13 @@
                   <span *ngIf="LoginData?.['password']?.errors?.['required']" class="text-light"> Password is required</span>
                 </div>
                 </div>
-
+                <h3 class="d-flex justify-content-end text-danger fw-bold" role='button' (click)="gotopage()" > Forgot password?</h3>
 
 
                 <div class="d-flex justify-content-center pt-3">
                   <button type="submit" class="btn btn-warning btn-lg ms-2" ><mat-icon svgIcon="submit"></mat-icon> Submit form</button>
                 </div>
+
                   <h3 class="text-center mt-4">Don't have an account? <a routerLink="/register" class="btn btn-primary"><mat-icon svgIcon="register"></mat-icon> Register</a></h3>
 
               </div>

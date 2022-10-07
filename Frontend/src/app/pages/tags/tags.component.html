@@ -1,0 +1,29 @@
+
+<div class="item d-flex" *ngIf="!isLoaded ; else usersData" >
+  <div class="row" >
+
+  <mat-card  class="m-auto mb-5 me-2 mt-5 col-3" *ngFor="let item of loadingAnimation">
+  <div class="d-flex ms-5" >
+  <ngx-skeleton-loader class="col-3 ms-2 mt-3" count="1" appearance="line"></ngx-skeleton-loader>
+</div>
+<div class="d-flex justify-content-center">
+  <ngx-skeleton-loader count="4" appearance="line" class="d-grid  col-8"></ngx-skeleton-loader>
+</div>
+</mat-card>
+
+</div>
+</div>
+
+<ng-template #usersData>
+  <div class="row d-flex justify-content-center  ">
+<mat-card  class="example-card overflow-hidden   mb-5 mt-3 me-3 animate__animated animate__shakeX col-sm-3 "  *ngFor="let tag of AllTags  | paginate: { itemsPerPage: 20, currentPage: p, totalItems: tagSize}">
+  <mat-card-header class="container " >
+      <mat-card-title class="fw-bold  qtitle text-truncate badge rounded-pill mt-1 p-3 " style="color:#283149;background-color: #C5E0EA;font-size: 100%;" (click)="goToSingleTag(tag)"><mat-icon svgIcon="tag"></mat-icon> {{tag}}</mat-card-title>
+  </mat-card-header>
+</mat-card>
+</div>
+<div class="d-flex justify-content-center m-auto" >
+  <pagination-controls [autoHide]="true" [responsive]="true" [previousLabel]="previousLabel" class="rounded-1 p-1 active my-pagination" style="background-color: #2F3B56;color:#B9D7E5;" (pageChange)="paginate($event)" (click)="gotoTop()"></pagination-controls>
+</div>
+</ng-template>
+

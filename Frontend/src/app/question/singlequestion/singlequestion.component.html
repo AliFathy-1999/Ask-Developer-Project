@@ -90,6 +90,7 @@
           <li *ngFor="let tag of question.tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
         </ul>
       </div>
+      <mat-card-actions class="d-flex justify-content-between">
         <ul class="list-unstyled list-group list-group-horizontal p-2 mt-2" >
           <li mat-button class="list-group-item border-0" *ngIf="isAuthor">
             <button  class="btn btn-warning  fw-bold p-2" (click)="toEditPage(question._id)" routerLink="{{toEditQuestionPage}}"><mat-icon svgIcon="addquestion"></mat-icon> Edit </button>
@@ -98,6 +99,22 @@
             <button  class="btn text-danger fw-bold border-0" (click)="deletequestion(question._id)"><mat-icon svgIcon="delete"></mat-icon> Delete</button>
           </li>
         </ul>
+        <div>
+          <share-buttons [theme]="'circles-dark'"
+          [include]="['facebook','twitter','linkedin','telegram','whatsapp','email','copy']"
+          [show]="3"
+          [showText]="true"
+          url="{{websiteUrl}}"
+          title="{{question.title}}"
+          description="{{question.title}}"
+          image="https://drive.google.com/file/d/1fZL5hmfipeZJre6pJquQUngVp8VWmsjY/view?usp=sharing"
+          tags="{{question.tags}}"
+          [autoSetMeta]="false"
+         ></share-buttons>
+        </div>
+
+      </mat-card-actions>
+
       </mat-card>
 
       <hr class="mt-5">

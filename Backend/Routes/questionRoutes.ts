@@ -18,4 +18,6 @@ router.post('/search/:pageNum/:limit',questionController.search);
 router.put('/countanswers/:id',questionController.countanswers);
 router.post('/bookmark/:id',userAuthQ,questionController.bookmarkQuestion);
 router.put('/unbookmark/:id',userAuthQ,questionController.unbookmarkQuestion);
+router.get('/alltags/:pageNum/:limit',questionController.getAlltags);
+router.get('/singletag/:tag/:pageNum/:limit',questionController.singleTag);
 module.exports = router;

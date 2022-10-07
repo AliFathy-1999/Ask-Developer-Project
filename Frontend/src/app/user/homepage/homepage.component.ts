@@ -26,7 +26,9 @@ export class HomepageComponent implements OnInit {
   routerLinkStatus:Boolean=false;
   routerlink:String="";
   answerCount:number = 0;
+  websiteUrl:String = `${window.location.href}/singlequestion`
   constructor(private toastr: ToastrService,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
+
     this._global.navbar = true
     this._global.isHomePage = true
     if(this.token){
@@ -38,6 +40,9 @@ export class HomepageComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('views', sanitizer.bypassSecurityTrustHtml(this._icons.VIEWS_ICON));
     iconRegistry.addSvgIconLiteral('votes', sanitizer.bypassSecurityTrustHtml(this._icons.VOTE_ICON));
     iconRegistry.addSvgIconLiteral('clock', sanitizer.bypassSecurityTrustHtml(this._icons.CLOCK_ICON));
+    iconRegistry.addSvgIconLiteral('twitter', sanitizer.bypassSecurityTrustHtml(this._icons.TWITTER_ICON));
+    iconRegistry.addSvgIconLiteral('facebook', sanitizer.bypassSecurityTrustHtml(this._icons.FACEBOOK_ICON));
+    iconRegistry.addSvgIconLiteral('linkendin', sanitizer.bypassSecurityTrustHtml(this._icons.LINKEDIN_ICON));
    }
    openModal(){
     if(this.token){

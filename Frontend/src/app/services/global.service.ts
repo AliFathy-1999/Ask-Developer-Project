@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,10 @@ export class GlobalService {
   url:string="http://localhost:2000/api/user/"
   questionurl:string="http://localhost:2000/api/question/"
   answerurl:string="http://localhost:2000/api/answer/"
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,private router : Router) {
 
   }
+
   userRegister(obj:any){
     return this.http.post(`${this.url}userRegister`,obj);
   }
@@ -113,5 +115,20 @@ export class GlobalService {
   }
   GetUser(id:any){
     return this.http.get(`${this.url}user/${id}`)
+  }
+  GetAllTags(pageNum:number,limit:number){
+    return this.http.get(`${this.questionurl}alltags/${pageNum}/${limit}`)
+  }
+  singleTag(tag:any,pageNum:number,limit:number){
+    return this.http.get(`${this.questionurl}singletag/${tag}/${pageNum}/${limit}`)
+  }
+  sendEmail(obj:any){
+    return this.http.post(`${this.url}sendverificationcode`,obj)
+  }
+  verifyCode(token:any,obj:any){
+    return this.http.put(`${this.url}verifycode/${token}`,obj)
+  }
+  resetPassword(token:any,obj:any){
+    return this.http.put(`${this.url}forgetpassword/${token}`,obj)
   }
 }

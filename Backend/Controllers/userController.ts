@@ -1,12 +1,13 @@
 import {Request,Response } from "express";
 const multer = require('multer');
 const sharp = require('sharp');
-
 const path=require('path');
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
 const answerModel= require("../DB/Models/AnswerModel")
+const sendEmail = require("../helpers/sendEmail.helpers")
 import {ControllerInterface } from '../Interfaces/ControllerInterface';
+let jwt = require('jsonwebtoken');
 
 class User{
     static userRegister:ControllerInterface= async(req:Request,res:Response) =>{
@@ -43,6 +44,7 @@ class User{
             })
         }
     }
+
     static getMe =async (req:any,res:Response) => {
         const questionsCount = await questionModel.countDocuments({userId:req.user._id})
         const answersCount = await answerModel.countDocuments({userId:req.user._id})
@@ -195,5 +197,79 @@ class User{
         }
     });
     }
+    static SendverificationCode= async(req:any,res:Response)=>{
+        try{
+            const userEmail = req.body.email;
+            const emails = await userModel.find({}).select("email")
+            const emailsArray = emails.map((email:any)=>email.email)
+           const email = emailsArray.filter((email:any)=>email === userEmail)
+            if(email.toString()){
+                const token = jwt.sign({email:userEmail},process.env.TOKEN_SECRET_VERIFICATION)
+                    sendEmail(email,token);
+            }else if(!(email.toString())){
+                    throw new Error("Email not found")
+                }
+            res.status(200).send({
+                apiStatus:true,
+                message:"Verification code sent Successfully, Please check your email you will find it in your inbox or spam folder"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    }
+    static verifingProcess= async(req:any,res:Response)=>{
+        try{
+            const userToken = req.params.token
+            const decoded = jwt.verify(req.params.token,process.env.TOKEN_SECRET_VERIFICATION)
+            var d = new Date
+            const datenow = [d.getMonth()+1,d.getDate(),d.getFullYear()].join('/')+' '+
+                      [d.getHours(),
+                       d.getMinutes(),
+                       d.getSeconds()].join(':');
+            const userVerify = await userModel.findOne({email:decoded.email})
+            if(userVerify.verify[0].code===req.body.verify && userVerify.verify[0].expire <= datenow){
+                userVerify.verify[0].status=true;
+                await userVerify.save()
+            }else if(userVerify.verify[0].code!==req.body.verify){
+                throw new Error("Verified code is incorrect ")
+            }else if(userVerify.verify[0].expire >= datenow){
+                throw new Error("Verified code is expired ")
+            }else if(userVerify.verify[0].status===true){
+                throw new Error("You are already verified ")
+            }
+            res.status(200).send({
+                apiStatus:true,
+                message:"Verified code is correct"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    }
+    static forgetpassword= async(req:any,res:Response)=>{
+        try{
+            const userToken = req.params.token
+            const decoded = jwt.verify(userToken,process.env.TOKEN_SECRET_VERIFICATION)
+            const Resetpassword = await userModel.forgetPassword(decoded.email,req.body.password)
+            res.status(200).send({
+                apiStatus:true,
+                message:"Password Reseted Successfully"
+            })
+        }catch(e:any){
+            res.status(500).send({
+                apiStatus:false,
+                data:e,
+                message:e.message
+            })
+        }
+    }
+
 }
 module.exports = User;

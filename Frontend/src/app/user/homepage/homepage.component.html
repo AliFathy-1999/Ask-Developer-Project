@@ -41,7 +41,9 @@
 </div>
 
 <ng-template #questionData>
+
 <mat-card  class="example-card overflow-auto m-auto mb-5 mt-3 mb-5 animate__animated animate__shakeX"  *ngFor="let question of AllQuestions | paginate: { itemsPerPage: 10, currentPage: p, totalItems: AllQuestions.count}">
+
   <mat-card-header class="container ">
       <img mat-card-avatar src="{{question.authorpImage}}" class="qtitle" alt="" (click)="gotouserprofile(question.userId)">
       <mat-card-title class="fw-bold qtitle" (click)="gotouserprofile(question.userId)">{{question.author}}</mat-card-title>
@@ -65,8 +67,22 @@
     <li *ngFor="let tag of question.tags" class="list-group-item border-0" class="badge rounded-pill mt-1 ms-2" style="color:#283149;background-color: #C5E0EA;font-size: 100%;" >{{tag}}</li>
   </ul>
 </div>
-  <mat-card-actions>
-    <button mat-button [routerLink]="['singlequestion', question._id]">Show Question </button>
+  <mat-card-actions class="d-flex justify-content-between">
+    <button  [routerLink]="['singlequestion', question._id]" class="btn btn-primary h-25 mt-3"><mat-icon svgIcon="views" class="mb-3"></mat-icon> Show Question </button>
+    <div>
+      <share-buttons [theme]="'circles-dark'"
+      [include]="['facebook','twitter','linkedin','telegram','whatsapp','email','copy']"
+      [show]="3"
+      [showText]="true"
+      url="{{websiteUrl}}/{{question._id}}"
+      title="{{question.title}}"
+      description="{{question.title}}"
+      image="https://drive.google.com/file/d/1fZL5hmfipeZJre6pJquQUngVp8VWmsjY/view?usp=sharing"
+      tags="{{question.tags}}"
+      [autoSetMeta]="false"
+     ></share-buttons>
+    </div>
+
   </mat-card-actions>
 </mat-card>
 <div class="d-flex justify-content-center mb-5" >

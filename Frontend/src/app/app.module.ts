@@ -26,6 +26,13 @@ import { AddquestionComponent } from './question/addquestion/addquestion.compone
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatTabsModule} from '@angular/material/tabs';
+
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+
+import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare';
+import { faTwitterSquare } from '@fortawesome/free-brands-svg-icons/faTwitterSquare';
+import { faPinterest } from '@fortawesome/free-brands-svg-icons/faPinterest';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -43,6 +50,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CookieService } from 'ngx-cookie-service';
 import { BookmarkComponent } from './user/bookmark/bookmark.component';
 import { SingleuserComponent } from './pages/singleuser/singleuser.component';
+import { TagsComponent } from './pages/tags/tags.component';
+import { SingletagComponent } from './pages/singletag/singletag.component';
+import { ForgetpasswordComponent } from './user/forgetpassword/forgetpassword.component';
+import { VerificationsComponent } from './pages/verifications/verifications.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatInputModule} from '@angular/material/input';
+import { ResetpasswordComponent } from './pages/resetpassword/resetpassword.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +77,12 @@ import { SingleuserComponent } from './pages/singleuser/singleuser.component';
     MyanswersComponent,
     BookmarkComponent,
     SingleuserComponent,
+    TagsComponent,
+    SingletagComponent,
+    ForgetpasswordComponent,
+    VerificationsComponent,
+    ResetpasswordComponent,
+
 
 
   ],
@@ -129,7 +149,11 @@ import { SingleuserComponent } from './pages/singleuser/singleuser.component';
     LazyLoadImageModule,
     NgxPaginationModule,
     MatDialogModule,
-    MatTabsModule,MatAutocompleteModule
+    MatTabsModule,MatAutocompleteModule,
+    ShareButtonsModule,
+    ShareIconsModule,
+    MatStepperModule,
+    MatInputModule
   ],
   providers: [
     {
@@ -142,4 +166,8 @@ import { SingleuserComponent } from './pages/singleuser/singleuser.component';
   bootstrap: [AppComponent],
 
 })
-export class AppModule { }
+export class AppModule {
+  fbIcon = faFacebookSquare;
+  pinIcon = faPinterest;
+  tweetIcon = faTwitterSquare;
+ }

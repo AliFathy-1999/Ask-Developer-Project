@@ -1,8 +1,7 @@
-import { link } from 'fs';
+
 import {Schema,model,VirtualType, SchemaType} from 'mongoose';
 import { isDate } from 'util/types';
 import validator from 'validator';
-
 var mongoosePaginate = require('mongoose-paginate');
 const bcryptjs = require('bcryptjs');
 let jwt = require('jsonwebtoken');
@@ -118,6 +117,24 @@ const schema= new Schema<IUserModel>({
             }
         },
     },
+    verify:[
+        {        
+            code:{
+                type:Schema.Types.Mixed,
+                
+            },
+            expire:String,
+            status:{
+                type:Boolean,
+                default:false
+            },
+            token:String,
+        }
+    ],
+    verified:{
+        type:Boolean,
+        default:false
+    },
     facebookacc:{type:Schema.Types.Mixed,default:""},
     twitteracc:{type:Schema.Types.Mixed,default:""},
     githubacc:{type:Schema.Types.Mixed,default:""},
@@ -158,6 +175,7 @@ schema.methods.toJSON = function () {
     delete userObject.password;
     delete userObject.__v;
     delete userObject.tokens;
+    delete userObject.verify;
     return userObject;
 }
 schema.pre('save',async function (){
@@ -173,7 +191,18 @@ schema.statics.login = async function(email,password){
     if(!isMatched) throw new Error("Invalid Password");
    return userData;
 }
+schema.statics.forgetPassword = async function(email,password){
+    const userdata = await User.findOne({email});
+    if(userdata?.verify[0].status){
+    const userencrypt = await bcryptjs.hash(password,10);
+    const user = await User.findOneAndUpdate({email},{password:userencrypt});
+    await user?.save();
+    }else{
+        throw new Error("Enter the correct verification code or your verification code has expired")
+    }
 
+    
+}
 schema.methods.generateToken = async function(){
     const user = this;
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET)
@@ -181,7 +210,6 @@ schema.methods.generateToken = async function(){
     await user.save();
     return token;
 }
-
 schema.plugin(mongoosePaginate);
 const User = model("User",schema)
 module.exports =User;

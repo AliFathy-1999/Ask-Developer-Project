@@ -3,6 +3,7 @@ import {Request,Response } from "express";
 const userModel= require("../DB/Models/userModel")
 const questionModel= require("../DB/Models/questionModel")
 const answerModel= require("../DB/Models/AnswerModel")
+
 class Question{
     static addQuestion = async(req:any,res:Response)=>{
         try{
@@ -12,7 +13,6 @@ class Question{
                 author:req.user.username,
                 authorpImage:req.user.pImage,
             });
-
             await userQuestion.save(); 
             res.status(200).send({
                 apiStatus:true,
@@ -291,6 +291,60 @@ class Question{
             })
         }
        
+    }
+    static getAlltags=async(req:any,res:Response)=>{
+        var query   = {};
+        var options = {
+            page:+req.params.pageNum,
+            limit:+req.params.limit
+        };
+
+        questionModel.paginate(query,options,async function(err:any, result:any) {
+        try {
+            const tagsData = await questionModel.find().select('tags')
+            const onlytags = (tagsData.map((tag:any)=>tag.tags))
+            const merged = [... new Set([].concat.apply([], onlytags))];
+            var tagslength = [... new Set([].concat.apply([], onlytags))].length
+            res.status(200).send({
+                apiStatus:true,
+                tagslength:tagslength,
+                data:merged,
+                message:"All Tags Retrieved Successfully"
+            })
+        } catch (error:any) {
+            res.status(500).send({
+                apiStatus:false,
+                message:error.message
+            })
+        }
+        });
+    
+    }
+    static singleTag= async(req:any,res:Response)=>{
+        var query   = {};
+        var options = {
+            page:+req.params.pageNum,
+            limit:+req.params.limit
+        };
+        questionModel.paginate(query,options,async function(err:any, result:any) {
+            try{
+                const tag = req.params.tag;
+                const tagData = await questionModel.find({'tags':{ $regex : tag,$options: "$i"}}).select('userId and author and authorpImage and title and tags and votes and views and answersCount')
+              .sort({views:-1});
+                res.status(200).send({
+                    apiStatus:true,
+                    data:tagData,
+                    message:"tags were successfully retrieved."
+                })
+  
+            }catch(e:any){
+                res.status(500).send({
+                    apiStatus:false,
+                    data:e,
+                    message:"No results found"
+                })
+            }
+        });
     }
 }
 module.exports =Question;

@@ -16,6 +16,7 @@ export class AppComponent {
   token = localStorage.getItem('token')
   routerLinkStatus:Boolean=false;
   routerlink:String="";
+
   constructor(public _global:GlobalService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private _icons: IconsService,@Inject(DOCUMENT) public document: Document) {
 
     iconRegistry.addSvgIconLiteral('arrowup', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_UP_ICON));

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   status:string="show";
   passwordstatus:any="password"
   token = localStorage.getItem('token')
+
   constructor(private toastr: ToastrService,public _global: GlobalService, private router : Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     this._global.navbar = false;
     this._global.footer=false;
@@ -77,5 +78,8 @@ export class LoginComponent implements OnInit {
 
   });
     }
+}
+gotopage(){
+  this.router.navigate(['/forgetpassword']);
 }
 }

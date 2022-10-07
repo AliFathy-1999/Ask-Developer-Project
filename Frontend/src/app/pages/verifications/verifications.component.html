@@ -1,0 +1,66 @@
+
+
+
+<div class="container pb-5 mb-sm-4 m-5">
+  <!-- Progress-->
+  <div class="steps">
+
+      <div class="steps-body">
+          <div class="step step-completed">
+            <span class="unverified">
+              <mat-icon svgIcon="unverified"></mat-icon>
+            </span>
+              <mat-icon svgIcon="verify"></mat-icon>
+            <h3 class="fw-bold">Verifying Process</h3></div>
+            <div class="step step-completed">
+              <span class="unverified">
+                <mat-icon svgIcon="unverified"></mat-icon>
+              </span>
+                <mat-icon svgIcon="resetpass"></mat-icon>
+              <h3 class="fw-bold">Reset password</h3></div>
+
+              <div class="step step-completed">
+                <span class="unverified">
+                  <mat-icon svgIcon="unverified"></mat-icon>
+                </span>
+                  <mat-icon svgIcon="donepass"></mat-icon>
+                <h3 class="fw-bold">Done</h3>
+              </div>
+
+      </div>
+  </div>
+  <!-- Footer-->
+
+</div>
+
+<div class="container">
+  <br>
+  <div class="row d-flex justify-content-center">
+      <div class="col-lg-5 col-md-7  mb-5">
+          <div class="card">
+              <div class="card-body px-lg-5 py-lg-5 text-center">
+                  <img src="../../../assets/verifybyemail.png" class="rounded-circle avatar-lg img-thumbnail mb-4 w-50 h-50" alt="profile-image">
+                  <h2 class="text-info">Verify code to reset your password.</h2>
+                  <p class="mb-4">Enter 6-digits code appeared in your inbox .</p>
+
+                  <form [formGroup]="verifycode" (ngSubmit)="verifyingcode()">
+                      <div class="mb-4">
+                             <input type="text" class="form-control form-control-lg text-lg " name="verify" placeholder="ex. 123456"   formControlName="verify" required
+                            maxlength="6"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" >
+                          <div class="d-flex justify-content-end">
+                              <p class="text-danger mt-3">Resend it again</p>
+                          </div>
+
+                      </div>
+
+                      <div class="text-center">
+                          <button type="submit" class="btn btn-lg my-4" style="background-color:#283149;color:#B9D7E5;"><mat-icon svgIcon="verify"></mat-icon>    Verify</button>
+                      </div>
+
+                  </form>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

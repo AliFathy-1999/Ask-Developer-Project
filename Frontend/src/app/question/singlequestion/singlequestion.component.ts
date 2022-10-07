@@ -58,6 +58,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   answerDataForm:any = new FormGroup({
     body: new FormControl('',[Validators.required,Validators.minLength(6)]),
   });
+  websiteUrl:String = `${window.location.href}`
   constructor(private toastr:ToastrService,private activated : ActivatedRoute,private router:Router,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService,public _global:GlobalService) {
     iconRegistry.addSvgIconLiteral('addquestion', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('tags', sanitizer.bypassSecurityTrustHtml(this._icons.TAGS_ICON));

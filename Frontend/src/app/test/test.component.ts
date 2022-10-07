@@ -6,7 +6,7 @@ import { IconsService } from 'src/app/services/icons.service';
 import { ToastrService } from 'ngx-toastr';
 import {FormControl} from '@angular/forms';
 
-import {map, startWith} from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -14,6 +14,31 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class TestComponent implements OnInit {
   myControl = new FormControl('');
+  AllTags:any = []
+  tagSize:any = 0;
+  verifycode:any={
+    fnum:"",
+    snum:"",
+    tnum:"",
+    frnum:"",
+    fivnum:"",
+    sinum:""
+  }
+  // tagSize(tag:any){
+  //   if(tag.length > 20){
+  //     return tag.substring(0,20) + '...'
+  //   }else{
+  //     return tag
+  //   }
+  // }
+  p:any
+
+  isLoaded:boolean = false
+  previousLabel:string = 'Prev';
+  //page = 0;
+  page = 0;
+  pageSize = 10;
+  active = 'top';
   tags: string[] = ['Nodejs', 'Angular', 'Mongoose'];
   filteredOptions:any;
   selectedAccount = 'SEO';
@@ -993,7 +1018,7 @@ export class TestComponent implements OnInit {
   "writer",
   "yardmaster",
   "zoologist"];
-  constructor(public _global: GlobalService,private toastr: ToastrService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
+  constructor(private activated : ActivatedRoute,private router:Router,public _global: GlobalService,private toastr: ToastrService,iconRegistry: MatIconRegistry, sanitizer: DomSanitizer,private _icons:IconsService) {
     iconRegistry.addSvgIconLiteral('edit', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
     iconRegistry.addSvgIconLiteral('profile', sanitizer.bypassSecurityTrustHtml(this._icons.PROFILE_ICON));
     iconRegistry.addSvgIconLiteral('name', sanitizer.bypassSecurityTrustHtml(this._icons.FULLNAME_ICON));
@@ -1019,13 +1044,32 @@ export class TestComponent implements OnInit {
     //   startWith(''),
     //   map(value => this._filter(value || '')),
     // );
+    // this._global.GetAllTags(this.page,this.pageSize).subscribe((data:any)=>{
+    //   this.AllTags=data.data
+    //   this.tagSize = data.tagslength
+    //   console.log(this.tagSize)
+    // }, (err:any)=>{
+    //   location.reload()
+    // } , ()=>{
+    //     this.isLoaded = true
+    // })
   }
   // private _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();
 
   //   return this.options.filter(option => option.toLowerCase().includes(filterValue));
   // }
+  // gotouserprofile(id:any){
+  //   this.router.navigate(['/tags/tagged',id])
+  // }
 
+  // paginate(e:any){
+  //   this.p = e;
+  //   console.log(this.p)
+  // }
+  // gotoTop(){
+  //   window.scrollTo(0,0)
+  // }
 }
 
 
