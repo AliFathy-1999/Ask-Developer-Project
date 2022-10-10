@@ -64,7 +64,11 @@ const schema = new Schema({
   bookmarker:[{
     type:String,
     Default:[]
-  }]
+  }],
+  bestanswer:{
+    type:String,
+    default:""
+  }
 },
 {
     timestamps:true

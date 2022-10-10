@@ -43,7 +43,11 @@ const schema = new Schema(
     Replies: [{
       type:String,
       Default:[]
-    }]
+    }],
+    bestanswer:{
+      type:Boolean,
+      default:false
+    }
   },
   {
     timestamps: true,

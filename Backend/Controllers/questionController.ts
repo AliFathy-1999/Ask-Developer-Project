@@ -256,7 +256,7 @@ class Question{
                 }else if(UserBookmark>0){
                     throw new Error("User: You can bookmarks only once on any question");
                 }else if(isAuthor=== userId){
-                    throw new Error("Author: You can't bookmarks his/her question");
+                    throw new Error("Author: You can't bookmarks your question");
                 }
             res.status(200).send({
                 apiStatus:true,

@@ -10,4 +10,5 @@ AnswerRouter.get("/getanswers/:id/:pageNum/:limit",AnswerController.AllAnswersFo
 AnswerRouter.put('/votinganswer/:id/:userid/:vote',userAuthA,AnswerController.VotingAnswer);
 AnswerRouter.get('/allmyanswers/:pageNum/:limit',userAuthA,AnswerController.myAnswers);
 AnswerRouter.get('/answer/:id',AnswerController.SingleQuestion);
+AnswerRouter.put('/bestanswer/:id/:questionid',userAuthA,AnswerController.bestAnswer);
 module.exports = AnswerRouter

@@ -131,4 +131,7 @@ export class GlobalService {
   resetPassword(token:any,obj:any){
     return this.http.put(`${this.url}forgetpassword/${token}`,obj)
   }
+  bestanswer(id:any,questionid:any){
+    return this.http.put(`${this.answerurl}bestanswer/${id}/${questionid}`,null)
+  }
 }

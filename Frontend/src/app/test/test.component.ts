@@ -32,7 +32,7 @@ export class TestComponent implements OnInit {
   //   }
   // }
   p:any
-
+  answerarray:any = ["","","",""]
   isLoaded:boolean = false
   previousLabel:string = 'Prev';
   //page = 0;
@@ -1036,7 +1036,14 @@ export class TestComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('vote', sanitizer.bypassSecurityTrustHtml(this._icons.VOTE_ICON));
     iconRegistry.addSvgIconLiteral('view', sanitizer.bypassSecurityTrustHtml(this._icons.VIEWS_ICON));
     iconRegistry.addSvgIconLiteral('answer', sanitizer.bypassSecurityTrustHtml(this._icons.ANSWERS_ICON));
-
+    iconRegistry.addSvgIconLiteral('delete', sanitizer.bypassSecurityTrustHtml(this._icons.DELETE_ICON));
+    iconRegistry.addSvgIconLiteral('addquestion', sanitizer.bypassSecurityTrustHtml(this._icons.EDIT_ICON));
+    iconRegistry.addSvgIconLiteral('arrowup2', sanitizer.bypassSecurityTrustHtml(this._icons.UP_ICON));
+    iconRegistry.addSvgIconLiteral('arrowdown', sanitizer.bypassSecurityTrustHtml(this._icons.ARROW_DOWN_ICON));
+    iconRegistry.addSvgIconLiteral('best', sanitizer.bypassSecurityTrustHtml(this._icons.BESTANSWER_ICON));
+    iconRegistry.addSvgIconLiteral('answers', sanitizer.bypassSecurityTrustHtml(this._icons.ANSWERS_ICON));
+    iconRegistry.addSvgIconLiteral('views', sanitizer.bypassSecurityTrustHtml(this._icons.VIEWS_ICON));
+    iconRegistry.addSvgIconLiteral('votes', sanitizer.bypassSecurityTrustHtml(this._icons.VOTE_ICON));
   }
 
   ngOnInit(): void {

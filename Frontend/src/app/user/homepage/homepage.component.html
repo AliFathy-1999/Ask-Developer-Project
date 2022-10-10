@@ -68,7 +68,7 @@
   </ul>
 </div>
   <mat-card-actions class="d-flex justify-content-between">
-    <button  [routerLink]="['singlequestion', question._id]" class="btn btn-primary h-25 mt-3"><mat-icon svgIcon="views" class="mb-3"></mat-icon> Show Question </button>
+    <button (click)="incrementview(question._id)"  [routerLink]="['singlequestion', question._id]" class="btn btn-primary h-25 mt-3"><mat-icon svgIcon="views" class="mb-3"></mat-icon> Show Question </button>
     <div>
       <share-buttons [theme]="'circles-dark'"
       [include]="['facebook','twitter','linkedin','telegram','whatsapp','email','copy']"

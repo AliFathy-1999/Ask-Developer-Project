@@ -13,7 +13,6 @@ router.post('/editprofile',userAuth,userController.editProfile);
 router.post('/uploadimage',userAuth,imageAuth.single('profilepicture'),userController.uploadProfilePic);
 router.get('/allusers/:pageNum/:limit',userController.getAllUsers);
 router.get('/user/:id',userController.singleUser);
-router.put('/addsocialmedialinks',userAuth,userController.addsocialmedialinks);
 router.get('/userbookmarks/:pageNum/:limit',userAuth,userController.userBookmarks);
 router.post('/sendverificationcode',userController.SendverificationCode);
 router.put('/verifycode/:token',userController.verifingProcess);

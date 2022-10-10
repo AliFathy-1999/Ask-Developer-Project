@@ -185,5 +185,37 @@ class Answer{
     })
   }
   }
+  static bestAnswer = async(req:any,res:Response)=>{
+    try{
+      const AllAnswers = await AnswerModel.find({QuestionId:req.params.questionid}).select('bestanswer')
+      const answersStatus= AllAnswers.map((answer:any)=>answer.bestanswer)
+      const isBestAnswer = answersStatus.filter((answer:any)=>answer===true)
+      const authorData =await AnswerModel.findById({_id:req.params.id}).select('userId')
+      const userId = (req.user._id).toString()
+      const isAuthor:any = (authorData.userId).toString();
+      if(isBestAnswer.length<=0 && isAuthor!== userId){
+        const answerData =await AnswerModel.findByIdAndUpdate(
+          {_id:req.params.id},
+          {bestanswer:true},
+          );
+          const questionData =await questionModel.findByIdAndUpdate({_id:req.params.questionid},{bestanswer:req.params.id})
+          await answerData.save() && questionData.save()
+      }else if(isBestAnswer.length>0){
+        throw new Error("You can't choose more than one best answer")
+      }else if(isAuthor=== userId){
+        throw new Error("Author can't set his/her answer as best answer");
+      }
+      res.status(200).send({
+        apiStatus:true,
+        message:"You set this answer as the Best Answer answered on your question."
+      })
+    }catch(e:any){
+      res.status(500).send({
+        apiStatus:false,
+        data:e,
+        message:e.message
+      })
+    }
+  }
 }
 module.exports = Answer

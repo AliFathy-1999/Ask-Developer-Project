@@ -28,9 +28,9 @@ class User{
         }
     }
     static userLogin:ControllerInterface = async(req:Request,res:Response)=>{
-        const userData = await userModel.login(req.body.email,req.body.password)
-        const token = await userData.generateToken();
         try{
+            const userData = await userModel.login(req.body.email,req.body.password)
+            const token = await userData.generateToken();
             res.status(200).send({
                 apiStatus:true,
                 data:{user:userData,token},
@@ -156,23 +156,7 @@ class User{
             })
         }
     }
-    static addsocialmedialinks= async(req:any,res:Response)=>{
-        try{
-            const socialData = await userModel.findByIdAndUpdate({_id:req.user._id},{socialmedia:req.body},);
-                await socialData.save()
-            res.status(200).send({
-                apiStatus:true,
-                data:socialData,
-                message:"Social Media Links Added Successfully"
-            })
-        }catch(e:any){
-            res.status(500).send({
-                apiStatus:false,
-                data:e,
-                message:e.message
-            })
-        }
-    }
+
     static userBookmarks = async(req:any,res:Response)=>{
         var query   = {};
         var options = {

@@ -31,6 +31,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   answers:any = {};
   AllAnswers:any = [{}]
   voters:any=[]
+  isbestAnswer:boolean=false;
   bookmarkers:any=[]
   Avoters:any=[]
   toEditQuestionPage:string=`/editquestion/${this.questionIdParams}`;
@@ -76,6 +77,8 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     iconRegistry.addSvgIconLiteral('info', sanitizer.bypassSecurityTrustHtml(this._icons.INFO_ICON));
     iconRegistry.addSvgIconLiteral('send', sanitizer.bypassSecurityTrustHtml(this._icons.SEND_ICON));
     iconRegistry.addSvgIconLiteral('bookmark', sanitizer.bypassSecurityTrustHtml(this._icons.BOOKMARK_ICON));
+    iconRegistry.addSvgIconLiteral('best', sanitizer.bypassSecurityTrustHtml(this._icons.BESTANSWER_ICON));
+
    }
 
    toEditPage(id:any){
@@ -86,7 +89,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     this._global.SingleQuestion(this.questionIdParams).subscribe((data:any)=>{
       this.bookmarkers=data.data.bookmarker;
       this.question= data.data;
-      this.questionsAnswers=data.data.answers
+
       this.voters=data.data.voters
       this.voters.forEach((voter:any)=>{
         if(voter === this._global.userInfo?.data._id){
@@ -94,7 +97,7 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
         }
       })
       this.bookmarkers.forEach((bookmarker:any)=>{
-        if(bookmarker === this._global.userInfo?.data._id){
+        if(bookmarker === this._global?.userInfo?.data._id){
           this.bookmarkStatus=true;
         }
       })
@@ -113,8 +116,16 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
     this._global.getAllAnswer(this.questionIdParams,this.page,this.pageSize).subscribe((data:any)=>{
       this.AllAnswers= data.data;
       this.Avoters=data.data.voters
-
-      this.Avoters.forEach((voter:any)=>{
+      this.AllAnswers.forEach((answer:any)=>{
+        if(answer.bestanswer === true){
+          this.isbestAnswer=true;
+        }
+      })
+      if(this.AllAnswers.bestanswer){
+        console.log(this.AllAnswers.bestanswer)
+        this.isbestAnswer=true;
+      }
+      this.Avoters?.forEach((voter:any)=>{
         if(voter === this._global.userInfo.data._id){
           this.oneClickAnswer=true;
           this.isAuthorAnswer=true;
@@ -138,7 +149,6 @@ export class SinglequestionComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.editor.destroy();
   }
-
 
   get AnswerData(){
     return this.answerDataForm.controls;
@@ -217,6 +227,16 @@ BookmarkQuestion(id:any){
     this.toastr.error(err.error.message);
   })
 
+}
+BestAnswer(id:any){
+  this._global.bestanswer(id,this.questionIdParams).subscribe((data:any)=>{
+    this.toastr.success(data.message);
+    this.ngOnInit();
+  },(err)=>{
+    this.toastr.error(err.error.message);
+  },()=>{
+    this.isLoaded = true;
+  })
 }
 paginate(e:any){
   this.p = e;
